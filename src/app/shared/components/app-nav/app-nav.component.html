@@ -25,7 +25,7 @@
       class="nav-item">
       <!-- <a class="nav-link" [routerLinkActive]="['active']" *ngIf="userData.roleName == 'Company Admin' || userData.roleName == 'Super Admin' routerLink="/pos-dashboard/admin-table-details"> -->
       <a class="nav-link" [routerLinkActive]="['active']" *ngIf="userData.roleName == 'Super Admin'"
-        routerLink="/pos-dashboard/admin-table-details">
+        routerLink="/pos-dashboard/masters-tax">
         <img alt="image" src="/assets/images/settings-icon.svg" class="mr_10" />
         <span class="font_14 fw-reg text-white">Settings</span>
       </a>
@@ -57,7 +57,7 @@
         <span class="font_14 fw-reg text-white">Inventory</span>
       </a>
     </li>
-    <li class="nav-item" id="616fcb634754880a6f3053f1" *ngIf="commonService.checkMenuDisplayPermission(Orders)"
+     <li class="nav-item" id="616fcb634754880a6f3053f1" *ngIf="commonService.checkMenuDisplayPermission(Orders)"
       class="nav-item">
       <a class="nav-link" class="nav-link" [routerLinkActive]="['active']" *ngIf="userData.roleName == 'Super Admin'" routerLink="/pos-dashboard/dine-in">
         <img alt="image" src="/assets/images/orders-icon.svg" class="mr_10" />
@@ -67,8 +67,8 @@
         <img alt="image" src="/assets/images/orders-icon.svg" class="mr_10" />
         <span class="font_14 fw-reg text-white">Orders</span>
       </a>
-    </li>    
-    <li id="616fcbab4754880a6f3053f3" *ngIf="commonService.checkRolePermissions('LIST_KITCHEN')" class="nav-item">
+    </li>     
+    <!-- <li id="616fcbab4754880a6f3053f3" *ngIf="commonService.checkRolePermissions('LIST_KITCHEN')" class="nav-item">
       <a class="nav-link" [routerLinkActive]="['active']" routerLink="/pos-dashboard/kitchen">
         <img alt="image" src="/assets/images/kitchen-icon.svg" class="mr_10" />
         <span class="font_14 fw-reg text-white">{{this.commonService?.generalSettings?.kitchenName}}</span>
@@ -79,7 +79,7 @@
         <img alt="image" src="/assets/images/bar-glass-icon.svg" class="mr_10" />
         <span class="font_14 fw-med text-white">{{this.commonService?.generalSettings?.barName}}</span>
       </a>
-    </li>
+    </li> -->
     <li id="616fcb914754880a6f3053f2" class="nav-item" *ngIf="commonService.checkMenuDisplayPermission(Sales)">
       <a class="nav-link" [routerLinkActive]="['active']" *ngIf="userData.roleName == 'Super Admin'" routerLink="/pos-dashboard/sales-by-category">
         <img alt="image" src="/assets/images/sales-icon.svg" class="mr_10" />

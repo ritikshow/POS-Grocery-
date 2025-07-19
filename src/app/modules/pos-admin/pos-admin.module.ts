@@ -16,8 +16,8 @@ import { OrderHistoryComponent } from './pages/order-history/order-history.compo
 import { ItemDiscountComponent } from './pages/order/item-discount/item-discount.component';
 import { MakePaymentComponent } from './pages/make-payment/make-payment.component';
 import { AdminTableDetailsComponent } from './pages/admin-table-details/admin-table-details.component';
-import { AdminCategoryComponent } from './pages/admin-category/admin-category.component';
-import { AddAdminCategoryComponent } from './pages/admin-category/add-admin-category/add-admin-category.component';
+//import { AdminCategoryComponent } from './pages/admin-category/admin-category.component';
+//import { AddAdminCategoryComponent } from './pages/admin-category/add-admin-category/add-admin-category.component';
 import { AddAdminTabledetailsComponent } from './pages/admin-table-details/add-admin-tabledetails/add-admin-tabledetails.component';
 import { PrintTableQrComponent } from './pages/admin-table-details/print-table-qr/print-table-qr.component';
 import { MastersPromoCodeComponent } from './pages/masters-promo-code/masters-promo-code.component';
@@ -51,7 +51,7 @@ import { TaxViewComponent } from './pages/master/tax/tax-view/tax-view.component
 import { PrintDesignVeiwComponent } from './pages/print-design-veiw/print-design-veiw.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { PrintVeiwComponent } from './pages/print-design-veiw/print-veiw/print-veiw.component';
-import { MainPipe } from '@core/services/pos-system/pipes/main-pipe.module';
+import { MainPipe } from '../../core/services/pos-system/pipes/main-pipe.module';
 import { NgxPrintModule } from 'ngx-print';
 import { AdminRestaurantComponent } from './pages/admin-restaurant/admin-restaurant.component';
 import { RestaurantFormComponent } from './pages/admin-restaurant/restaurant-form/restaurant-form.component';
@@ -157,8 +157,8 @@ import { LoyalitySettingsComponent } from './pages/loyality-settings/loyality-se
     ItemDiscountComponent,
     MakePaymentComponent,
     AdminTableDetailsComponent,
-    AdminCategoryComponent,
-    AddAdminCategoryComponent,
+   //AdminCategoryComponent,
+    //AddAdminCategoryComponent,
     AddAdminTabledetailsComponent,
     PrintTableQrComponent,
     MastersPromoCodeComponent,

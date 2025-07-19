@@ -2,8 +2,8 @@ import { TaxSetupComponent } from './pages/master/tax-setup/tax-setup.component'
 import { PrintDesignTableComponent } from './pages/print-design-veiw/print-design-table/print-design-table.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AddAdminCategoryComponent } from './pages/admin-category/add-admin-category/add-admin-category.component';
-import { AdminCategoryComponent } from './pages/admin-category/admin-category.component';
+//import { AddAdminCategoryComponent } from './pages/admin-category/add-admin-category/add-admin-category.component';
+//import { AdminCategoryComponent } from './pages/admin-category/admin-category.component';
 import { AdminTableDetailsComponent } from './pages/admin-table-details/admin-table-details.component';
 import { MenuComponent } from './pages/menu/menu.component';
 import { CompleteOrderComponent } from './pages/complete-order/complete-order.component';
@@ -178,20 +178,20 @@ const routes: Routes = [
     path: 'dine-in/voided-order',
     component: VoidedOrderComponent
   },
-  {
-    path: 'admin-category',
-    component: AdminCategoryComponent
-  },
+  // {
+  //   path: 'admin-category',
+  //   component: AdminCategoryComponent
+  // },
   {
     path: 'admin-table-details',
     component: AdminTableDetailsComponent,
     canActivate: [POSAuthGuard]
   },
-  {
-    path: 'admin-category/add-admin-category',
-    component: AddAdminCategoryComponent,
-    canActivate: [POSAuthGuard]
-  },
+  // {
+  //   path: 'admin-category/add-admin-category',
+  //   component: AddAdminCategoryComponent,
+  //   canActivate: [POSAuthGuard]
+  // },
   {
     path: 'masters-modifiers',
     component: ModifierGroupComponent
