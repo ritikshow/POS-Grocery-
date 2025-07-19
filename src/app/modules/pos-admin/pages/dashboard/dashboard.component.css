@@ -1,0 +1,152 @@
+.horizontal_line {
+  margin-top: 5px;
+  border-bottom: 2px solid rgb(105, 104, 104);
+}
+
+.btn-orders {
+  border-color: #d6d6e2;
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  height: 30px;
+  line-height: 14px;
+  width: auto;
+}
+
+.edit {
+  background-color: rgb(88, 88, 243);
+}
+
+.edit:hover {
+  background-color: rgb(86, 86, 247);
+}
+
+.pos_title {
+  width: 50%;
+  font-size: 20px;
+  padding-left: 10px;
+  font-weight: 600;
+}
+
+.OutletName {
+
+  width: 50%;
+  font-weight: 600;
+  text-align: right;
+  padding-right: 10px;
+}
+
+.hide-icon::after {
+  content: "";
+  bottom: 4px;
+  left: 5px;
+  width: 54px;
+  height: 15px;
+  background: #fff;
+  display: block;
+  position: absolute;
+  z-index: 2;
+}
+
+.hide-icon {
+  position: relative;
+
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Float four columns side by side */
+.column {
+  float: left;
+  width: 25%;
+  padding: 0 4px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+/* Clear floats after the columns */
+
+/* Responsive columns */
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+}
+
+/* Style the counter cards */
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  border-radius: 5px;
+  text-align: center;
+  background-color: #f1f1f1;
+  color: white;
+}
+
+.card-title {
+  margin: unset !important;
+}
+
+.view-card {
+  width: 14rem;
+  /* height: 4rem; */
+  border-style: solid;
+  border-color: #3f51b5;
+  border-width: 0px;
+  border-radius: initial;
+}
+
+.view-card-div-3 {
+  width: 14rem;
+  height: 4rem;
+  border-style: solid;
+  border-color: #3f51b5;
+  border-width: 0px;
+  border-radius: initial;
+}
+
+.view-card-div-4 {
+  width: 14rem;
+  height: 4rem;
+  color: black;
+  border-style: solid;
+  border-color: #3f51b5;
+  border-width: 0px;
+  border-radius: initial;
+  background-color: #ffc3007d !important;
+}
+
+.view-card-title {
+  font-size: 15px;
+  margin: 0px;
+  font-weight: 400;
+}
+
+.overview {
+  background-color: #f2f2f2;
+  color: red;
+  font-size: 20px;
+  font-weight: 600;
+  width: 40rem;
+  padding: 5px;
+  margin: 8px 0 8px 0 !important;
+}
+
+.div-3 {
+  margin-right: 5px;
+}
+
+.card-text {
+  font-size: 16px;
+}
+.bg-success{
+  background-color: #132756 !important;
+}

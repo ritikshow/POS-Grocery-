@@ -1,0 +1,87 @@
+<div class="page_container">
+  <h2 class="text_pri font_20 fw-semi mb_15">Orders</h2>
+  <ul class="p-0 mb_7 d-flex align-items-center order_nav_blk">
+    <li class="mr_6" *ngIf="commonService.checkRolePermissions('LIST_DINE_IN')"><a routerLink="/pos-dashboard/dine-in">Dine In</a></li>
+    <li class="mr_6" *ngIf="commonService.checkRolePermissions('LIST_ONLINE')"><a class="active">Online</a></li>
+    <li class="mr_6" *ngIf="commonService.checkRolePermissions('LIST_TAKEAWAY')"><a routerLink="/pos-dashboard/walk-in">Take Away</a></li>
+  </ul>
+  <div class="order_info_blk">
+    <!-- <ul class="nav nav-tabs d-flex flex-wrap align-items-center nav_tabs_ul p-0" id="myTab" role="tablist">
+      <li role="presentation">
+        <a routerLink="/pos-dashboard/online">Running Orders</a>
+      </li>
+      <li role="presentation">
+        <a routerLink="/pos-dashboard/online/completed-order">
+          Completed Orders
+        </a>
+      </li>
+      <li role="presentation">
+        <a class="active" routerLink="/pos-dashboard/online/online-order-history">
+          Order History
+        </a>
+      </li>
+      <li role="presentation">
+        <a routerLink="/pos-dashboard/online/online-voided-order">
+          Voided Orders
+        </a>
+      </li>
+    </ul> -->
+    <div class="order_sub_nav_blk mb_10 d-flex align-items-center justify-content-between">
+      <ul class="d-flex align-items-center p-0 m-0" id="myTab" role="tablist">
+        <li role="presentation" *ngIf="commonService.checkRolePermissions('ONLINE_RUNNING_ORDERS')">
+          <a routerLink="/pos-dashboard/online"> Running Orders</a>
+        </li>
+        <li role="presentation" *ngIf="commonService.checkRolePermissions('ONLINE_COMPLETED_ORDERS')">
+          <a routerLink="/pos-dashboard/online/completed-order">Completed Orders</a>
+        </li>
+        <!-- <li role="presentation">
+          <a class="active" routerLink="/pos-dashboard/online/online-order-history">Order History</a>
+        </li> -->
+        <li role="presentation" *ngIf="commonService.checkRolePermissions('ONLINE_VOIDED_ORDERS')">
+          <a routerLink="/pos-dashboard/online/online-voided-order">Voided Orders</a>
+        </li>
+      </ul>
+      <h6 class="font_18 fw-semi text_pri m-0">Total Value : <span class="fw-reg">{{count.toFixed(2)}}</span></h6>
+    </div>
+    <div class="table-responsive">
+      <table *ngIf="isDataLoaded" datatable [dtOptions]="dtOptions" class="buyer_table w-100" id="table-request">
+        <thead class="thead-dark">
+          <tr>
+            <th id="unique_name">Customer Name</th>
+            <th id="status_name">Order Number</th>
+            <th id="order_unique_name">Amount</th>
+            <th id="buyer_company_name">Status</th>
+            <th id="buyer_company_name">Created At</th>
+            <th id="buyer_company_name">Created By</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of orders; let i=index">
+            <td class="text-center">
+              {{data.customerName}}
+            </td>
+            <td>{{data.orderNo}}</td>
+            <td>{{data.subTotal}}</td>
+            <td>{{data.orderStatus}}</td>
+            <td>{{data.createdOn}}</td>
+            <td>{{data.createdByName}}</td>
+            <td>
+              <button  class="btn btn-orders edit" (click)="orderDetails(data.orderId)">View</button>
+              <button  class="btn btn-orders edit" (click)="print(data.orderId)">Print</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- <div class="total_entries">
+        <select class="len_per_page" (change)="changedLength($event)">
+          <option value="5">5</option>
+          <option value="10">10&nbsp;</option>
+          <option value="20">20&nbsp;</option>
+          <option value="-1">All&nbsp;</option>
+        </select>
+        <label>Total :</label>
+        <label> {{tableListRecord.total}}</label>
+      </div> -->
+    </div>
+</div>

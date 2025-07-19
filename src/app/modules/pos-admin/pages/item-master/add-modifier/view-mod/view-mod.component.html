@@ -1,0 +1,15 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="SKUModalLabel">Modifier Group Name: {{modData?.groupName}}</h5>
+    <a href="javascript:void(0)" class="close" (click)="closeModal()"> <span aria-hidden="true">×</span> </a>
+</div>
+<div class="container pt-2 pb-2">
+    <div class="d-flex">
+        <div class="w-50"><b>Modifier Name</b></div>
+        <div class="w-50"><b>Price</b></div>
+    </div>
+    <div class="d-flex">
+        <div class="w-50">{{modData?.modifierName}}</div>
+        <div class="w-50">{{modData?.price}}</div>
+    </div>
+    
+</div>

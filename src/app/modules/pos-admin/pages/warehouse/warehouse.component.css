@@ -1,0 +1,262 @@
+@font-face {
+  font-family: "dubai-regular";
+  src: url("../../../../../assets/fonts/dubai/DubaiW23-Regular.eot");
+  src: url("../../../../../assets/fonts/dubai/DubaiW23-Regular.woff2") format("woff2"), url("../../../../../assets/fonts/dubai/DubaiW23-Regular.woff") format("woff"), url("../../../../../assets/fonts/dubai/DubaiW23-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+a {
+  cursor: pointer;
+}
+.btn-orders,
+.btn-orders.course {
+  background-color: rgb(19, 52, 141);
+  border-color: #d6d6e2;
+  font-size: 13px;
+
+  height: 30px;
+  line-height: 14px;
+  width: auto;
+  color: white;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+/* =============================================== */
+.card {
+  position: relative;
+  display: flex;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  padding: 15px;
+}
+.cardWalk-in {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  background-color: #fff2f0;
+}
+.cardDine-in {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  background-color: #ebf2fc;
+}
+.cardOnline {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  background-color: #e4f5ef;
+}
+.card-header {
+  padding: 2px 10px !important;
+}
+.card-body {
+  height: 12rem;
+  text-align: left;
+  font-size: 12px;
+  color: darkslategray;
+  padding: 8px 18px 8px 30px;
+}
+.card-footer {
+  padding: 4px 12px 30px !important;
+  background-color: none !important;
+  border-top: none !important;
+}
+.order_no {
+  width: 120px;
+  text-align: left;
+  margin-left: 18px;
+  margin-bottom: auto;
+}
+.order_type {
+  text-align: left;
+  margin-left: 18px;
+}
+.list-group-item {
+  border: none !important;
+}
+.print-btn {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 14px;
+  color: white;
+}
+
+.table th td {
+  border: 1px solid #f2f2f2;
+  border-collapse: collapse;
+}
+
+.search-box {
+  border-width: 1px;
+  border-color: #dee2e6;
+  border-radius: 4px;
+  border-style: solid;
+  width: 45%;
+}
+.card-deck {
+  display: inline-block !important;
+}
+.order-card {
+  min-width: 18rem;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #007bff;
+  margin-left: 18px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.prepared-btn {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 10px;
+  color: white;
+}
+.OutletName {
+  width: 50%;
+  font-weight: 600;
+  padding-right: 10px;
+  float: right;
+  text-align: right;
+}
+.header {
+  padding: 8px;
+  text-align: center;
+  background: #1abc9c;
+  color: white;
+  font-size: 10px;
+}
+.header.card-items-header {
+  width: 100%;
+  border: 1px solid #000;
+}
+.card-items {
+  border: 1px solid #000;
+  width: 86%;
+  margin: 15px auto 15px auto;
+}
+.second-container {
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+.course {
+  color: white;
+  font-family: "Playfair Display", serif;
+  font-weight: 400;
+}
+
+.btn-orders.singleItem {
+  background-color: rgb(19, 52, 141);
+  border-color: #d6d6e2;
+  font-size: 11px;
+
+  height: 30px;
+  line-height: 14px;
+  width: auto;
+  color: white;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+/****** css changes o 01/02/2023 *****************/
+.kitchen_row.row {
+  width: calc(100% + 15px);
+  margin-left: -7.5px;
+  margin-right: -7.5px;
+}
+.kitchen_row.row > * {
+  padding-left: 7.5px;
+  padding-right: 7.5px;
+}
+.card .card-header {
+  margin-bottom: 10px;
+  background: none;
+  padding: 0 !important;
+  border: none;
+}
+.w-60 {
+  width: 60% !important;
+}
+.w-40 {
+  width: 40% !important;
+}
+.mb_5 {
+  margin-bottom: 5px;
+}
+.btn-orders.btn-prepare {
+  box-shadow: none !important;
+  background-color: #484d53 !important;
+  border-radius: 4px !important;
+  border-color: #484d53 !important;
+  height: inherit !important;
+  padding: 3px 6px !important;
+}
+.btn-orders.course_prepare {
+  box-shadow: none !important;
+  background-color: transparent !important;
+  border-radius: 4px !important;
+  border-color: #484d53 !important;
+  height: inherit !important;
+  padding: 3px 6px !important;
+  position: static;
+  color: #484d53;
+  display: flex;
+}
+.card .card-body {
+  padding: 0 10px 0 0;
+  width: calc(100% + 15px);
+  height: 270px;
+}
+.kitchen_crs_div {
+  background-color: #ffff;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+.fw-med {
+  font-weight: 500 !important;
+}
+.items_wd {
+  width: 60%;
+}
+.qty_wd {
+  width: 10%;
+}
+.prepare_wd {
+  width: 30%;
+}
+.kit_it_row > div {
+  padding: 5px 0;
+  border-top: 1px solid #f0f0f0;
+  border-bottom: 1px solid #f0f0f0;
+}
+.kit_it_row:not(:last-child) > div {
+  border-bottom: none !important;
+}
+.font_12 {
+  font-size: 12px !important;
+  line-height: 15px !important;
+}
+.card .font_14 {
+  font-size: 14px !important;
+  font-family: 'dubai-regular', sans-serif !important;
+  line-height: 17px !important;
+}
+.card .card-footer {
+  padding: 0 !important;
+  margin-top: 10px;
+  background: none;
+}
+/* width */
+.card .card-body::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+.card .card-body::-webkit-scrollbar-track {
+  background: #cbcdcc;
+}
+
+/* Handle */
+.card .card-body::-webkit-scrollbar-thumb {
+  background: #656766;
+}
+
+/* Handle on hover */
+.card .card-body::-webkit-scrollbar-thumb:hover {
+  background: #656766;
+}
+/****** css changes o 01/02/2023 *****************/

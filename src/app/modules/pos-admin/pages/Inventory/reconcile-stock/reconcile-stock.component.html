@@ -1,0 +1,57 @@
+
+<div class="modal-header">
+    <h5 class="font_20 fw-semi text_pri mb_15" id="SKUModalLabel">Reconcile Stock</h5>
+    <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer" (click)="closeModal()"/>
+</div>
+<div class="table-responsive" id="checkBoxes">
+    <table class="m-0">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Product Name</th>
+                <th>Supplier Name</th>
+                <th>Price</th>
+                <th>Unit</th>
+                <th>Quantity</th>
+                <th>Actual Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of AllMasterData; let i=index">
+                <td>{{i+1}}</td>
+                <td >{{data.productName}}</td>
+                <td >{{data.productName}}</td>
+                <td >{{data.price}}</td>
+                <td >{{data.unit}}</td>
+                <td >{{data.quantity}}</td>
+                <td>
+                <input type="number" class="btn btn-orders btn_add actualQuantity"
+                    value="{{data.actualQuantity}}" (keyup)="editActualQuantity($event,i,data._id)"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="row modal_input_row">
+    <div class="col-md-6">
+        <label class="font_14 fe-reg text_pri mb_5">Remarks<span class="required-asterisk">*</span></label>
+        <input type="text" class="form-control" (keyup)="Remarks($event)" required>
+    </div>
+</div>
+<div class="row modal_input_row">
+    <div class="col-md-6 pb_0">
+        <button class="cancel_btn" name="btn_login" (click)="closeModal()" type="reset">Cancel</button>
+    </div>
+    <div class="col-md-6 pb_0">
+      <button  class="btn_primary" name="btn_login" type="submit" (click)="reconsileStock()">Save</button>
+    </div>
+</div>
+<!-- <div class="pl-0 mt-4 float-right">
+    <button class="btn btn-lg btn-primary active btn-block mb-1 mt-2 mr-2" type="reset"
+        (click)="closeModal()">
+        Cancel
+    </button>
+    <button class="btn btn-lg btn-primary active action-btn btn-block mb-1" ngbAutofocus
+        (click)="reconsileStock()" name="btn_login" type="submit">
+        Save
+    </button>
+</div> -->

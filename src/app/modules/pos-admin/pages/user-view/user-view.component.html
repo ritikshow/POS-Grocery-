@@ -1,0 +1,167 @@
+<div class="page_container">
+  <h2 _ngcontent-cia-c306="" class="text_pri font_20 fw-semi mb_15">My Profile</h2>
+  <div class="order_info_blk floor_container">
+    <form class="ng-invalid ng-touched ng-dirty" [formGroup]="userForm" (ngSubmit)="UpdateUser()">
+      <div class="row modal_input_row">
+        <div class="col-md-6">
+          <label class="font_14 fe-reg text_pri mb_5">User Name<span class="required-asterisk">*</span></label>
+          <input type="text" [readonly]="!enableEdit" class="form-control" id="email" placeholder="Enter User Name"
+            formControlName="userName">
+        </div>
+        <div class="col-md-6">
+          <label class="font_14 fe-reg text_pri mb_5">Password<span class="required-asterisk">*</span></label>
+          <input type="text" [readonly]="!enableEdit" class="form-control" id="email" placeholder="Enter Password"
+            formControlName="password">
+        </div>
+        <div class="col-md-12">
+          <div class="add_modifier_blk">
+            <h4 class="font_16 fw-semi text_pri">Phone Numbers</h4>
+            <div formArrayName="phoneNo" *ngFor="let address of modItemsControls; let i = index;">
+              <div [formGroupName]="i">
+                <div class="row modal_input_row modifier_align_row d-flex align-items-end">
+                  <div class="col-md-6">
+                    <label class="font_14 fe-reg text_pri mb_5">Phone Number {{ i + 1}}<span class="required-asterisk">*</span></label>
+                    <input type="text" [readonly]="!enableEdit" class="form-control" placeholder="Enter Phone Number"
+                      formControlName="number">
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mod_check d-flex align-items-center mb_15">
+                      <input type="checkbox" class="remember_input mr_10" [readonly]="!enableEdit" id="headerCheck{{ i + 1}}" (change)="onCheckboxChange($event, i)" />
+                      <label class="font_14 fe-reg text_pri m-0">Primary Number</label>
+                    </div>
+                  </div>
+                  <div class="col-md-2 d-flex justify-content-end">
+                    <img alt="image" src="/assets/images/red-delete-icon.svg" class="cursor-pointer mb_15" (click)="removeMod(i)"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-end"> 
+              <a type="button" class="text-underline font_14 fw-med text-sec" (click)="addMod()">Add Phone No</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label class="font_14 fe-reg text_pri mb_5">Email<span class="required-asterisk">*</span></label>
+          <input type="email" [readonly]="!enableEdit" class="form-control" placeholder="Enter Email"
+            formControlName="emailId">
+        </div>
+        <div class="col-md-6">
+          <label class="font_14 fe-reg text_pri mb_5">Joining Date</label>
+          <input type="date" [readonly]="!enableEdit" class="form-control" placeholder="Enter Joining Date"
+            formControlName="joiningDate">
+        </div>
+        <div class="col-md-12">
+          <label class="font_14 fe-reg text_pri mb_5">Address<span class="required-asterisk">*</span> </label>
+          <textarea class="form-control" placeholder="Enter Address" formControlName="address"></textarea>
+        </div>
+        <div class="col-md-6">
+          <label class="font_14 fe-reg text_pri mb_5"> Select Country<span class="required-asterisk">*</span></label>
+          <div class="position-relative">
+            <select class="form-control select-control" formControlName="country" id="CountryName"
+              (change)="SelectCountry()">
+              <option *ngFor="let country of countryData" value="{{country.countryName}}">
+                {{country.countryName}}</option>
+            </select>
+            <img alt="image" src="/assets/images/dropdown-arrow.svg" class="select_input_arrow">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label class="font_14 fe-reg text_pri mb_5"> Select City<span class="required-asterisk">*</span></label>
+          <div class="position-relative">
+            <select class="form-control select-control" formControlName="city">
+              <option *ngFor="let city of cityData" value="{{city.cityName}}">
+                {{city.cityName}}</option>
+            </select>
+            <img alt="image" src="/assets/images/dropdown-arrow.svg" class="select_input_arrow">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label class="font_14 fe-reg text_pri mb_5" for="sel1"> Select Role<span class="required-asterisk">*</span></label>
+          <div class="position-relative">
+            <select class="form-control select-control" id="sel1" formControlName="userRoleId">
+              <option *ngFor="let role of roleData" value="{{role.roleId}}">{{role.roleName}}</option>
+            </select>
+            <img alt="image" src="/assets/images/dropdown-arrow.svg" class="select_input_arrow">
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="uploadOuter signup-drag">
+            <span class="dragBox d-flex flex-column">
+              <div class="icon mb_5">
+                <img alt="image" src="{{BaseUrl + profileImage}}"
+                  [ngClass]="{'image' : profileImage }" *ngIf="profileImage && !SelectedImage"/>
+                  <img alt="image" [src]="profileImage || 'assets/images/upload_icon.png'"
+                  [ngClass]="{'image' : profileImage }" *ngIf="(profileImage && SelectedImage) || SelectedImage"/>
+              </div>
+              <div class="font_14 fe-reg text_pri mb_5"*ngIf="!profileImage">Upload Photo</div>
+              <div class="font_14 fe-reg text_pri mb_5" *ngIf="profileImage">Change Photo</div>
+              <input type="file" [readonly]="!enableEdit" (change)="dragNdrop($event)" formControlName="file"
+                id="uploadFile" />
+            </span>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="font_14 fe-reg text_pri mb_5">Id Card No</label>
+            <input type="text" [readonly]="!enableEdit" class="form-control" id="email"
+              placeholder="Enter Id Card Number" formControlName="idCardNo">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="font_14 fe-reg text_pri mb_5">Void Password</label>
+            <input type="text" [readonly]="!enableEdit" class="form-control" id="email"
+              placeholder="Enter Void Password" formControlName="voidPassword">
+          </div>
+        </div>
+        <div class="col-md-6">
+            <label class="font_14 fe-reg text_pri mb_5" for="sel1">Shift Timing <span class="required-asterisk">*</span></label>
+            <div class="position-relative">
+              <select class="form-control select-control" formControlName="shiftTiming" name="filterSearchBox">
+                <option value="" [disabled]="true">Select Shift</option>
+                <option *ngFor="let shift of shiftList" value="{{shift.shiftName}}" selected>
+                  {{shift.shiftName}}</option>
+              </select>
+              <img alt="image" src="/assets/images/dropdown-arrow.svg" class="select_input_arrow">
+            </div>
+        </div>
+        <div class="col-md-12">
+          <div class="d-flex align-items-center justify-content-between mb_10">
+            <h4 class="font_16 fw-semi text_pri">Off Days</h4>
+            <div class="d-flex align-items-center">
+              <input type="checkbox" class="remember_input mr_5" [readonly]="!enableEdit" id="selectAllWeekOff" [value]="" (change)="onSelectAllWeekOffBoxChange($event)" />
+              <label class="font_14 fe-reg text_pri m-0">Select All</label>
+            </div>
+          </div>
+          <div class="add_modifier_blk d-flex align-items-center justify-content-between off_days_blk">
+            <div *ngFor="let day of weekOffDropdownList" class="border-none mod_check d-flex align-items-center mb_0">
+              <input type="checkbox" class="remember_input mr_5" [readonly]="!enableEdit" id="{{day.WeekDay}}" [value]="day.WeekDay" (change)="onWeekOffCheckboxChange($event)" />
+              <label class="font_14 fe-reg text_pri m-0" for="{{day.WeekDay}}">{{day.WeekDay}}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row modal_input_row">
+        <div class="col-md-6 pb_0">
+          <button *ngIf="enableEdit" class="cancel_btn" name="btn_login" type="button" (click)="OnClickCancel()">Cancel</button>
+        </div>
+        <div class="col-md-6 pb_0">
+          <button *ngIf="enableEdit" class="btn_primary" name="btn_login" type="submit">Save</button>
+          <button *ngIf="!enableEdit" class="btn_primary" name="btn_login" (click)="enableEditMethod()">Edit</button>
+        </div>    
+      </div>
+      <!-- <div class="pl-0 mt-4 text-center">
+        <button *ngIf="enableEdit" class="btn btn-lg btn-primary active action-btn btn-block my-0 mr_16"
+          ngbAutofocus name="btn_login" type="submit" style="margin-left: 5px;">
+          Save
+        </button>
+        <button *ngIf="!enableEdit" (click)="enableEditMethod()"
+          class="btn btn-lg btn-primary active action-btn btn-block my-0 mr_16" ngbAutofocus name="btn_login"
+          style="margin-left: 5px;">
+          Edit
+        </button>
+      </div> -->
+    </form>
+  </div>
+</div>

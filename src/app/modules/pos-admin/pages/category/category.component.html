@@ -1,0 +1,174 @@
+<div class="modal-header">
+  <h5 *ngIf="editMod !== true" class="font_20 fw-semi text_pri" id="SKUModalLabel">Add Item</h5>
+  <h5 *ngIf="editMod == true" class="font_20 fw-semi text_pri" id="SKUModalLabel">Edit Item</h5>
+  <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer"
+    (click)="closeModal()" />
+</div>
+<div class="modal-body create_order_blk this_mon_blk form_popup">
+  <form class="ng-invalid ng-touched ng-dirty" [formGroup]="itemForm">
+    <div class="row modal_input_row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label class="font_14 fe-reg text_pri mb_5" for="sel1"><span class="required-asterisk">*</span> Select
+            Category:</label>
+          <div class="position-relative">
+            <select class="form-control" id="sel1" formControlName="category">
+              <option *ngFor="let cat of category" value="{{cat.categoryId}}" selected>{{cat.categoryName}}</option>
+            </select>
+            <img alt="image" src="/assets/images/dropdown-arrow.svg" class="select_input_arrow" />
+          </div>
+        </div>
+      </div>
+      <!-- <div class="col-md-6">
+        <div class="form-group ">
+          <label class="font_14 fe-reg text_pri mb_5"><span class="required-asterisk">*</span>Item Status</label>
+          <div class="d-flex align-items-center">
+            <label for="'{{'radioTrue'}}" class="mr_15">
+              <input type="radio" id="{{'radioTrue'}}" formControlName="isActive" class="mr_10" [value]=true checked="checked">
+              <span class="font_14 fe-reg text_pri mb_5">Activate</span>
+            </label>
+            <label for="{{'radioFalse'}}">
+              <input type="radio" id="{{'radioFalse'}}" formControlName="isActive" class="mr_10" [value]=false>
+              <span class="font_14 fe-reg text_pri mb_5">Inactive</span>
+            </label>
+          </div>
+        </div>
+      </div> -->
+      <div class="col-md-6">
+        <div class="form-group">
+          <label class="font_14 fe-reg text_pri mb_5"><span class="required-asterisk">*</span> Item Name:</label>
+          <input type="text" class="form-control" id="email" placeholder="Enter Item Name" formControlName="itemName">
+        </div>
+      </div>
+
+      <!-- Place this after the Item Name input -->
+    <div class="col-md-12">
+      <div class="form-group">
+        <label class="font_14 fe-reg text_pri mb_5">
+          <span class="required-asterisk">*</span> Select Item Type
+        </label>
+        <div class="d-flex align-items-center">
+          <label class="mr_15 mb_0 d-flex align-items-center">
+            <input type="checkbox" [checked]="itemForm.get('itemTypes').value === 'Veg'" (change)="selectOnlyOne('Veg')" class="mr_10" />
+            <span class="font_14 fe-reg text_pri">Veg</span>
+          </label>
+          <label class="mr_15 mb_0 d-flex align-items-center">
+            <input type="checkbox" [checked]="itemForm.get('itemTypes').value === 'NonVeg'" (change)="selectOnlyOne('NonVeg')" class="mr_10"/>
+            <span class="font_14 fe-reg text_pri">Non-Veg</span>
+          </label>
+          <label class="mr_15 mb_0 d-flex align-items-center">
+            <input type="checkbox" [checked]="itemForm.get('itemTypes').value === 'Eggetarian'" (change)="selectOnlyOne('Eggetarian')" class="mr_10"/>
+            <span class="font_14 fe-reg text_pri">Eggetarian</span>
+          </label>
+          <label class="mr_15 mb_0 d-flex align-items-center">
+            <input type="checkbox" [checked]="itemForm.get('itemTypes').value === 'Softdrinks'" (change)="selectOnlyOne('Softdrinks')" class="mr_10"/>
+            <span class="font_14 fe-reg text_pri">Soft Drinks</span>
+          </label>
+          <label class="mb_0 d-flex align-items-center">
+            <input type="checkbox" [checked]="itemForm.get('itemTypes').value === 'Harddrinks'" (change)="selectOnlyOne('Harddrinks')"class="mr_10" />
+            <span class="font_14 fe-reg text_pri">Hard Drinks</span>
+          </label>
+        </div>
+      </div>
+    </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label class="font_14 fe-reg text_pri mb_5"><span class="required-asterisk">*</span> Item Amount:</label>
+          <input type="number" class="form-control" id="email" placeholder="Enter Item Amount"
+            formControlName="itemAmount">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label class="font_14 fe-reg text_pri mb_5"><span class="required-asterisk">*</span> Preparing Time(In
+            Min):</label>
+          <input type="number" class="form-control" id="email" placeholder="Enter Time Take To Prepare"
+            formControlName="PreparingTime">
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label class="font_14 fe-reg text_pri mb_5"> Item Description:</label>
+          <textarea class="form-control" placeholder="Item Description" formControlName="description"></textarea>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label class="font_14 fe-reg text_pri mb_5" for="sel1">Set item level tax (If Applicable)</label>
+          <div class="position-relative">
+            <select class="form-control" id="sel1" formControlName="taxId">
+              <option *ngFor="let tax of taxData" value="{{tax.taxId}}" selected>{{tax.taxName}}
+                ({{tax.taxPercent[0]?.taxPercent}}%)</option>
+            </select>
+            <img alt="image" src="/assets/images/dropdown-arrow.svg" class="select_input_arrow" />
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label class="font_14 fe-reg text_pri mb_5" for="sel1">Uplaod Cover Image</label>
+        <span class="dragBox d-flex align-items-center flex-column">
+          <div class="icon mb_5" *ngIf="editMod == false || SelectedImage">
+            <img alt="image" [src]="ItemImage || 'assets/images/upload_icon.png'" [ngClass]="{'image' : ItemImage }" />
+          </div>
+          <div class="icon" *ngIf="editMod == true && !SelectedImage">
+            <img alt="image" src="{{BaseUrl + ItemImage}}" [ngClass]="{'image' : ItemImage }" *ngIf="ItemImage" />
+            <img alt="image" src="assets/images/upload_icon.png" [ngClass]="{'image' : ItemImage }"
+              *ngIf="!ItemImage" />
+          </div>
+          <span class="font_14 fw-semi text-black" *ngIf="!ItemImage">Upload Cover Image</span>
+          <span class="font_14 fw-semi text-black" *ngIf="ItemImage">Change Cover Image</span>
+          <input type="file" (change)="dragNdrop($event)" formControlName="file" id="uploadFile"
+            class="cursor-pointer" />
+        </span>
+      </div>
+      <div class="col-md-12 tab_w_100">
+        <label class="font_14 fe-reg text_pri mb_5" for="sel1">Upload Item Images</label>
+        <span class="dragBox d-flex align-items-center flex-column">
+          <img alt="image" src="/assets/images/upload_icon.png" />
+          <span class="font_14 fw-semi text-black">
+            {{ editMod ? 'Change Images' : 'Upload Multiple Images' }}
+          </span>
+          <input type="file" (change)="onImageSelected($event)" class="cursor-pointer" multiple />
+        </span>
+
+        <ul class="d-flex align-items-center p-0 mt_10 mb_0 multiple_img_upload_blk">
+          <li class="multi_img_items position-relative" *ngFor="let img of imagePreviews; let i = index">
+            <div class="img_container">
+              <img alt="image" [src]="img.previewUrl" class="img-fluid" />
+            </div>
+            <img alt="image" src="/assets/images/pri_cross_icon.svg" class="multi_img_cross_icon cursor-pointer"
+              (click)="removeImage(i)" />
+          </li>
+        </ul>
+      </div>
+
+      <div class="col-md-12 tab_w_100">
+        <div class="d-flex align-items-center justify-content-between mb_15" *ngIf="editMod !== true">
+          <h4 class="font_16 fw-semi text_pri m-0">Select outlet</h4>
+          <div class="d-flex align-items-center">
+            <input type="checkbox" id="selectAll" class="remember_input mr_10" [value]=""
+              (change)="onSelectAllboxChange($event)" />
+            <label class="font_14 fe-reg text_pri m-0 remeber_label">Select All</label>
+          </div>
+        </div>
+        <div class="add_modifier_blk d-flex align-items-center justify-content-between mb_20" *ngIf="editMod !== true">
+          <div *ngFor="let outlet of resData?.outlets" class="mb_0 mod_check border-none d-flex align-items-center">
+            <input type="checkbox" class="remember_input mr_10" id="{{outlet.outletId}}" [value]="outlet.outletId"
+              (change)="onCheckboxChange($event)" [checked]="selectedIds?.includes(outlet.outletId)" />
+            <label class="font_14 fe-reg text_pri m-0 remeber_label border-none">{{outlet.outletName}}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row modal_input_row">
+      <div class="col-md-6 pb_0">
+        <button class="cancel_btn" type="reset" (click)="closeModal()">Cancel</button>
+      </div>
+      <div class="col-md-6 pb_0">
+        <button class="btn_primary" name="btn_login" (click)="addItem()">Save</button>
+      </div>
+    </div>
+  </form>
+</div>

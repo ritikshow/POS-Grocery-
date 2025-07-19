@@ -1,0 +1,65 @@
+<div class="modal-header">
+  <h5 class="font_20 fw-semi text_pri"  id="SKUModalLabel">View Print Design</h5>
+  <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer" (click)="closeModal()"/>
+</div>
+<div class="div_2 p-2">
+  <div>
+    <h3>Sample Preview</h3>
+  </div>
+  <div id="printSectionId" class="printMainDiv">
+    <div class="print_header" *ngIf="previewData?.printHeaderSettings.showHeader == true">
+      <div [innerHTML]="previewData?.printHeaderSettings.headerDetails | noSanitize"></div>
+    </div>
+    <div class="print_title_body">
+      <div class="horizontal_line mt-2"></div>
+      <div class="print_title">{{previewData?.printGenerealSettings.title}}</div>
+      <div class="horizontal_line"></div>
+      <div class="p-2">
+        <div class="invoice_no">{{previewData?.printGenerealSettings.invoiceNumber}}:</div>
+        <div class="invoice_no">{{previewData?.printGenerealSettings.customer}}:</div>
+        <div class="invoice_no">{{previewData?.printGenerealSettings.servedBy}}:</div>
+      </div>
+    </div>
+    <div class="print_body">
+      <table class="table">
+        <caption>Print Design View Table</caption>
+        <thead>
+          <tr>
+            <th>{{previewData?.printItemHeaderSettings.item}}</th>
+            <th>{{previewData?.printItemHeaderSettings.quantity}}</th>
+            <th *ngIf="previewData?.printItemHeaderSettings.discount !== ''">
+              {{previewData?.printItemHeaderSettings.discount}}
+            </th>
+            <th>{{previewData?.printItemHeaderSettings.amount}}</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="previewData?.printItemHeaderSettings">
+          <tr>
+            <td>Bread</td>
+            <td>2</td>
+            <td *ngIf="previewData?.printItemHeaderSettings.discount !== ''">10%</td>
+            <td>18</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>SubTotal:</td>
+            <td>18</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>Discount:</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>Total:</td>
+            <td>18</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="print_footer" *ngIf="previewData?.printFooderSettings.showFooder == true">
+      <div [innerHTML]="previewData?.printFooderSettings.fooderDetails | noSanitize"></div>
+    </div>
+  </div>
+</div>

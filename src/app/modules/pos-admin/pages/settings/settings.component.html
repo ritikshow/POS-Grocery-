@@ -1,0 +1,75 @@
+<div class="page_container">
+  <div class="d-flex align-items-start setting_info_container">
+    <div class="settings_nav_section">
+      <ul class="p-0 m-0">
+        <li class="position-relative" *ngIf="commonService.checkRolePermissions('LIST_CATEGORY')">
+          <a href="" class="font_14 fw-reg text-black" [routerLinkActive]="['active']"
+            routerLink="/pos-dashboard/admin-category">Category</a>
+        </li>
+        <li class="position-relative" *ngIf="commonService.checkRolePermissions('LIST_RESTAURANT_SECTION')">
+          <a href="" class="font_14 fw-reg text-black" [routerLinkActive]="['active']"
+            routerLink="/pos-dashboard/masters-table-type">Restaurant Sections</a>
+        </li>
+        <li class="active position-relative" *ngIf="commonService.checkRolePermissions('LIST_TABLE_DESIGNS')">
+          <a href="" class="font_14 fw-reg text-black" 
+            [routerLinkActive]="['active']" routerLink="/pos-dashboard/admin-table-details">Table Details</a>
+        </li>
+        <li class="position-relative" *ngIf="commonService.checkRolePermissions('LIST_PRINT_DESIGNS')">
+          <a href="" class="font_14 fw-reg text-black" [routerLinkActive]="['active']"
+            routerLink="/pos-dashboard/print">Print Design</a>
+        </li>
+        <li class="position-relative" *ngIf="commonService.checkRolePermissions('LIST_RESTAURANT')">
+          <a href="" class="font_14 fw-reg text-black" [routerLinkActive]="['active']"
+            routerLink="/pos-dashboard/admin-restaurant">Restaurant</a>
+        </li>
+        <li class="position-relative" *ngIf="commonService.checkRolePermissions('LIST_TAX')">
+          <a href="" class="font_14 fw-reg text-black"  [routerLinkActive]="['active']"
+            routerLink="/pos-dashboard/masters-tax">Tax</a>
+        </li>
+        <li class="position-relative" *ngIf="commonService.checkRolePermissions('LIST_MODIFIERS')">
+          <a href="" class="font_14 fw-reg text-black" [routerLinkActive]="['active']"
+            routerLink="/pos-dashboard/masters-modifiers">Modifiers</a>
+        </li>
+        <li class="position-relative" *ngIf="commonService.checkRolePermissions('LIST_DISCOUNT')">
+          <a href="" class="font_14 fw-reg text-black" [routerLinkActive]="['active']"
+            routerLink="/pos-dashboard/masters-discount">Discounts</a>
+        </li>
+        <li class="position-relative" *ngIf="commonService.checkRolePermissions('LIST_PROMO_CODES')">
+          <a href="" class="font_14 fw-reg text-black" [routerLinkActive]="['active']"
+            routerLink="/pos-dashboard/promo-code">Promo Codes</a>
+        </li>
+        <!-- <li class="position-relative">
+          <a href="" class="font_14 fw-reg text-black" [routerLinkActive]="['active']" routerLink="/pos-dashboard/form-access">Form Access</a>
+        </li> -->
+        <!-- <li class="position-relative">
+          <a href="" class="font_14 fw-reg text-black" [routerLinkActive]="['active']" routerLink="/pos-dashboard/masters-order-status">Order Status</a>
+        </li> -->
+        <li class="position-relative" *ngIf="commonService.checkRolePermissions('LIST_ROLES_AND_PERMISSIONS')">
+          <a href="" class="font_14 fw-reg text-black"
+            *ngIf="userData.roleName == 'Company Admin' || userData.roleName == 'Super Admin'"
+            [routerLinkActive]="['active']" routerLink="/pos-dashboard/role">Roles & Permissions</a>
+        </li>
+        <li class="position-relative" *ngIf="commonService.checkRolePermissions('LIST_USER_REGISTRATION')">
+          <a href="" class="font_14 fw-reg text-black"  [routerLinkActive]="['active']"
+            routerLink="/pos-dashboard/master-user-registration">User Registration</a>
+        </li>
+        <li class="position-relative" *ngIf="commonService.checkRolePermissions('LIST_GENERAL_SETTINGS')">
+          <a href="" class="font_14 fw-reg text-black" [routerLinkActive]="['active']"
+            routerLink="/pos-dashboard/general-settings">General Settings</a>
+        </li>
+         <li class="position-relative" *ngIf="commonService.checkRolePermissions('LIST_LOYALITY_SETTINGS')">
+          <a href="" class="font_14 fw-reg text-black" [routerLinkActive]="['active']"
+            routerLink="/pos-dashboard/loyality-settings">Loyality Settings</a>
+        </li>
+        <li class="position-relative" *ngIf="commonService.checkRolePermissions('LIST_SHIFT_TIMINGS')">
+          <a href="" class="font_14 fw-reg text-black" [routerLinkActive]="['active']"
+            routerLink="/pos-dashboard/shifttiming"> Shift Timings</a>
+        </li>
+        <li class="position-relative" *ngIf="commonService.checkRolePermissions('LIST_PAYMENTMODE')">
+          <a href="" class="font_14 fw-reg text-black" [routerLinkActive]="['active']"
+            routerLink="/pos-dashboard/paymentmode"> Payment Mode</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

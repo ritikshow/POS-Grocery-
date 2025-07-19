@@ -1,0 +1,44 @@
+.btn-orders {
+    border-color: #d6d6e2;
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    height: 30px;
+    line-height: 14px;
+    width: auto;
+}
+
+.edit {
+    background-color: rgb(88, 88, 243);
+}
+
+.edit:hover {
+    background-color: rgb(86, 86, 247);
+}
+
+.OutletName {
+    width: 50%;
+    font-weight: 600;
+    padding-right: 10px;
+    float: left;
+}
+
+body .main_content .container .row .middle_list .main_container .table-responsive table.mytable tbody tr.selected .status_td {
+    padding: 0px 15px 0px 0px !important;
+}
+
+.grossMargin {
+    display: flex;
+}
+
+.formSpace {
+    position: relative;
+    width: 100%;
+    padding: 12px;
+}
+.required-asterisk{
+    color: red;
+    font-weight: bold;
+    margin-left: 3px;
+    font-size: 1.2em;
+}

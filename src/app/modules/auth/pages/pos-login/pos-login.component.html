@@ -1,0 +1,92 @@
+<div class="login_blk h-100">
+  <div class="row m-0 p-0 h-100">
+    <div class="col-md-7 p-0 h-100 login_img_blk position-relative">
+      <img alt="image" src="../../../../../assets/images/login-img.svg" class="login_img" />
+    </div>
+    <div class="col-md-5 p-0">  
+      <div class="h-100 d-flex align-items-center justify-content-center flex-column">
+        <form class="text-center login_form_container" [formGroup]="LoginForm" (ngSubmit)="onLogin()">
+          <img alt="image" src="../../../../../assets/images/POS-logo.svg" class="mb_5" />
+          <h4 class="font_20 fw-semi text_pri mb_12">It's your business, grow it your way</h4>
+          <p class="font_14 fw-reg text_light_black mb_28">A wholly integrated Intuitive POS, simple approach, highly
+            Intuitive, full featured and easy to use </p>
+          <div class="login_input_form">
+            <div class="mb_28 position-relative">
+              <span class="font_14 fw-reg text_pri mb_5 text-left w-100 d-inline-flex">Email</span>
+              <input type="text" *ngIf="!ResturantSelection" class="form-control" formControlName="username"
+                maxlength="50" [ngClass]="{ 'is-invalid': submitted && loginForm.username.errors }"
+                placeholder="Your email address">
+              <input type="text" *ngIf="ResturantSelection" disabled class="form-control" formControlName="username"
+                maxlength="50" [ngClass]="{ 'is-invalid': submitted && loginForm.username.errors }"
+                placeholder="Your email address">
+              <div *ngIf="submitted && loginForm.username.errors" class="invalid-feedback">
+                <span class="font_12 fw-reg" *ngIf="loginForm.username.errors?.required">Email is required.</span>
+                <span class="font_12 fw-reg" *ngIf="loginForm.username.errors?.pattern">Invalid Email Address</span>
+              </div>
+            </div>
+            <div class="mb_28 position-relative">
+              <span class="font_14 fw-reg text_pri mb_5 text-left w-100 d-inline-flex">Password</span>
+              <div class="position-relative">
+                <input *ngIf="!ResturantSelection"  [type]="showpassword ? 'text' : 'password'" class="form-control password_input" formControlName="password"
+                  maxlength="50" [ngClass]="{ 'is-invalid': submitted && loginForm.password.errors }"
+                  placeholder="Your password" (keyup)="enablePass($event)" />
+                <input *ngIf="ResturantSelection" disabled [type]="showpassword ? 'text' : 'password'" class="form-control password_input" formControlName="password"
+                  maxlength="50" [ngClass]="{ 'is-invalid': submitted && loginForm.password.errors }"
+                  placeholder="Your password" (keyup)="enablePass($event)" />
+                  <button class="font_14 fw-semi text_sec validate_text cursor-pointer text-green" type="submit" *ngIf="!login">Validate</button>
+                  <button class="font_14 fw-semi text_sec validate_text cursor-pointer text-green " style="color: red;" type="button" *ngIf="login" (click)="OnClickLogout()">LogOut</button>
+                
+              </div>
+               <a (click)="show_password()" class="pass-icons" *ngIf="passIcon">
+                <i *ngIf="showpassword" class="fa fa-eye-slash" aria-hidden="true" style="color: #f23d3e;"></i>
+                <i *ngIf="!showpassword" class="fa fa-eye" aria-hidden="true" style="color: #f23d3e;"></i>
+               </a>
+              <div *ngIf="submitted && loginForm.password.errors" class="text-left position-relative m-0">
+                <span class="font_12 fw-reg login_Error" *ngIf="loginForm.password.errors?.required">Password is required.</span>
+              </div>
+              <div class="m-0 align-items-center text-left position-relative" *ngIf="loginError || login">
+                <span class="font_12 fw-reg login_Error" *ngIf="loginError">Invalid username or password.</span>
+                <span class="font_12 fw-reg text-success" *ngIf="login">Login Successfully!</span>
+              </div>
+            </div>      
+            <div class="mb_28 position-relative" >
+              <span class="font_14 fw-reg text_pri mb_5 text-left w-100 d-inline-flex" >Select Restaurant*</span>
+              <div class="position-relative">
+                <select class="form-control select-control" id="sel1" formControlName="restaurantId"  disabled *ngIf="!login"   (change)="onSelectRestaurant($event)">
+                  <option value="" [disabled]="true">Select Restaurant</option>
+                  <option *ngFor="let restaurant of resData" value="{{restaurant.restaurantId}}">
+                    {{ restaurant.restaurantName}}</option>
+                </select>
+                <select class="form-control select-control" id="sel1" formControlName="restaurantId"  *ngIf="login"   (change)="onSelectRestaurant($event)">
+                  <option value="" [disabled]="true">Select Restaurant</option>
+                  <option *ngFor="let restaurant of resData" value="{{restaurant.restaurantId}}">
+                    {{ restaurant.restaurantName}}</option>
+                </select>
+                <img alt="image" src="../../../../../assets/images/dropdown-arrow.svg" class="dropdown_arrow" />
+              </div>
+              <div *ngIf="ResturantSelection && validationNoOutletsForSelectedResturant" class="m-0 align-items-center text-left position-relative">
+                <span class="font_12 fw-reg">No outlets available for selected resturant</span>
+              </div>
+              <div *ngIf="validateResturantSelection" class="m-0 align-items-center text-left position-relative">
+                <span class="font_12 fw-reg login_Error">Resturant is required</span>
+              </div>
+            </div>
+            <div class="d-flex align-items-center justify-content-between mb_25" *ngIf="!ResturantSelection">
+              <div class="custom-control pl-0 d-flex align-items-center">
+                <input type="checkbox" class="mr_7 remember_input">
+                <span class="font_12 fw-reg text_pri">Remember Me</span>
+              </div>
+              <a href="javascript:void(0)" class="text-light-blue font_12 fw-reg " (click)="forgotPassword()">Forgot
+                Password?</a>
+            </div>
+            <button class="btn_primary mb_45 login_btn" name="btn_login" type="submit" disabled *ngIf="!ResturantSelection">Continue</button>
+            <button class="btn_primary mb_45" name="btn_login" type="button" *ngIf="ResturantSelection" (click)="onContinue()">Continue</button>
+           
+            <!-- <span class="font_12 fw-reg text_pri" *ngIf="!ResturantSelection">Don't have an account? <a href="javascript:void(0)"
+                class="text-light-blue font_14 fw-reg">Sign Up</a> </span> -->
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

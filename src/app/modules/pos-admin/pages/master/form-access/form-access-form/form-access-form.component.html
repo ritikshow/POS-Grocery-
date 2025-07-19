@@ -1,0 +1,114 @@
+<div class="main-div">
+    <div class="modal-header">
+        <h4 class="font_20 fw-semi text_pri" id="SKUModalLabel">Add Form Accesses</h4>
+        <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer"
+            (click)="closeModal()" />
+    </div>
+    <div class="modal-body create_order_blk this_mon_blk form_popup">
+        <form #FormAccessForm="ngForm" [formGroup]="addFormAccess" (ngSubmit)="AddPermissionsToRole()"
+            class="ng-invalid ng-touched ng-dirty">
+            <div class="row modal_input_row">
+                <div class="col-md-6" *ngIf="!isAddRolePermission">
+                    <label for="sel1"> Select User<span class="required-asterisk">*</span></label>
+                    <div class="position-relative">
+                        <select class="form-control select-control" id="userId" formControlName="userId">
+                            <option value="" [disabled]="true">Select User</option>
+                            <option *ngFor="let sform of userData" value="{{sform.userId}}">{{sform.userName}}</option>
+                        </select>
+                        <img alt="image" src="/assets/images/dropdown-arrow.svg" class="select_input_arrow" />
+                    </div>
+                </div>
+                <div class="col-md-6" *ngIf="isAddRolePermission">
+                    <label class="font_14 fe-reg text_pri mb_5" for="sel1">User Role<span
+                            class="required-asterisk">*</span></label>
+                    <div class="position-relative">
+                        <span class="form-control select-control disabled_input_form" id="userId"
+                            formControlName="userRoleId">{{roleName}}
+                        </span>
+                        <img alt="image" src="/assets/images/dropdown-arrow.svg" class="select_input_arrow" />
+                    </div>
+                </div>
+            </div>
+            <div class="row modal_input_row">
+                <div class="col-md-12 pb_0">
+                    <label class="font_16 fe-semi text_pri mb_10" for="sel1">Select Forms <span
+                            class="required-asterisk">*</span></label>
+                </div>
+                <!-- <div class="col-md-6">
+                    <div class="role_switch_container d-flex align-items-center justify-content-between">
+                        <span class="font_14 fe-reg text_pri m-0" id="616fcbe64754880a6f3053f5" for="flexSwitchCheckDefault">Admin</span>
+                        <label class="switch">
+                            <input type="checkbox" id="adminCheck" (click)="switchButton('admin')" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div> -->
+                <div class="col-md-12 pb_0">
+                    <div class="row roles_blk_row">
+                        <div class="col-md-6" *ngFor="let module of Modules; index as k;">
+                        <div class="roles_Permission_blk">
+                            <!-- Module Header with Select All -->
+                            <div class="d-flex align-items-center justify-content-between">
+                            <h5 class="font_14 fw-semi text-black m-0">{{ module.moduleName }}</h5>
+                            <div class="d-flex align-items-center">
+                                <input type="checkbox" [checked]="module.isChecked" id="{{module.moduleId}}"
+                                (change)="switchModuleButton(module,k)" class="mr_5 roles_checkbox">
+                                <span class="font_12 fw-reg text-black">Select</span>
+                            </div>
+                            </div>
+                            <!-- Always show feature list if there are features with status !== 0 -->
+                            <div class="sub_roles_permission_blk mt_10" *ngIf="DisplayFeaturesList.length > 0">
+                            <div class="row roles_blk_row">
+                                <ng-container *ngFor="let feature of DisplayFeaturesList; index as i">
+                                <ng-container *ngIf="feature.ModuleId === module.moduleId">
+                                    <ng-container *ngFor="let data of feature.Features; index as j">
+                                    <div class="col-md-6 d-flex align-items-center" *ngIf="data.status !== 0">
+                                        <input type="checkbox" [checked]="data.isChecked" id="{{data.featureId}}"
+                                        (click)="switchFeaturesButton(data, i, j)" class="mr_5 roles_checkbox">
+                                        <span class="font_12 fw-reg text-black">{{ data.featureName }}</span>
+                                    </div>
+                                    </ng-container>
+                                </ng-container>
+                                </ng-container>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+
+                <!-- <div class="col-md-6" *ngFor="let module of Modules; index as k;">
+                    <div class="role_switch_container d-flex align-items-center justify-content-between">
+                        <span class="font_14 fe-reg text_pri m-0">{{module.moduleName}}</span>
+                        <label class="switch">
+                            <input type="checkbox" id={{module.moduleId}} (click)="switchModuleButton(module, k)">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div *ngIf="module.isChecked">
+                        <div class="col-md-6" *ngFor="let feature of DisplayFeaturesList; index as i;">
+                            <div *ngFor="let data of feature.Features; index as j">
+                                <div *ngIf="feature.ModuleId == module.moduleId && data.status != 0" class="role_switch_container d-flex align-items-center justify-content-between">
+                                    <span class="font_14 fe-reg text_pri m-0">{{data.featureName}}</span>
+                                    <label class="switch">
+                                        <input type="checkbox" id={{data.featureId}}
+                                            (click)="switchFeaturesButton(data, i, j)">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+            <div class="row modal_input_row">
+                <div class="col-md-6 pb_0">
+                    <button class="cancel_btn" type="reset" (click)="closeModal()">Cancel</button>
+                </div>
+                <div class="col-md-6 pb_0">
+                    <button class="btn_primary" name="btn_login" type="submit">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,81 @@
+.table_header {
+  display: flex;
+  justify-content: space-between;
+}
+.div_1 {
+  padding-left: 4px;
+  width: 20%;
+}
+.div_2 {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.btn-group {
+  width: 75%;
+}
+.btn-orders {
+  border-color: #d6d6e2;
+  font-size: 13px;
+  font-weight: 600;
+  height: 30px;
+  line-height: 14px;
+  width: auto;
+}
+.tables:hover {
+  background-color: #4171ac;
+}
+.tables {
+  color: white;
+  background-color: #335d90;
+}
+.order {
+  background-color: #ffffff;
+  color: #335d90;
+}
+.order:hover {
+  color: white;
+  background-color: #335d90;
+}
+.horizontal_line {
+  margin-top: 5px;
+  border-bottom: 2px solid rgb(105, 104, 104);
+}
+.print_btn {
+  width: 45%;
+}
+.pay_btn {
+  width: 45%;
+}
+.print {
+  color: white;
+  background-color: #4171ac;
+}
+.print:hover {
+  background-color: #3382e4;
+}
+.pay {
+  color: white;
+  background-color: #66ec66;
+}
+.pay:hover {
+  background-color: #6cee88;
+}
+.orderTd {
+  cursor: pointer;
+}
+.total_value {
+  text-align: right;
+  padding-right: 10px;
+}
+.OutletName {
+  font-weight: 600;
+  padding-right: 10px;
+  padding-left: 12px;
+  margin-bottom: 5px;
+  float: left;
+}
+.res_per_row > * {
+  padding: 0 15px 0;
+}

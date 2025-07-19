@@ -1,0 +1,87 @@
+
+  <div class="modal-header">
+    <h5 *ngIf="editMod !== true" class="font_20 fw-semi text_pri mb_15" id="SKUModalLabel">Add Supplier</h5>
+    <h5 *ngIf="editMod == true" class="font_20 fw-semi text_pri mb_15" id="SKUModalLabel">Edit Supplier</h5>
+    <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer" (click)="closeModal()"/>
+  </div>
+  <div class="d-flex align-items-center mb_20" *ngIf="editMod !== true">
+    <div class="position-relative w-50 mr_15">
+      <input type="text" class="form-control search_icon_input" placeholder="Search" formControlName="quantity" (keyup)="GetVal($event)">
+      <img alt="image" src="/assets/images/search-icon.svg" class="search_input_icon">
+    </div>
+    <button class="searh_btn" (click)="search()">
+      <img alt="image" src="/assets/images/search-icon.svg" class="">
+    </button>
+  </div>
+  <!-- <label *ngIf="editMod !== true">Search Supplier :</label>
+  <div *ngIf="editMod !== true" class="d-flex justify-content-between">
+    <input type="text" class="form-control" placeholder="Search" formControlName="quantity" (keyup)="GetVal($event)">
+    <button (click)="search()">Search</button>
+  </div> -->
+    <div *ngIf="WPSupplierData != null" class="" >
+      <div class="table-responsive" id="checkBoxes">
+        <table id="example" class="w-100 m-0" id="table-request">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Supplier Name</th>
+              <th>Address</th>
+              <th>Contact Number</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of WPSupplierData; let i=index">
+              <td>{{i+1}}</td>
+              <td>{{data.company_name}}</td>
+              <td>{{data.address}}</td>
+              <td>{{data.mobile_no_code}}&nbsp;&nbsp;&nbsp;{{data.mobile_no}}</td>
+              <td *ngIf="!data.isBlock"><button class="add_btn font_14 fw-med text_sec" (click)="Add(data._id, i)">Add</button></td>
+              <td *ngIf="data.isBlock"><button style="background-color: lightgray !important;" class="add_btn font_14 fw-med text_sec">Already Available</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="d-flex align-items-center justify-content-end">
+        <button class="add_btn font_14 fw-med text_sec mr_14" *ngIf="page > 2" (click)="previous()">Previous</button>
+        <button class="add_btn font_14 fw-med text_sec" (click)="search()">Next</button>
+      </div>
+    </div>
+    <form class="ng-invalid ng-touched ng-dirty" [formGroup]="addSupplierForm" (ngSubmit)="addSupplierOrder()">
+      <div class="row modal_input_row">
+        <div class="col-md-4">
+          <label class="font_14 fe-reg text_pri mb_5">Supplier Name:<span class="required-asterisk">*</span></label>
+          <input type="text" class="form-control" placeholder="Enter supplier name" formControlName="supplierName">
+        </div>
+        <div class="col-md-4">
+          <label class="font_14 fe-reg text_pri mb_5">Address:<span class="required-asterisk">*</span></label>
+          <input type="text" class="form-control" placeholder="Enter address" formControlName="address">
+        </div>
+        <div class="col-md-4">
+          <label class="font_14 fe-reg text_pri mb_5">Contact Number:<span class="required-asterisk">*</span></label>
+          <input type="text" class="form-control" placeholder="Enter contact number" formControlName="contactNumber">
+        </div>
+      </div>
+      <div class="row modal_input_row">
+        <div class="col-md-6 pb_0">
+          <button class="cancel_btn" name="btn_login" (click)="closeModal()" type="reset"> Cancel</button>
+        </div>
+        <div class="col-md-6 pb_0">
+          <button *ngIf="editMod !== true" class="btn_primary" name="btn_login" type="submit">Add Supplier</button>
+          <button *ngIf="editMod == true" class="btn_primary" name="btn_login" type="submit">Update Supplier</button>
+        </div>
+     </div>
+      <!-- <div class="pl-0 mt-4">
+        <button class="btn btn-lg btn-primary active btn-block mb-1 mt-2 mr-2" type="reset" (click)="closeModal()">
+          Cancel
+        </button>
+        <button *ngIf="editMod !== true" class="btn btn-lg btn-primary active action-btn btn-block mb-1" ngbAutofocus
+          name="btn_login" type="submit">
+          Add Supplier
+        </button>
+        <button *ngIf="editMod == true" class="btn btn-lg btn-primary active action-btn btn-block mb-1" ngbAutofocus
+          name="btn_login" type="submit">
+          Update Supplier
+        </button>
+      </div> -->
+    </form>

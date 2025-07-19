@@ -1,0 +1,258 @@
+<div class="modal-header">
+    <h5 class="font_20 fw-semi text_pri mb_15" id="SKUModalLabel">Order No: {{orderData?.orderNo}}</h5>
+    <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer" (click)="closeModal()"/>
+</div>
+    <!-- <h5 *ngIf="this.orderData?.deliverectId != null && this.orderData?.deliverectId != ''" id="SKUModalLabel">Deliverect Order No: {{deliverectOrderData?.channelOrderDisplayId}}</h5> -->
+    <div class="modal-body">
+        <div class="view_details_blk">
+        <h5 class="font_16 fw-semi text_pri mb_10" id="SKUModalLabel">Order Details</h5>
+        <div class="row modal_input_row">
+            <div class="col-md-3">
+                <h6 class="font_14 fw-reg text_pri mb_5">Order Type</h6>
+                <h4 class="font_14 fw-semi text-black m-0">{{orderData?.orderType}}</h4>
+            </div>
+            <div class="col-md-3">
+                <h6 class="font_14 fw-reg text_pri mb_5">Order Status</h6>
+                <h4 class="font_14 fw-semi text-black m-0">{{orderData?.orderStatus}}</h4>
+            </div>
+            <!-- <div class="col-md-3">
+                <h6 class="font_14 fw-reg text_pri mb_5">Invoice No</h6>
+                <h4 class="font_14 fw-semi text-black m-0">{{invoiceData?.invoiceNo}}</h4>
+            </div> -->
+            <div class="col-md-3">
+                <h6 class="font_14 fw-reg text_pri mb_5">Discounted Amount</h6>
+                <h4 class="font_14 fw-semi text-black m-0">{{orderData?.totalDiscount|number}}</h4>
+                <!-- <h4 class="font_14 fw-semi text-black m-0" *ngIf="invoiceData?.discountedAmount !== 0">{{invoiceData?.discountedAmount | number}}</h4>
+                <ng-template class="Property" #elseDiscount> </ng-template>
+                <h4 class="font_14 fw-semi text-black m-0" *ngIf="invoiceData?.promocodeAmount !== 0">{{invoiceData?.promocodeAmount | number}}</h4> -->
+                <ng-template class="Property" #elsePromo> </ng-template>
+            </div>
+            <div class="col-md-3" *ngIf="orderData != null">
+                <h6 class="font_14 fw-reg text_pri mb_5">Sub Total</h6>
+                <h4 class="font_14 fw-semi text-black m-0">{{orderData?.subTotal |number:'1.2-2' }}</h4>
+            </div>
+            <div class="col-md-3">
+                <h6 class="font_14 fw-reg text_pri mb_5">Total Payable Amount </h6>
+                <h4 class="font_14 fw-semi text-black m-0">{{orderData?.total| number:'1.2-2' }}</h4>
+            </div>
+            <div class="col-md-3">
+                <h6 class="font_14 fw-reg text_pri mb_5">Tip</h6>
+                <h4 class="font_14 fw-semi text-black m-0">{{TotalTip}}</h4>
+            </div>
+            <div class="col-md-3" *ngIf="orderData?.remarks!=null">
+                <h6 class="font_14 fw-reg text_pri mb_5">Remark</h6>
+                <h4 class="font_14 fw-semi text-black m-0">{{orderData?.remarks}}</h4>
+            </div>
+        </div>
+
+        <h3 class="font_16 fw-semi text_pri mb_15">Item Details</h3>
+        <div class="table-responsive mb_20">
+            <table class="w-100 m-0">
+                <tr>
+                    <th>Item Name</th>
+                    <th>Qty</th>
+                    <th>Amt</th>
+                    <th>Status</th>
+                </tr>
+                <tr *ngFor="let data of orderData?.items">
+                    <td>
+                        <div>
+                            {{data.itemName}}
+                            <ul class="p-0 m-0" *ngIf="data.modifiers != null && data.modifiers?.length > 0">
+                                <li *ngFor="let modifier of data.modifiers">
+                                    <span class="font_12 fw-semi text_pri">{{modifier.modifierName}}: + {{modifier.price}}</span>
+                                </li>
+                            </ul>
+                        </div></td>
+                    <td>{{data.orderQuantity}}</td>
+                    <td>{{data.itemAmount | number}}</td>
+                    <td>{{data.itemStatus}}</td>
+                </tr>
+            </table>
+        </div>
+        <div *ngIf="invoiceData?.paymentBreakage != null && invoiceData?.paymentBreakage.length > 0">
+            <h3 class="font_16 fw-semi text_pri mb_15">Payment Details</h3>
+            <div class="table-responsive mb_20" >
+                <table class="w-100 m-0">
+                    <tr>
+                        <th>Payment Mode</th>
+                        <th>Card Type</th>
+                        <th>Amount</th>
+                        <th>Amount Recieved</th>
+                        <th>Amount Return</th>
+                    </tr>
+                    <tr *ngFor="let invData of invoiceData?.paymentBreakage">
+                        <td>{{invData.paymentMode}}</td>
+                        <td>{{invData.cardType}}</td>
+                        <td>{{invData.amount | number}}</td>
+                        <td>{{invData.cashRecived | number}}</td>
+                        <td>{{invData.balanceReturned | number}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div *ngIf="invoiceData?.paymentBreakage[0]?.cardType === 'tapandgo'">
+            <h3 class="font_16 fw-semi text_pri mb_15">TapAndGo Details</h3>
+            <div class="table-responsive mb_20" >
+                <table class="w-100 m-0">
+                    <tr>
+                        <th>Check Sequence No</th>
+                        <th>Total Paid Amount</th>
+                        <th>Tip Amount</th>
+                        <th>Service Charge Amount</th>
+                    </tr>
+                    <tr *ngFor="let data of tapAndGoData">
+                        <td>{{data.checkSequenceNumber}}</td>
+                        <td>{{data.payment.amount | number}}</td>
+                        <td>{{data.tipPayment.amount | number}}</td>
+                        <td>{{data.serviceChargePayment.amount | number}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div *ngIf="invoiceData != null">
+            <div *ngIf="invoiceData?.taxDetails != null && invoiceData?.taxDetails.length > 0">
+                <h3 class="font_16 fw-semi text_pri mb_15">Tax Details</h3>
+                <div class="table-responsive mb_20" >
+                    <table class="w-100 m-0">
+                        <tr>
+                            <th>Tax Name</th>
+                            <th>Tax Percentage</th>
+                            <th>Tax Amount</th>
+                        </tr>
+                        <tr *ngFor="let data of invoiceData?.taxDetails">
+                            <td>{{data.taxName}}</td>
+                            <td>{{data.taxPercent}}</td>
+                            <td>{{data.taxAmount | number}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- Deliverect order Details-->
+    <div *ngIf="this.orderData?.deliverectId != null && this.orderData?.deliverectId != ''" class="container mb-2"><b>
+            <hr>
+        </b>
+        <h3 class="titleHead"><b>Deliverect Order Details</b></h3>
+        <div class="d-flex">
+            <div class="title"><b>Deliverect Order Id :</b></div>
+            <div class="Property">{{deliverectOrderData?.channelOrderDisplayId}}</div>
+        </div>
+        <div class="d-flex">
+            <div class="title"><b>Order Status :</b></div>
+            <div class="Property" *ngIf="deliverectOrderData?.status == 1">PARSED </div>
+            <div class="Property" *ngIf="deliverectOrderData?.status == 2">RECEIVED </div>
+            <div class="Property" *ngIf="deliverectOrderData?.status == 20">ACCEPTED </div>
+            <div class="Property" *ngIf="deliverectOrderData?.status == 10">NEW </div>
+            <div class="Property" *ngIf="deliverectOrderData?.status == 35">DENIED </div>
+            <div class="Property" *ngIf="deliverectOrderData?.status == 50">PREPARING </div>
+            <div class="Property" *ngIf="deliverectOrderData?.status == 60">PREPARED </div>
+            <div class="Property" *ngIf="deliverectOrderData?.status == 70">READY FOR PICKUP </div>
+            <div class="Property" *ngIf="deliverectOrderData?.status == 80">IN DELIVERY </div>
+            <div class="Property" *ngIf="deliverectOrderData?.status == 90">FINALIZED </div>
+            <div class="Property" *ngIf="deliverectOrderData?.status == 100">CANCELE </div>
+            <div class="Property" *ngIf="deliverectOrderData?.status == 110">CANCELED </div>
+        </div>
+        <div class="d-flex">
+            <div class="title"><b>Channel :</b></div>
+            <div class="Property">{{deliverectOrderData?.channel}}</div>
+        </div>
+        <div class="d-flex">
+            <div class="title"><b>Notes :</b></div>
+            <div class="Property">{{deliverectOrderData?.note}}</div>
+        </div>
+        <!-- Customer Details -->
+        <div>
+            <h3 class="titleHead"><b>Customer Details</b></h3>
+            <div class="d-flex">
+                <div class="title"><b>Name :</b></div>
+                <div class="Property">{{deliverectOrderData?.customer?.name}}</div>
+            </div>
+            <div class="d-flex">
+                <div class="title"><b>Company Name :</b></div>
+                <div class="Property">{{deliverectOrderData?.customer?.companyName}}</div>
+            </div>
+            <div class="d-flex">
+                <div class="title"><b>Phone Number :</b></div>
+                <div class="Property">{{deliverectOrderData?.customer?.phoneAccessCode}}
+                    {{deliverectOrderData?.customer?.phoneNumber}}</div>
+            </div>
+            <div class="d-flex">
+                <div class="title"><b>Email:</b></div>
+                <div class="Property">{{deliverectOrderData?.customer?.email}}</div>
+            </div>
+            <div class="d-flex">
+                <div class="title"><b>Note:</b></div>
+                <div class="Property">{{deliverectOrderData?.customer?.note}}</div>
+            </div>
+        </div>
+        <!-- End-->
+
+        <!-- Delivery Details -->
+        <div>
+            <h3 class="titleHead"><b>Delivery Adress</b></h3>
+            <div class="d-flex">
+                <div class="title"><b>street :</b></div>
+                <div class="Property">{{deliverectOrderData?.deliveryAddress?.street}}</div>
+            </div>
+            <div class="d-flex">
+                <div class="title"><b>streetNumber:</b></div>
+                <div class="Property">{{deliverectOrderData?.deliveryAddress?.streetNumber}}</div>
+            </div>
+            <div class="d-flex">
+                <div class="title"><b>postalCode :</b></div>
+                <div class="Property">{{deliverectOrderData?.deliveryAddress?.postalCode}}</div>
+            </div>
+            <div class="d-flex">
+                <div class="title"><b>city:</b></div>
+                <div class="Property">{{deliverectOrderData?.deliveryAddress?.city}}</div>
+            </div>
+            <div class="d-flex">
+                <div class="title"><b>extraAddressInfo:</b></div>
+                <div class="Property">{{deliverectOrderData?.deliveryAddress?.extraAddressInfo}}</div>
+            </div>
+        </div>
+        <!-- End-->
+
+        <!-- payment Details -->
+        <span>
+            <h3 class="titleHead"><b>Payment Details</b></h3>
+            <div class="tab_titles" style="background-color: #e0ded8;">
+                <div class="table_title">Amount</div>
+                <div class="table_title">Payment Type</div>
+            </div>
+            <div class="tab_values">
+                <div class="table_value">{{deliverectOrderData?.payment?.amount.toString() |
+                    slice:0:-2}}.{{deliverectOrderData?.payment?.amount.toString() | slice:-2}}</div>
+                <div class="table_value" *ngIf="deliverectOrderData?.payment?.type == 0">Credit Card Online</div>
+                <div class="table_value" *ngIf="deliverectOrderData?.payment?.type == 1">Cash</div>
+                <div class="table_value" *ngIf="deliverectOrderData?.payment?.type == 2">On Delivery</div>
+                <div class="table_value" *ngIf="deliverectOrderData?.payment?.type == 3">Online</div>
+                <div class="table_value" *ngIf="deliverectOrderData?.payment?.type == 4">Credit Card at Door</div>
+                <div class="table_value" *ngIf="deliverectOrderData?.payment?.type == 5">PIN at Door</div>
+                <div class="table_value" *ngIf="deliverectOrderData?.payment?.type == 6">Voucher at Door</div>
+                <div class="table_value" *ngIf="deliverectOrderData?.payment?.type == 7">Meal Voucher</div>
+                <div class="table_value" *ngIf="deliverectOrderData?.payment?.type == 8">Bank Contact</div>
+                <div class="table_value" *ngIf="deliverectOrderData?.payment?.type == 9">Other</div>
+            </div>
+        </span>
+        <!-- End -->
+
+        <!-- Extra Details -->
+        <h3 class="titleHead"><b>Other Details</b></h3>
+        <div class="d-flex">
+            <div class="title"><b>Delivery Cost :</b></div>
+            <div class="Property">{{deliverectOrderData?.deliveryCost }}</div>
+        </div>
+        <div class="d-flex">
+            <div class="title"><b>Service Charge:</b></div>
+            <div class="Property">{{deliverectOrderData?.serviceCharge }}</div>
+        </div>
+        <div class="d-flex">
+            <div class="title"><b>Discount Total:</b></div>
+            <div class="Property">{{deliverectOrderData?.discountTotal }}</div>
+        </div>
+        <!-- End-->
+    </div>

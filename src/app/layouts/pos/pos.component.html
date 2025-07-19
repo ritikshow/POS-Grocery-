@@ -1,0 +1,193 @@
+<div
+  [ngClass]="status ? 'buyer_dashboard_layout d-flex position-relative collapsed' : 'buyer_dashboard_layout d-flex flex-wrap position-relative'">
+  <div class="d-flex align-items-start w-100 main_blk">
+    <app-app-inner-header></app-app-inner-header>
+    <div class="main_div">
+      <ngx-ui-loader bgsPosition="center-center" fgsPosition="center-center" bgsColor='#ea372b' fgsColor='#ea372b'
+        hasProgressBar=true pbColor='#ea372b' class="load_1">
+      </ngx-ui-loader>
+      <div class="main_top_section d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center">
+          <img alt="image" src="/assets/images/sidemenu-collapse-icon.svg" (click)="clickEvent()"
+            class="cursor-pointer mr_18" />
+          <div class="d-flex align-items-center">
+            <div class="dropdown Select_resto_dropdown profile_dropdown mr_18">
+              <div class="dropdown-toggle d-flex align-items-center" type="button" id="selectOutletBtn"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div class="select_resto_btn d-flex align-items-center justify-content-start cursor-pointer">
+                  <img alt="image" src=assets\images\restaurant-icon.svg class="mr_4" />
+                  <div class="d-flex flex-column align-items-start resto_name_blk">
+                    <span class="font_12 fw-reg text_light_black">Restaurant</span>
+                    <div class="d-flex w-100">
+                      <span class="font_14 fw-reg text_black resto_select_name">{{ activeRestaurantName}}</span>
+                      <img alt="image" src="/assets/images/dropdown-arrow.svg" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="dropdown-menu" aria-labelledby="selectOutletBtn">
+                <div class="resto_dropdown order_food_info_blk">
+                  <h6 class="font_14 fw-reg text-black cursor-pointer m-0" *ngFor="let restaurant of resData"
+                    (click)="onSelectRestaurant(restaurant)">
+                    {{ restaurant.restaurantName }}
+                  </h6>
+                </div>
+              </div>
+            </div>
+
+            <div class="dropdown Select_resto_dropdown profile_dropdown mr_18">
+              <div class="dropdown-toggle d-flex align-items-center" type="button" id="selectOutletBtn"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div class="select_resto_btn d-flex align-items-center justify-content-start cursor-pointer">
+                  <img alt="image" src="/assets/images/outlet-logo.svg" class="mr_4" />
+                  <div class="d-flex flex-column align-items-start resto_name_blk">
+                    <span class="font_12 fw-reg text_light_black">Outlet</span>
+                    <div class="d-flex w-100">
+                      <span class="font_14 fw-reg text_black resto_select_name" id="selectedOutlet">{{activeOutletName
+                        }}</span>
+                      <img alt="image" src="/assets/images/dropdown-arrow.svg" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="dropdown-menu" aria-labelledby="selectOutletBtn">
+                <div class="resto_dropdown order_food_info_blk">
+                  <h6 class="font_14 fw-reg text-black cursor-pointer m-0" *ngFor="let outlet of resDataByID?.outlets"
+                    (click)="onSelectOutlet(outlet)">
+                    {{outlet.outletName}}
+                  </h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex align-items-center">
+          <ul class="p-0 m-0 d-flex align-items-center top_left_section">
+            <!-- <li class="cursor-pointer">
+              <img alt="image" src="/assets/images/topsection-order-icon.svg" class="order_blk"/>
+            </li> -->
+            <li>
+              <div class="dropdown notification_dropdown profile_dropdown" (document:click)="closeDropdown($event)">
+                <div class="dropdown-toggle d-flex align-items-center" id="dropdownNotiBlk"
+                  (click)="toggleDropdown($event)">
+                  <div (click)="Getnotification(true)" class="notification_blk position-relative cursor-pointer">
+                    <img alt="image" src="/assets/images/notification-icon.svg" />
+                    <div class="noti_count">
+                      <span *ngIf="!showNotificationPopup" class="font_10 fw-bold">{{Notifactioncount }}</span>
+                      <span *ngIf="showNotificationPopup" class="font_10 fw-bold">{{Notification}}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="dropdown-menu notifiction_body_blk" [class.show]="showNotificationPopup"
+                  (click)="$event.stopPropagation()">
+                  <span class="triangle_blk"></span>
+                  <div class="d-flex justify-content-center align-items-center bg-blue not_header">
+                    <span class="me-auto d-flex align-items-center font_16 text_white fw-semi"
+                      *ngIf="showNotificationPopup">Notification <span
+                        class="not_count d-flex align-items-center justify-content-center">{{ Notification
+                        }}</span></span>
+                    <!-- <button class="btn btn-warning btn-sm ms-2" (click)="Getnotification(true)">UnSeen</button>
+                    <button class="btn btn-danger btn-sm ms-2" (click)="markAllAsRead(notifydata)">Clear All</button> -->
+                    <!-- <button class="add_btn btn_view_all text-sec m-0" (click)="GettAllNotification()">View All</button> -->
+                  </div>
+
+                  <div class="notifications_container">
+                    <div class="noti_item_blk cursor-pointer position-relative" *ngFor="let item of notifydata"
+                      (click)="MarkAsRead(item)">
+                      <!-- <div class="d-flex align-items-center justify-content-between">
+                        <h5 class="font_14 fw-reg text_black m-0">Table No: {{ item.tableNo || 'Online' }}</h5>
+                        <span type="button" class="font_10 fw-reg order_ready_text text-danger"
+                          *ngIf="item.notificationStatus == false" (click)="MarkAsRead(item)">Click</span>
+                        <span type="button" class="font_10 fw-reg order_ready_text"
+                          *ngIf="item.notificationStatus == true">Seen</span>
+                      </div>
+                      <h5 class="font_14 fw-reg text_black m-0">Order NO: {{ item.orderNo }}</h5>
+                      <h5 class="font_14 fw-reg text_black m-0">Message : {{ item.message }}</h5> -->
+                      <span class="font_14 fw-reg text_black d-flex mb_5">Table No. <span class="fw-bold">({{
+                          item.tableNo || 'Online' }})</span> &nbsp;and Order No. <span class="fw-bold">{{ item.orderNo
+                          }}</span></span>
+                      <h5 class="font_14 fw-reg text_black m-0">{{ item.message }}</h5>
+                      <span class="unread_btn"
+                        *ngIf="item.notificationStatus == false"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <!-- ========================================================= -->
+
+              <!-- <div class="dropdown notification_dropdown profile_dropdown">
+                <div class="dropdown-toggle d-flex align-items-center" type="button" id="dropdownNotiBlk" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <div class="notification_blk position-relative">
+                    <img alt="image" src="/assets/images/notification-icon.svg" class=""/>
+                    <div class="noti_count">
+                      <span class="font_10 fw-bold">{{ Notification }}</span></div>
+                  </div>
+                </div>
+                <div class="dropdown-menu notifiction_body_blk" aria-labelledby="dropdownNotiBlk">
+                  <span class="triangle_blk"></span>
+                  <div class="d-flex justify-content-center align-items-center px-2 py-1 border-bottom bg-blue">
+                    <span class="me-auto">Notification Count: {{ Notification }}</span>
+                    <button class="btn btn-warning btn-sm ms-2" (click)="Getnotification()">UnSeen</button>
+                    <button class="btn btn-danger btn-sm ms-2" (click)="markAllAsRead(notifydata)">Clear All</button>
+                    <button class="btn btn-success btn-sm ms-2" (click)="GettAllNotification()">Seen</button>
+                  </div>
+                    <div class="notifications_container">
+                    <div class="noti_item_blk" *ngFor="let item of notifydata">
+                      <div class="d-flex align-items-center justify-content-between">
+                        <h5 class="font_14 fw-reg text_black m-0">Table No.:{{ item.tableNo||"OnlineOrder" }}</h5>
+                        <span class="font_10 fw-reg order_ready_text cursor-pointer"*ngIf="item.notificationStatus == false" (click)="MarkAsRead(item) ">Mark as Read</span>
+                        <span type="button" class="font_10 fw-reg order_ready_text" *ngIf="item.notificationStatus==true">Read</span>
+                      </div>
+                      <h5 class="font_14 fw-reg text_black m-0">Order NO: {{ item.orderNo }}</h5>
+                      <h5 class="font_14 fw-reg text_black m-0">Message : {{ item.message }}</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>  -->
+
+              <!-- ====================================================================== -->
+
+
+            </li>
+            <li class="d-flex align-items-center">
+              <div class="dropdown profile_dropdown">
+                <div class="dropdown-toggle d-flex align-items-center" type="button" id="dropdownMenuButton"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span class="font_14 fw-reg text_light_black">Welcome, <span
+                      class="text_pri fw-semi">{{userCredential?.userName}}</span></span>
+                  <div class="profile_photo_blk" *ngIf="!userCredential?.imagePath">
+                    <img alt="image" src="/assets/images/profile-photo.svg" />
+                  </div>
+                  <div class="profile_photo_blk" *ngIf="userCredential?.imagePath">
+                    <img alt="image" src="{{BaseUrl + profileImage}}" />
+                  </div>
+                </div>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="font_14 fw-reg text-black" routerLink="/pos-dashboard/user-view">Profile</a>
+                  <a class="font_14 fw-reg text-black" href="" (click)="onLogout()">Log Out</a>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <router-outlet></router-outlet>
+
+      <app-alert></app-alert>
+    </div>
+  </div>
+  <!--  <app-app-footer></app-app-footer>
+  -->
+
+</div>
+<!-- <div class="left_arrow" (click)="clickEvent()">
+  <svg xmlns="http://www.w3.org/2000/svg" width="12.585" height="12.577" viewBox="0 0 12.585 12.577">
+    <g transform="translate(0.316 0.317)">
+      <path class="a" fill="#F23D3E" stroke-width="0.5px" stroke="#fff" d="M16.989,17.015a.858.858,0,0,0,.609-1.466l-4.545-4.537L17.6,6.475a.858.858,0,0,0-1.209-1.209l-5.146,5.146a.858.858,0,0,0,0,1.209l5.146,5.146a.858.858,0,0,0,.6.249Z" transform="translate(-10.994 -5.005)" />
+      <path class="a" fill="#F23D3E" stroke-width="0.5px" stroke="#fff" d="M11,17.006a.858.858,0,0,0,.609-1.466L7.062,11l4.545-4.537a.861.861,0,0,0-1.218-1.218L5.244,10.394a.858.858,0,0,0,0,1.209l5.146,5.146A.858.858,0,0,0,11,17.006Z" transform="translate(0.143 -4.996)" />
+    </g>
+  </svg>
+</div>  -->

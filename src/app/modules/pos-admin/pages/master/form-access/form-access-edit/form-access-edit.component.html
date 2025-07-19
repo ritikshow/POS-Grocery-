@@ -1,0 +1,82 @@
+<div class="main-div">
+  <div class="modal-header">
+    <h4 class="font_20 fw-semi text_pri" id="SKUModalLabel">Edit Form Access</h4>
+    <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer"
+      (click)="closeModal()" />
+  </div>
+  <div class="modal-body create_order_blk this_mon_blk form_popup">
+    <form #FormAccessForm="ngForm" [formGroup]="addFormAccess" (ngSubmit)="AddPermissionsToRole()"
+      class="ng-invalid ng-touched ng-dirty">
+      <div class="row modal_input_row">
+        <div class="col-md-6" *ngIf="!isAddRolePermission">
+          <label class="font_14 fe-reg text_pri mb_5"> Select User<span class="required-asterisk">*</span></label>
+          <div class="position-relative">
+            <select disabled class="form-control select-control" id="userId" formControlName="userId">
+              <option selected disabled>{{roleName}}</option>
+            </select>
+            <img alt="image" src="/assets/images/dropdown-arrow.svg" class="select_input_arrow" />
+          </div>
+        </div>
+
+        <div class="col-md-6" *ngIf="isAddRolePermission">
+          <label class="font_14 fe-reg text_pri mb_5">User Role<span class="required-asterisk">*</span></label>
+          <div class="position-relative">
+            <select class="form-control select-control" id="userId" formControlName="userRoleId" disabled>
+              <option selected disabled>{{roleName}}</option>
+            </select>
+            <img alt="image" src="/assets/images/dropdown-arrow.svg" class="select_input_arrow" />
+          </div>
+        </div>
+
+        <div class="col-md-12 pb_0">
+          <label class="font_16 fe-semi text_pri mb_10" for="sel1">Select Forms <span
+              class="required-asterisk">*</span></label>
+        </div>
+
+        <div class="col-md-12 pb_0">
+          <div class="row roles_blk_row">
+            <div class="col-md-6" *ngFor="let module of Modules; index as k;">
+              <div class="roles_Permission_blk">
+                <!-- Module Header with Select All -->
+                <div class="d-flex align-items-center justify-content-between mb_10">
+                  <h5 class="font_14 fw-semi text-black m-0">{{ module.moduleName }}</h5>
+                  <div class="d-flex align-items-center">
+                    <input type="checkbox" [checked]="module.isChecked" id="{{module.moduleId}}"
+                      (change)="switchModuleButton(module,k)" class="mr_5 roles_checkbox">
+                    <span class="font_12 fw-reg text-black">Select All</span>
+                  </div>
+                </div>
+                <!-- Always show feature list if there are features with status !== 0 -->
+                <div class="sub_roles_permission_blk">
+                  <div class="row roles_blk_row">
+                    <ng-container *ngFor="let feature of DisplayFeaturesList; index as i">
+                      <ng-container *ngIf="feature.ModuleId === module.moduleId">
+                        <ng-container *ngFor="let data of feature.Features; index as j">
+                          <div class="col-md-6 d-flex align-items-center" *ngIf="data.status !== 0">
+                            <input type="checkbox" [checked]="data.isChecked" id="{{data.featureId}}"
+                              (click)="switchFeaturesButton(data, i, j)" class="mr_5 roles_checkbox">
+                            <span class="font_12 fw-reg text-black">{{ data.featureName }}</span>
+                          </div>
+                        </ng-container>
+                      </ng-container>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="row modal_input_row">
+        <div class="col-md-6 pb_0">
+          <button class="cancel_btn" type="reset" (click)="closeModal()">Cancel</button>
+        </div>
+        <div class="col-md-6 pb_0">
+          <button class="btn_primary" type="submit" name="btn_login">Save</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

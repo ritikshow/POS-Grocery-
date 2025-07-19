@@ -1,0 +1,68 @@
+
+  <div class="modal-header mb_14">
+    <h5 *ngIf="editMod !== true" class="font_20 fw-semi text_pri" id="SKUModalLabel">Add In Stock</h5>
+    <h5 *ngIf="editMod == true" class="font_20 fw-semi text_pri" id="SKUModalLabel">Edit Stock</h5>
+    <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer" (click)="closeModal()"/>
+  </div>
+  <div class="create_order_blk">
+    <form class="ng-invalid ng-touched ng-dirty" [formGroup]="addInventoryForm" (ngSubmit)="addStock()">
+      <div class="modal_input_row row">
+        <div class="col-md-6">
+          <label class="font_14 fe-reg text_pri mb_5">Select Product<span class="required-asterisk">*</span></label>
+          <div class="position-relative">
+            <select class="form-control" id="prodId" formControlName="productId" (change)="selectItem($event)">
+              <option *ngFor="let product of AllProduct" value="{{product.productId}}">
+                {{product.productName}}-{{product.wMData?.wMSupplierName}}</option>
+            </select>
+            <img alt="image" src="/assets/images/dropdown-arrow.svg" class="select_input_arrow"/>
+          </div>
+        </div>
+        <div *ngIf="showDropDown" class="col-md-6">
+          <label class="font_14 fe-reg text_pri mb_5">Select Supplier<span class="required-asterisk">*</span></label>
+          <select class="form-control" id="supId" formControlName="supplierId">
+            <option *ngFor="let supplier of supplierNotInWm" value="{{supplier.supplierId}}">
+              {{supplier.supplierName}}</option>
+          </select>
+        </div>
+        <div *ngIf="!showDropDown" class="col-md-6">
+          <label class="font_14 fe-reg text_pri mb_5">Supplier<span class="required-asterisk">*</span></label>
+          <input type="text" class="form-control" value="{{supplierName}}" readonly>
+        </div>
+        <div class="col-md-6">
+          <label class="font_14 fe-reg text_pri mb_5">Amount:</label>
+          <input type="number" [readonly]="!editAmount" class="form-control" (keyup)="addPrice($event)" placeholder="Enter Price" formControlName="price" value="{{price}}">
+        </div>
+        <div class="col-md-6">
+          <label class="font_14 fe-reg text_pri mb_5">Unit:</label>
+          <input type="text" class="form-control" placeholder="Unit" formControlName="unit" value="{{unit}}" readonly>
+        </div>
+        <div class="col-md-6">
+          <label class="font_14 fe-reg text_pri mb_5">Quantity(In-Hand) :</label>
+          <input id="quantity" type="number" [readonly]="editMod" class="form-control" placeholder="Enter Quantity" formControlName="quantity">
+        </div> 
+        <div class="col-md-6">
+          <label class="font_14 fe-reg text_pri mb_5">Actual Quantity :</label>
+          <input id="quantity" type="number" class="form-control" placeholder="Enter Actual Quantity" formControlName="actualQuantity">
+        </div>
+        <div class="col-md-6">
+          <label class="font_14 fe-reg text_pri mb_5">Critical Quantity :</label>
+          <input id="quantity" type="number" class="form-control" placeholder="Enter Critical Quantity" formControlName="criticalQuantity">
+        </div>
+        <div class="col-md-6">
+          <label class="font_14 fe-reg text_pri mb_5">Order Quantity :</label>
+          <input id="quantity" type="number" class="form-control" placeholder="Enter Order Quantity" formControlName="orderQuantity">
+        </div>
+        <div class="col-md-6 pb_0">
+          <button class="cancel_btn" type="reset" (click)="closeModal()">
+            Cancel
+          </button>
+        </div>
+        <div class="col-md-6 pb_0">
+          <button *ngIf="editMod !== true" class="btn_primary" ngbAutofocus
+            name="btn_login" type="submit">Add Master</button>
+          <button *ngIf="editMod == true" class="btn_primary" ngbAutofocus
+            name="btn_login" type="submit">Update Master</button>
+        </div>
+      </div>
+    </form>
+  </div>

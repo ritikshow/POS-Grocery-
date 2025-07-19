@@ -1,0 +1,28 @@
+.modal-title {
+  font-size: 16px !important;
+  color: rgb(30, 182, 202);
+}
+.titleHead {
+  text-align: center;
+  margin-bottom: 0px !important;
+  cursor: pointer;
+}
+.title {
+  width: 30%;
+  background-color: #e0ded8;
+  padding: 5px;
+}
+.Property {
+  width: 70%;
+  background-color: #fbf9f9;
+  padding: 5px;
+}
+.mod_list_td {
+  padding: 0px !important;
+}
+.mod_ul {
+  margin-bottom: 0px !important;
+}
+.mod_li {
+  font-size: 12px;
+}

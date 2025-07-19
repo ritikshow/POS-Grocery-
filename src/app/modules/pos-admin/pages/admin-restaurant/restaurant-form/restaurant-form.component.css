@@ -1,0 +1,111 @@
+.field_1{
+    width: 49%;
+}
+.field_2{
+    width: 33%;
+}
+.select {
+    height: 100px;
+    overflow: scroll;
+}
+.btn-orders{
+    border-color: #d6d6e2;
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    height: 30px;
+    line-height: 14px;
+    width: auto;
+}
+.btn_add{
+    margin-bottom: 5px;
+    background-color: rgb(15, 107, 143);
+}
+.btn_add:hover{
+    background-color: rgb(21, 126, 168);
+}
+.required-asterisk{
+    color: red;
+    font-weight: bold;
+    margin-left: 3px;
+    font-size: 1.2em;
+}
+img{
+    height: auto !important;
+}
+.required-width{
+    width: 100%;
+}
+
+/* Phone input group styles */
+.phone-input-group .form-select {
+    border-radius: 4px 0 0 4px;
+    border-right: none;
+}
+
+.phone-input-group .input-group-text {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+}
+
+.phone-input-group .form-control {
+    border-radius: 0 4px 4px 0;
+    border-left: none;
+}
+
+.phone-input-group .form-select:focus,
+.phone-input-group .form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.phone-input-group .input-group-text img {
+    border-radius: 2px;
+}
+
+.password-checklist {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 8px;
+}
+.password-checklist li {
+  color: #000; /* black by default */
+  font-size: 15px;
+  margin-bottom: 2px;
+  transition: color 0.2s;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+.password-checklist li .checkmark {
+  color: #000; /* black by default */
+  margin-right: 6px;
+  font-size: 16px;
+  transition: color 0.2s;
+}
+.password-checklist li.valid {
+  color: #009966; /* green when valid */
+}
+.password-checklist li.valid .checkmark {
+  color: #009966; /* green checkmark when valid */
+}
+.w_60px {
+    width: 60px !important;
+}
+.w_50px {
+    width: 50px !important;
+}
+.calc_width_mbl {
+    width: calc(100% - 100px) !important;
+}   
+.mt_38 {
+    margin-top: 38px !important;
+}
+.form-control.custom_select_input {
+    border-left: none !important;
+    padding: 0px;
+}
+.w_maxcontent {
+    width: max-content !important;
+}

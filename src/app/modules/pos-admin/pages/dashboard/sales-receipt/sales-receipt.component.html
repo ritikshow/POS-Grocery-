@@ -1,0 +1,92 @@
+
+<div class="modal-header">
+    <h5 class="font_20 fw-semi text_pri">Print Sales Report</h5>
+    <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer" (click)="closeModal()"/>
+</div>
+    <div id="print_Section" class="mb_15 details_print_content d-flex justify-content-center">
+        <div class="printMainDiv" >
+            <div class="mb_10">
+                <h6 class="font_16 fw-reg text_pri mb_10">Outlet Name : <span class="fw-semi">{{outletName}}</span></h6>
+                <div class="d-flex align-items-center mb_10">
+                    <img alt="image" src="/assets/images/input-calendar-icon.svg" class="mr_5"/>
+                    <span class="font_16 fw-reg text_pri">{{date | date:'hh:mm a'}}</span>
+                </div>
+                <div class="d-flex align-items-center">
+                    <!-- <img alt="image" src="/assets/images/input-calendar-icon.svg" class="mr_5"/> -->
+                    <span class="font_16 fw-reg text_pri">PrintDate : <span class="fw-semi">{{PrintDate | date:'dd-MM-yyyy'}}</span></span>
+                </div>
+            </div>
+            <div class="print_body">
+                <table class="table m-0">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Total Orders</td>
+                            <td>{{dashBoardData?.totalCompletedOrders}}</td>
+                        </tr>
+                        <tr>
+                            <td>Total Voided Orders</td>
+                            <td>{{dashBoardData?.totalVoidedOrders}}</td>
+                        </tr>
+                        <tr>
+                            <td>Dine In Orders</td>
+                            <td>{{dashBoardData?.totalDineInOrders}}</td>
+                        </tr>
+                        <tr>
+                            <td>Take Away Orders</td>
+                            <td>{{dashBoardData?.totalTakeAwayOrders}}</td>
+                        </tr>
+                        <tr>
+                            <td>Online Orders</td>
+                            <td>{{dashBoardData?.totalOnlineOrders}}</td>
+                        </tr>
+                        <tr>
+                            <td>Orders Value</td>
+                            <td>{{dashBoardData?.allOrdersValue |number:'1.2-2' }}</td>
+                        </tr>
+                        <tr>
+                            <td>Card Payment</td>
+                            <td>{{dashBoardData?.byCardValue | number:'1.2-2' }}</td>
+                        </tr>
+                        <tr *ngFor="let cardType of dashBoardData?.cardPaymentDetails; let i=index">
+                            <td>{{cardType.cardName}}</td>
+                            <td>{{cardType.totalAmount}}</td>
+                        </tr>
+                        <tr>
+                            <td>Cash Payment</td>
+                            <td>{{dashBoardData?.byCashValue | number:'1.2-2' }}</td>
+                        </tr>
+                        <tr>
+                            <td>Online Payment</td>
+                            <td>{{dashBoardData?.byOnlineValue |number:'1.2-2'}}</td>
+                        </tr>
+                        <tr>
+                            <td>Tapandgo Payment</td>
+                            <td>{{dashBoardData?.byTapAndGoValue | number:'1.2-2'}}</td>
+                        </tr>
+                        <tr>
+                            <td>Total Tax</td>
+                            <td>{{dashBoardData?.totalTax | number:'1.2-2'}}</td>
+                        </tr>
+                        <tr>
+                            <td>Total Discount</td>
+                            <td>{{dashBoardData?.totalDiscount |number:'1.2-2'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row modal_input_row">
+        <div class="col-md-6 pb_0">
+            <button class="cancel_btn" type="reset" (click)="closeModal()">Cancel</button>
+        </div>
+        <div class="col-md-6 pb_0">
+            <button class="btn_primary" name="btn_login" printSectionId="print_Section" [useExistingCss]="true" ngxPrint>Print</button>
+        </div>
+    </div>

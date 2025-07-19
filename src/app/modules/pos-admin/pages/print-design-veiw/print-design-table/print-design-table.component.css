@@ -1,0 +1,19 @@
+.btn-orders {
+  border-color: #d6d6e2;
+  color: white;
+  font-size: 13px;
+  height: 30px;
+  line-height: 14px;
+  width: auto;
+}
+.edit {
+  background-color: rgb(88, 88, 243);
+}
+.edit:hover {
+  background-color: rgb(86, 86, 247);
+}
+.OutletName {
+  width: 50%;
+  font-weight: 600;
+  padding-right: 10px;
+}

@@ -1,0 +1,149 @@
+<div class="modal-header">
+  <h5 class="font_20 fw-semi text_pri mb_15" id="SKUModalLabel">Complete Payment</h5>
+  <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer"
+    (click)="cancelPaymentPopUp()" />
+</div>
+<div class="modal-body">
+  <h5 *ngIf="PrimaryOrder.orderType=='Dine-in'" class="font_14 fw-semi text_pri mb_10">Order No : <span
+      class="fw-reg">{{PrimaryOrder?.orderNo}}</span></h5>
+  <div class="d-flex align-items-center mb_10">
+    <h5 class="font_14 fw-semi text_pri mb_0 mr_10">Total Amount : <span class="fw-reg">{{PrimaryOrder?.total |number:'1.2-2'}}</span></h5> | <h5 class="font_14 fw-semi text_pri mb_0 ml_10 mr_10">Remaining Amount : <span
+        class="fw-reg">{{remainingAmount | number:'1.2-2'}}</span></h5> | <h5 class="font_14 fw-semi text_pri mb_0 ml_10" *ngIf="AmountFromWallete">Wallet Amount : <span class="fw-reg">{{AmountFromWallete |number:'1.2-2'}}</span></h5>
+  </div>
+  <div
+    *ngIf="!hideItemLevelPayment && PrimaryOrder.items != null && PrimaryOrder.items != undefined && PrimaryOrder.items.length > 1"
+    class="mb_15" id="checkBoxes">
+    <div class="table-responsive">
+      <table id="example" class="m-0" id="table-request">
+        <thead>
+          <tr>
+            <th>Select</th>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Amount</th>
+            <th>Total</th>
+            <th>Payment Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of PrimaryOrder.items; let i=index">
+            <td *ngIf="data.isPaid == false"><input type="checkbox"
+                (change)="PayForPerticularItem($event,data.id,data.itemTotal)"></td>
+            <td *ngIf="data.isPaid == true"> </td>
+            <td><span class="w_300px d-block">{{data.itemName}}</span></td>
+            <td>{{data.orderQuantity}}</td>
+            <td>{{data.itemAmount | number:'1.2-2'}}</td>
+            <td>{{data.newTotal | number:'1.2-2'}}</td>
+            <td>
+              <span class="text_green" *ngIf="data.isPaid == true">Paid</span>
+              <span class="text_red" *ngIf="data.isPaid == false">Not paid</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <form class="ng-invalid ng-touched ng-dirty" [formGroup]="form">
+    <div class="row modal_input_row">
+      <div class="col-md-4">
+        <label class="font_14 fe-reg text_pri mb_5">Select Payment Type</label>
+        <div class="position-relative">
+          <select class="form-control" id="sel1" formControlName="paymentMode" (change)="selectPaymentType()">
+            <option value="" [disabled]="true">Select Payment type</option>
+            <!-- <option value="Card">Card</option>
+            <option value="Cash">Cash</option>
+            <option value="Online">Online</option>
+            <option value="tapandgo">tapandgo</option> -->
+            <option *ngFor="let mode of allPaymentModes" value="{{mode.paymentModeName}}">
+              {{mode.paymentModeName}}</option>
+          </select>
+          <img alt="image" src="/assets/images/dropdown-arrow.svg" class="select_input_arrow" />
+        </div>
+      </div>
+      <div class="col-md-4">
+        <label class="font_14 fe-reg text_pri mb_5">Amount</label>
+        <input (keyup)="onKey($event)" type="number" class="form-control" id="amt" placeholder="Enter Amount" formControlName="amount"
+          onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))">
+      </div>
+      <div class="col-md-4" *ngIf="cardDetails == true">
+        <label class="font_14 fe-reg text_pri mb_5">Select Card Type</label>
+        <div class="position-relative">
+          <select class="form-control" formControlName="cardType" (change)="displayCardName()">
+            <!-- <option value="Master">Master</option>
+            <option value="Visa">Visa</option>
+            <option value="Others">Others</option> -->
+            <option *ngFor="let subMode of selectedPaymentModeData.subPaymentModes" value="{{subMode}}">
+              {{subMode}}</option>
+          </select>
+          <img alt="image" src="/assets/images/dropdown-arrow.svg" class="select_input_arrow" />
+        </div>
+      </div>
+      <!-- <div class="col-md-4" *ngIf="cardDetails == true">
+        <div *ngIf="isOther == true" class="form-group field_1">
+          <label class="font_14 fe-reg text_pri mb_5">Enter Card Name <span class="required-asterisk">*</span></label>
+          <input type="text" class="form-control" formControlName="cardName" placeholder="Enter Card Name">
+        </div>
+      </div> -->
+      <div class="col-md-4" *ngIf="loginForm.amount.value > remainingAmount">
+        <label class="font_14 fe-reg text_pri mb_5">Amount Recieved</label>
+        <input  type="text" class="form-control" id="rcv_amt" placeholder="Enter Amount"
+          [readonly]="true" formControlName="cashRecived">
+      </div>
+      <div class="col-md-4" *ngIf="loginForm.amount.value > remainingAmount" >
+        <label class="font_14 fe-reg text_pri mb_5">Balance Returned</label>
+        <input type="text" class="form-control" placeholder="Enter Amount" formControlName="balanceReturned"
+          onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))">
+      </div>
+      <div class="col-md-4">
+        <label class="font_14 fe-reg text_pri mb_5">Tip Amount</label>
+        <input type="text" class="form-control" (keyup)="TipAmount($event)" placeholder="Enter Tip Amount">
+      </div>
+    </div>
+  </form>
+  <div class="mb_15">
+    <button class="payment_add_btn" [disabled]="remainingAmount == 0" (click)="addItem()">Add Payment</button>
+  </div>
+  <div *ngIf="breakageData.length !==0" class="" id="checkBoxes">
+    <div class="table-responsive mb_15">
+      <table id="example" class="w-100 m-0" id="table-request">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Payment Type</th>
+            <th>Card</th>
+            <th>Amount</th>
+            <th>Amount Recieved</th>
+            <th>Amount Returned</th>
+            <th>Tip</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of breakageData; let i=index">
+            <td>{{i+1}}</td>
+            <td>{{data.paymentMode}}</td>
+            <td>{{data.cardType}}</td>
+            <td>{{data.amount | number:'1.2-2'}}</td>
+            <td>{{data.cashRecived | number:'1.2-2'}}</td>
+            <td>{{data.balanceReturned | number:'1.2-2'}}</td>
+            <td>{{data.tip| number:'1.2-2'}}</td>
+            <td>
+              <img alt="image" src="/assets/images/delete-icon.svg" class="cursor-pointer"
+                (click)="Remove(data.amount,i)" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <span *ngIf="ShowPrintMessage == true" class="font_14 fw-reg mb_10">You can print the invoice only after paying the
+    total amount</span>
+  <div class="row modal_input_row">
+    <div class="col-md-6 pb_0">
+      <button class="cancel_btn" name="btn_login" (click)="closeModal()" type="reset">Cancel</button>
+    </div>
+    <div class="col-md-6 pb_0">
+      <button class="btn_primary" name="btn_login" (click)="onBill()">Bill And Print</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,120 @@
+.field_1{
+  width: 49%;
+}
+.btn-orders{
+    border-color: #d6d6e2;
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    height: 30px;
+    line-height: 14px;
+    width: auto;
+}
+.btn_add{
+    margin-bottom: 5px;
+    background-color: rgb(15, 107, 143);
+}
+.btn_add:hover{
+    background-color: rgb(21, 126, 168);
+}
+.required-asterisk{
+    color: red;
+    font-weight: bold;
+    margin-left: 3px;
+    font-size: 1.2em;
+}
+img{
+    height: auto !important;
+}
+
+.modifier{
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 5px;
+    border: 1px solid #c9c7c7;
+    border-radius: 5px;
+}
+.mod_check{
+    width: auto;
+    margin-right: 15px;
+
+}
+
+.selCheck{
+    margin-top: 0px !important;
+}
+.select {
+    height: 100px;
+    overflow: scroll;
+}
+.calendar-icon {
+    width: 28px;
+    height: 28px;
+   
+    right: 15%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+.password-checklist {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 8px;
+}
+.password-checklist li {
+  color: #000; /* black by default */
+  font-size: 15px;
+  margin-bottom: 2px;
+  transition: color 0.2s;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+.password-checklist li .checkmark {
+  color: #000; /* black by default */
+  margin-right: 6px;
+  font-size: 16px;
+  transition: color 0.2s;
+}
+.password-checklist li.valid {
+  color: #009966; /* green when valid */
+}
+.password-checklist li.valid .checkmark {
+  color: #009966; /* green checkmark when valid */
+}
+.password-checklist li.invalid {
+  color: #888888; /* gray when invalid */
+}
+.password-checklist li.invalid .checkmark {
+  color: #888888; /* gray checkmark when invalid */
+}
+
+/* Hide browser default validation icons in input fields */
+.form-control.is-valid, .form-control.is-invalid {
+  background-image: none !important;
+  box-shadow: none !important;
+}
+.form-control.is-valid:after, .form-control.is-valid:before,
+.form-control.is-invalid:after, .form-control.is-invalid:before {
+  display: none !important;
+  content: none !important;
+}
+.w_60px {
+    width: 60px !important;
+}
+.w_50px {
+    width: 50px !important;
+}
+.calc_width_mbl {
+    width: calc(100% - 100px) !important;
+}   
+.mt_38 {
+    margin-top: 38px !important;
+}
+.form-control.custom_select_input {
+    border-left: none !important;
+    padding: 0px;
+}
+.w_maxcontent {
+    width: max-content !important;
+}

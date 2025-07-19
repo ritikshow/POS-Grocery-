@@ -1,0 +1,271 @@
+<div class="header_section d-flex align-items-center">
+  <img alt="image" src="/assets/images/back-arrow.svg" class="mr_5" (click)="OnClickHome()" />
+  <h2 class="font_22 fw-semi m-0 text_pri">{{OutletName}}</h2>
+</div>
+<div class="qr_menu_body_content" *ngIf="PageToLoad == 1 || PageToLoad == 3">
+  <div class="qr_order_tab_container mb_10 d-flex align-items-center">
+    <span class="font_16 fw-reg text_pri d-block" [ngClass]="{'active' : PageToLoad == 1}"
+      (click)="navigateToCart(1)">Orders</span>
+    <span class="font_16 fw-reg text_pri d-block" [ngClass]="{'active' : PageToLoad == 3}"
+      (click)="navigateToCart(3)">Previous Orders</span>
+  </div>
+  <div class="cart_items_blk mb_35" *ngIf="PrimaryOrder?.items?.length > 0 && PageToLoad==1">
+    <div class="cart_content_info" *ngFor="let CartData of PrimaryOrder.items; let i=index;">
+      <div class="d-flex align-items-start justify-content-between mb_10">
+        <div class="d-flex align-items-start cart_info_width mr_10">
+          <span class="item_cusine non_veg mr_5 mt_4"></span>
+          <div class="d-flex flex-column">
+            <h5 class="font_16 fw-semi text_pr mb_2">{{CartData.itemName}}</h5>
+            <h5 class="font_16 fw-semi text_pri mb_2">₹{{CartData.itemAmount}}</h5>
+            <span class="font_12 fw-reg text_grey d-block">Half</span>
+          </div>
+        </div>
+        <div class="d-flex flex-column align-items-end">
+          <div class="cart_alter_quantity_blk d-flex align-items-center justify-content-between mb_5">
+            <span class="font_18 fw-reg text_sec" (click)="QuantityDecreament(i)">-</span>
+            <span class="font_14 fw-reg text_sec">{{CartData.orderQuantity}}</span>
+            <span class="font_18 fw-reg text_sec" (click)="QuantityIncreament(i)">+</span>
+          </div>
+          <h5 class="font_16 fw-semi text_pri mb_2">₹{{CartData.itemTotal}}</h5>
+        </div>
+      </div>
+      <ul class="p-0 mb_5" *ngIf="CartData?.modifiers">
+        <li class="mb_2" *ngFor="let data of CartData?.modifiers">
+          <span class="font_12 fw-reg text_black d-block">{{data?.modifierName}}</span>
+        </li>
+      </ul>
+      <span class="font_12 fw-med text_sec text-underline cursor-pointer" *ngIf="CartData.ModifiersIds"
+        (click)="openModifier(openModifierPopup,i,CartData)">Edit Customization</span>
+    </div>
+  </div>
+  <span class="font_16 fw-semi text_sec d-block mb_60 w_maxcontent" (click)="OnClickHome()" *ngIf="PageToLoad ==1">+ Add Items</span>
+  <!--  this is for previous order block starts -->
+  <div class="general_cart_container" *ngIf="PageToLoad == 3">
+    <div class="general_cart_items" *ngFor="let item of LoginCustomerOrders">
+      <div class="d-flex align-items-center justify-content-between mb_10">
+        <div class="d-flex align-items-center">
+          <img alt="image" *ngIf="!item.imagePath" src="/assets/images/chicken-pizza-image.svg" class="mr_5 menu_general_img" />
+          <img alt="image" *ngIf="item.imagePath" src="{{BaseUrl + item.image}}" class="mr_5 menu_general_img" />
+          <span class="font_16 fw-med text-black">{{item.itemName}}</span>
+        </div>
+      </div>
+      <div class="d-flex align-items-center justify-content-between">
+        <span class="font_16 fw-med text-black">₹ {{item.itemAmount}}</span>
+        <span class="font_16 fw-med text-black">Qty : {{item.orderQuantity}}</span>
+      </div>
+    </div>
+  </div>
+  <!--  this is for previous order block ends -->
+  <div class="general_bill_container" *ngIf="PrimaryOrder?.items?.length > 0">
+    <div class="accordion" id="accordionPanelsStayOpenExample">
+      <div class="accordion-item cart_accordion_container">
+        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse collapsed">
+          <div class="accordion-body">
+            <div class="">
+              <ul class="border_bottom_grey mb_10  p-0 pb_10">
+                <li class="d-flex align-items-center justify-content-between mb_5">
+                  <span class="font_14 fw-med text_pri">Sub Total</span>
+                  <span class="font_14 fw-med text_pri">₹{{PrimaryOrder?.subTotal| number:'1.2-2'}}</span>
+                </li>
+              </ul>
+
+              <div class="border_bottom_dashed mb_5" *ngIf="PrimaryOrder?.items?.length">
+                <div *ngFor="let item of PrimaryOrder.items">
+                  <div *ngFor="let itemtax of item.itemWiseTax; let itx = index"
+                    class="d-flex align-items-center justify-content-between mb_5">
+                    <span class="font_14 fw-med text_pri">
+                      ({{item.itemName}}) {{itemtax.taxName}} {{itemtax.taxPercentage}}% :
+                    </span>
+                    <span class="font_14 fw-med text_pri">
+                      ₹{{itemtax.taxAmount | number:'1.2-2'}}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="border_bottom_dashed mb_5" *ngIf="PrimaryOrder?.taxDetails?.length">
+                <div class="d-flex align-items-center justify-content-between mb_5"
+                  *ngFor="let tax of PrimaryOrder.taxDetails; let tx=index">
+                  <span class="font_14 fw-med text_pri">{{tax.taxName}} {{tax.taxPercentage}}% :</span>
+                  <span class="font_14 fw-med text_pri">₹{{tax.taxAmount | number:'1.2-2'}}</span>
+                </div>
+              </div>
+              <div class="d-flex align-items-center justify-content-between">
+                <span class="font_14 fw-med text_pri"> Total GST charges</span>
+                <span class="font_14 fw-med text_pri">₹{{PrimaryOrder?.totalOrderTax}}</span>
+              </div>
+              <div class="d-flex align-items-center justify-content-between">
+                <span class="font_16 fw-med text_pri">Total payable</span>
+                <span class="font_16 fw-med text_pri">₹{{PrimaryOrder?.total |number:'1.2-2' }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-header">
+          <button class="accordion-button font_18 fw-semi text_pri mb_10 collapsed" type="button"
+            data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+            aria-controls="panelsStayOpen-collapseOne">
+            Bill Summary
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div *ngIf="PageToLoad==2">
+  <div class="qr_menu_body_content pb_15">
+    <div class="d-flex align-items-center justify-content-between mb_15">
+      <span class="font_16 fw-med text-black">Table No. : {{TableNumber}}</span>
+      <span class="font_16 fw-med text-black" *ngIf="orderHostory">Order No. : {{orderHostory?.orderNo}}</span>
+      <span class="font_16 fw-med text-black">Total Item : {{orderHostory?.items?.length}}</span>
+      <div class="d-flex align-items-center">
+        <img alt="image" src="/assets/images/multi_users_icon.svg" class="mr_5" />
+        <span class="font_16 fw-med text-black d-block mt_1">{{CustomerCount}}</span>
+      </div>
+    </div>
+    <div class="position-relative mb_20">
+      <input type="search" id="searchInput" class="form-control search_icon_input" [(ngModel)]="searchText"
+        placeholder="Search customer by name">
+      <img alt="image" src="/assets/images/search-icon.svg" class="search_input_icon" />
+    </div>
+    <div class="general_cart_container" *ngIf="orderHostory?.items?.length > 0">
+      <div class="general_cart_items" *ngFor="let item of filterItemsByCustomer(orderHostory?.items)">
+        <div class="d-flex align-items-start justify-content-between mb_10">
+          <div class="d-flex align-items-center">
+            <img alt="image" *ngIf="!item.imagePath" src="/assets/images/chicken-pizza-image.svg"
+              class="mr_5 menu_general_img" />
+            <img alt="image" *ngIf="item.imagePath" src="{{BaseUrl + item.image}}" class="mr_5 menu_general_img" />
+            <span class="font_16 fw-med text-black">{{item.itemName}}</span>
+          </div>
+          <div class="d-flex align-items-center">
+            <span class="font_16 fw-med text-black mr_10 pr_10 border_right w_maxcontent">Qty :
+              {{item.orderQuantity}}</span>
+            <span class="font_16 fw-med text-black">₹{{item.itemAmount|number:'1.2-2'}}</span>
+          </div>
+        </div>
+        <div class="d-flex align-items-center">
+          <img alt="image" src="/assets/images/menu_user_default.svg" class="mr_5" />
+          <span class="font_16 fw-med text-black pr_10 mt_1">{{item.customerName}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="general_bill_container" *ngIf="orderHostory?.items?.length > 0">
+    <div class="accordion" id="accordionPanelsStayOpenExample">
+      <div class="accordion-item cart_accordion_container">
+        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse collapsed">
+          <div class="accordion-body">
+            <div class="">
+              <ul class="border_bottom_grey mb_10  p-0 pb_10">
+                <li class="d-flex align-items-center justify-content-between mb_5">
+                  <span class="font_16 fw-med text_pri">Subtotal Total</span>
+                  <span class="font_16 fw-med text_pri">₹{{orderHostory?.subTotal |number:'1.2-2'}}</span>
+                </li>
+              </ul>
+              <div class="border_bottom_dashed mb_5" *ngIf="orderHostory?.items?.length">
+                <div *ngFor="let item of orderHostory.items">
+                  <div *ngFor="let itemtax of item.itemWiseTax; let itx = index"
+                    class="d-flex align-items-center justify-content-between mb_5">
+                    <span class="font_14 fw-med text_pri">
+                      ({{item.itemName}}) {{itemtax.taxName}} {{itemtax.taxPercentage}}% :
+                    </span>
+                    <span class="font_14 fw-med text_pri">
+                      ₹{{itemtax.taxAmount | number:'1.2-2'}}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="border_bottom_dashed mb_5" *ngIf="orderHostory?.taxDetails?.length">
+                <div class="d-flex align-items-center justify-content-between mb_5"
+                  *ngFor="let tax of orderHostory?.taxDetails; let tx=index">
+                  <span class="font_14 fw-med text_pri">{{tax.taxName}} {{tax.taxPercentage}}% :</span>
+                  <span class="font_14 fw-med text_pri">₹{{tax.taxAmount | number:'1.2-2'}}</span>
+                </div>
+              </div>
+              <div class="d-flex align-items-center justify-content-between">
+                <span class="font_14 fw-med text_pri"> Total GST charges</span>
+                <span class="font_14 fw-med text_pri">₹{{orderHostory?.totalOrderTax | number:'1.2-2'}}</span>
+              </div>
+              <div class="d-flex align-items-center justify-content-between mb_5">
+                <span class="font_16 fw-med text_pri">Discount :</span>
+                <span class="font_16 fw-med text_pri">₹{{orderHostory?.totalDiscount| number:'1.2-2'}}</span>
+              </div>
+              <div class="d-flex align-items-center justify-content-between">
+                <span class="font_16 fw-med text_pri">To Pay</span>
+                <span class="font_16 fw-med text_pri">₹{{orderHostory?.total | number:'1.2-2'}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-header">
+          <button class="accordion-button font_18 fw-semi text_pri mb_10 collapsed" type="button"
+            data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+            aria-controls="panelsStayOpen-collapseOne">
+            Bill Summary
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<button class="menu_place_order_btn" (click)="PlaceOrder()"
+  [ngClass]="{ 'disabled': PrimaryOrder?.items?.length > 0 ? false : true}"
+  [disabled]="PrimaryOrder?.items?.length > 0 ? false : true"
+  *ngIf="PageToLoad==1 && !orderHostory?.items && PrimaryOrder?.items">Place order</button>
+<button class="menu_place_order_btn" (click)="PlaceOrder()" [disabled]="PrimaryOrder?.items?.length > 0 ? false : true"
+  [ngClass]="{ 'disabled': PrimaryOrder?.items?.length > 0 ? false : true}"
+  *ngIf="PageToLoad==1 && orderHostory?.items">Update order</button>
+<div class="menu_footer_section d-flex align-items-center justify-content-between">
+  <div class="d-flex flex-column align-items-center" (click)="OnClickHome()">
+    <img alt="image" src="/assets/images/menu_home_icon.svg" class="mb_3 normal_icon" />
+    <img alt="image" src="/assets/images/menu_home_active_icon.svg" class="mb_3 active_icon d-none" />
+    <h5 class="font_16 fw-med text_light_black m-0">Home</h5>
+  </div>
+  <div class="d-flex flex-column align-items-center" [ngClass]="{ 'footer_active_menu': PageToLoad == 1 || PageToLoad == 3}"
+    (click)="navigateToCart(1)">
+    <img alt="image" src="/assets/images/menu_shopping_cart_icon.svg" class="mb_3 normal_icon" />
+    <img alt="image" src="/assets/images/menu_shopping_cart_active_icon.svg" class="mb_3 active_icon d-none" />
+    <h5 class="font_16 fw-med text_light_black m-0">Cart <span
+        *ngIf="PrimaryOrder?.items?.length">({{PrimaryOrder?.items?.length}})</span></h5>
+  </div>
+  <div class="d-flex flex-column align-items-center" [ngClass]="{ 'footer_active_menu': PageToLoad == 2 }"
+    (click)="navigateToCart(2)">
+    <img alt="image" src="/assets/images/menu_shopping_cart_icon.svg" class="mb_3 normal_icon" />
+    <img alt="image" src="/assets/images/menu_shopping_cart_active_icon.svg" class="mb_3 active_icon d-none" />
+    <h5 class="font_16 fw-med text_light_black m-0">General Cart <span
+        *ngIf="orderHostory?.items?.length">({{orderHostory?.items?.length}})</span></h5>
+  </div>
+</div>
+<ng-template #openModifierPopup let-close="close">
+  <div class="modal-header mb_10">
+    <h5 class="font_20 fw-semi text_pri m-0" id="SKUModalLabel">{{PrimaryOrder.items[SelectedItemIndex].itemName}}</h5>
+    <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer"
+      (click)="closeAction()" />
+  </div>
+  <div class="customization_body modal-body">
+    <div class="customization_blk mb_15">
+      <div class="customizatin_header_blk" *ngIf="Modifiers?.length >0">
+        <h4 class="font_16 fw-semi text-black m-0">Add Modifier</h4>
+      </div>
+      <div class="customization_content_blk" *ngIf="Modifiers?.length >0">
+        <div class="d-flex align-items-center justify-content-between mb_10" *ngFor="let Data of Modifiers">
+          <h4 class="font_14 fw-semi text-black m-0">{{Data.modifierName}}</h4>
+          <input type="checkbox" (click)="OnSelectModifier($event,Data)" [checked]="Data.checked" />
+        </div>
+      </div>
+      <div class="customizatin_header_blk" *ngIf="Ingredients?.length > 0">
+        <h4 class="font_16 fw-semi text-black m-0">Add Ingredients</h4>
+      </div>
+      <div class="customization_content_blk" *ngIf="Ingredients?.length > 0">
+        <div class="d-flex align-items-center justify-content-between mb_10" *ngFor="let Data of Ingredients">
+          <h4 class="font_14 fw-semi text-black m-0">{{Data.modifierName}}</h4>
+          <input type="checkbox" (click)="OnSelectModifier($event,Data)" [checked]="Data.checked" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="">
+    <button class="btn_primary" (click)="OnAddingModifiers()">Add Item</button>
+  </div>
+</ng-template>

@@ -1,0 +1,138 @@
+.required-asterisk {
+  color: red;
+  font-weight: bold;
+  margin-left: 3px;
+  font-size: 1.2em;
+}
+.field_1 {
+  width: 49%;
+}
+/* .field_2{
+  width: 49%;
+} */
+/* .chkbox {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+  margin: .5rem;
+} */
+/* .chkbox {
+  padding: 10px 5px 10px 20px;
+} */
+.formName {
+  width: 55% !important;
+  margin-left: 10px !important;
+}
+
+.switch {
+  /* position: relative; */
+  display: inline-block;
+  width: 48px;
+  height: 34px;
+  margin-top: 0px !important;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute !important;
+  content: "" !important;
+  height: 15px !important;
+  width: 15px !important;
+  left: 4px !important;
+  bottom: 4px !important;
+  background-color: white !important;
+  transition: 0.4s !important;
+}
+
+input:checked + .slider {
+  background-color: #2196f3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196f3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+  font-size: 14px;
+  padding: 10px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+.checkbox {
+  font-size: 14px;
+  padding: 10px;
+}
+.switch-label {
+  padding: 5px 10px;
+  font-size: 16px;
+}
+
+.container {
+  /* display: flex; */
+  flex-wrap: wrap;
+}
+
+.container > div {
+  flex: 50%;
+  box-shadow: 0 0 0 1px #f2f2f2;
+  margin-bottom: 10px;
+}
+.col {
+  box-shadow: 0 0 0 1px #f2f2f2;
+  margin: 0px 20px 10px 20px;
+  background-color: #fefefa;
+}
+.col-user {
+  box-shadow: 0 0 0 1px #f2f2f2;
+  margin: 0px 14px 6px 6px;
+  background-color: #fefefa;
+  border-radius: 4px;
+}
+
+/*** 20/01/2023 ***/
+.res_per_row > * {
+  padding: 0 15px 0;
+}
+.res_per_heading {
+  width: calc(103% - 15px);
+  height: 22%;
+  margin-bottom: 20px !important;
+  background: gainsboro;
+  border-radius: 9px;
+}
+/*** 20/01/2023 ***/
+.heading {
+  font-size: 19px;
+  text-transform: uppercase;
+  color: black;
+  letter-spacing: 1px;
+  font-family: "Playfair Display", serif;
+  font-weight: 400;
+}

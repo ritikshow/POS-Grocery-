@@ -1,0 +1,33 @@
+
+<div class="modal-header">
+    <h3 class="font_20 fw-semi text_pri mb_15" id="SKUModalLabel">Edit Outlet</h3>
+    <a href="javascript:void(0)" class="modal_close_icon" (click)="closeModal()">  <img alt="image" src="/assets/images/modal-close-icon.svg" class=" cursor-pointer"/>   </a>
+</div>
+<div class="modal-body create_order_blk this_mon_blk form_popup">
+    <form class="w-100" [formGroup]="outletForm" (ngSubmit)="addOutlets()">
+        <div class="row  modal_input_row">
+            <div class="col-md-6">
+                <label class="font_14 fe-reg text_pri mb_5"><span class="required-asterisk">*</span> Outlet Name:</label>
+                <input type="text" class="form-control" placeholder="Enter Outlet Name" formControlName="outletName">
+            </div>
+            <div class="col-md-6">
+                <label class="font_14 fe-reg text_pri mb_5"><span class="required-asterisk">*</span> Outlet Manager:</label>
+                <input type="text" class="form-control" placeholder="Enter Outlet Manager" formControlName="outletManager">
+            </div>
+            <div class="col-md-12">
+                <label class="font_14 fe-reg text_pri mb_5"><span class="required-asterisk">*</span> Outlet Address:</label>
+                <textarea class="form-control" placeholder="Outlet Address" formControlName="outletAddress"></textarea>
+            </div>
+            
+            <div class="col-md-6 pb_0">
+                
+                <button class="cancel_btn" type="reset"
+                (click)="closeModal()">Cancel</button>
+            </div>
+            <div class="col-md-6 pb_0">
+                <button class="btn_primary" ngbAutofocus name="btn_login"
+                type="submit">Save</button>                      
+            </div>
+        </div>
+    </form>
+</div>

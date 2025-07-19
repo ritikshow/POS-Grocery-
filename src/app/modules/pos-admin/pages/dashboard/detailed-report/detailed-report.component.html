@@ -1,0 +1,124 @@
+<div class="modal-header">
+    <h5 class="font_20 fw-semi text_pri">Detailed Report</h5>
+    <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer"
+        (click)="closeModal()" />
+</div>
+<div id="print_Section" class="mb_15 details_print_content d-flex justify-content-center">
+    <div class="printMainDiv">
+        <div class="d-flex align-items-center justify-content-between mb_10">
+            <h6 class="font_16 fw-reg text_pri m-0">Outlet Name : <span class="fw-semi">{{outletName}}</span></h6>
+            <div class="d-flex align-items-center">
+                <img alt="image" src="/assets/images/input-calendar-icon.svg" class="mr_5" />
+                <span class="font_16 fw-reg text_pri">{{date | date:'hh:mm a'}}</span>
+            </div>
+        </div>
+        <div class="d-flex align-items-center mb_15">
+            <!-- <img alt="image" src="/assets/images/input-calendar-icon.svg" class="mr_5"/> -->
+            <span class="font_16 fw-reg text_pri">PrintDate : <span class="fw-semi">{{getDetailedReportDate.fromDate |
+                    date:'dd-MM-yyyy'}}</span></span>
+        </div>
+        <div class="print_body">
+            <table class="table-grocerylist m-0">
+                <thead>
+                    <tr>
+                        <th colspan="4">Type</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="4">Total Orders</td>
+                        <td>{{getPrintData?.totalCompletedOrders| number:'1.2-2'}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">Total Sales</td>
+                        <td>{{getPrintData?.allOrdersValue | number:'1.2-2'}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">Total Tax</td>
+                        <td>{{getPrintData?.totalTax | number:'1.2-2'}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">Card Payment</td>
+                        <td>{{getPrintData?.byCardValue | number:'1.2-2' }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">Wallet Payment</td>
+                        <td>{{getPrintData?.byWalletValue | number:'1.2-2' }}</td>
+                    </tr>
+                    <tr *ngFor="let cardType of getPrintData?.cardPaymentDetails; let i=index">
+                        <td colspan="4">{{cardType.cardName}}</td>
+                        <td>{{cardType.totalAmount| number:'1.2-2'}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">Cash Payment</td>
+                        <td>{{getPrintData?.byCashValue | number:'1.2-2' }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">Online Payment</td>
+                        <td>{{getPrintData?.byOnlineValue | number:'1.2-2'}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">Dine In Orders</td>
+                        <td>{{getPrintData?.totalDineInOrders}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">Take Away Orders</td>
+                        <td>{{getPrintData?.totalTakeAwayOrders}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">Online Orders</td>
+                        <td>{{getPrintData?.totalOnlineOrders}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">Total Discount</td>
+                        <td>{{getPrintData?.totalDiscount | number:'1.2-2'}}</td>
+                    </tr>
+                    <tr>
+                        <th colspan="4">Tax</th>
+                        <th>Value</th>
+                    </tr>
+                    <tr *ngFor="let Stax of OrdertaxDetails">
+                        <td colspan="4">{{Stax.name }}</td>
+                        <td>{{Stax.value.toFixed(2)}}</td>
+                    </tr>
+                    <tr>
+                        <th colspan="2">Sales By Staff</th>
+                        <th>Qty</th>
+                        <th>Value</th>
+                        <th>Value%</th>
+                    </tr>
+                    <tr *ngFor="let staf of stafWiseOrder">
+                        <td colspan="2">{{staf.staffName}}</td>
+                        <td>{{staf.numOfOrder}}</td>
+                        <td>{{staf.totalValue.toFixed(2)}}</td>
+                        <td>{{staf.staffOrderPercentage.toFixed(2)}}%</td>
+                    </tr>
+                    <tr>
+                        <th>Sales By Category</th>
+                        <th>Qty</th>
+                        <th>Qty%</th>
+                        <th>Value</th>
+                        <th>Value%</th>
+                    </tr>
+                    <tr *ngFor="let data of getAllCategoryData; let i=index">
+                        <td>{{data?.categoryName}}</td>
+                        <td>{{data?.quantity}}</td>
+                        <td>{{data?.quantityPercentage.toFixed(2)}}%</td>
+                        <td>{{data?.amount.toFixed(2)}}</td>
+                        <td>{{data?.amountPercentage.toFixed(2)}}%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="row modal_input_row">
+    <div class="col-md-6 pb_0">
+        <button class="cancel_btn" type="reset" (click)="closeModal()">Cancel</button>
+    </div>
+    <div class="col-md-6 pb_0">
+        <button class="btn_primary" name="btn_login" printSectionId="print_Section" [useExistingCss]="true"
+            ngxPrint>Print</button>
+    </div>
+</div>

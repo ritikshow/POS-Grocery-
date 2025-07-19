@@ -1,0 +1,169 @@
+<div class="page_container">
+  <h2 class="text_pri font_20 fw-semi mb_15">Orders</h2> 
+  <ul class="p-0 mb_7 d-flex align-items-center order_nav_blk">
+    <li class="mr_6" *ngIf="commonService.checkRolePermissions('LIST_DINE_IN')"><a class="active" routerLink="/pos-dashboard/dine-in">Dine In</a></li>
+    <li class="mr_6" *ngIf="commonService.checkRolePermissions('LIST_ONLINE')"><a routerLink="/pos-dashboard/online">Online</a></li>
+    <li class="mr_6" *ngIf="commonService.checkRolePermissions('LIST_TAKEAWAY')"><a routerLink="/pos-dashboard/walk-in">Take Away</a></li>
+  </ul>
+  <div class="order_info_blk">
+    <div class="order_sub_nav_blk">
+      <ul class="d-flex align-items-center nav_tabs_ul p-0 m-0" id="myTab" role="tablist">
+        <li>
+          <a routerLink="/pos-dashboard/dine-in" *ngIf="commonService.checkRolePermissions('ALL_TABLES')"
+           >All Tables</a>
+        </li>
+        <li role="presentation" *ngIf="commonService.checkRolePermissions('DINEIN_RUNNING_ORDERS')">
+          <a class="active" routerLink="/pos-dashboard/dine-in/running-order">
+            Running Orders
+          </a>
+        </li>
+        <li role="presentation" *ngIf="commonService.checkRolePermissions('DINEIN_COMPLETED_ORDERS')">
+          <a routerLink="/pos-dashboard/dine-in/completed-order">
+            Completed Orders
+          </a>
+        </li>
+        <!-- <li role="presentation">
+          <a routerLink="/pos-dashboard/dine-in/order-history">
+            Order History
+          </a>
+        </li> -->
+        <li role="presentation" *ngIf="commonService.checkRolePermissions('DINEIN_VOIDED_ORDERS')">
+          <a routerLink="/pos-dashboard/dine-in/voided-order">
+            Voided Orders
+          </a>
+        </li>
+      </ul>
+    </div>
+    
+  <div class="order_info_container">
+    <!-- <div class="table_header  create_order_blk this_mon_blk">
+      <div class="w-100">
+        <div class="OutletName">Outlet Name : {{outletName}}</div>
+      </div>
+    </div> -->
+    <!-- <ul class="nav nav-tabs d-flex flex-wrap align-items-center nav_tabs_ul p-0 mb_20" id="myTab" role="tablist">
+      <li>
+        <a routerLink="/pos-dashboard/dine-in">All Tables</a>
+      </li>
+      <li role="presentation">
+        <a class="active" routerLink="/pos-dashboard/dine-in/running-order">
+          Running Orders
+        </a>
+      </li>
+      <li role="presentation">
+        <a routerLink="/pos-dashboard/dine-in/completed-order">
+          Completed Orders
+        </a>
+      </li>
+      <li role="presentation">
+        <a routerLink="/pos-dashboard/dine-in/order-history">
+          Order History
+        </a>
+      </li>
+      <li role="presentation">
+        <a routerLink="/pos-dashboard/dine-in/voided-order">
+          Voided Orders
+        </a>
+      </li>
+    </ul>  -->
+      <div class="table-responsive order_table_blk" id="checkBoxes">
+        <table *ngIf="isDataLoaded" datatable [dtOptions]="dtOptions" class="w-100" id="table-request">
+          <thead>
+            <tr>
+              <th>Sl.No</th>
+              <th>Table Number</th>
+              <th>Order Number</th>
+              <th>Amount</th>
+              <th>Created by</th>
+              <th>Created on</th>
+              <th>Status</th>
+              <th class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of finalOrder; let i=index">
+              <td>{{i+1}}</td>
+              <td><span *ngFor="let num of data.items | slice:0:1; let isLast=last">{{num.tableNo}}</span></td>
+              <td class="orderTd" (click)="orderDetails(data)">{{data.orderNo}}</td>
+              <td>{{data.total | number:'1.2-2'}}</td>
+              <td>{{data.createdByName}}</td>
+              <td>{{data.createdOn | date:'yyyy-MM-dd HH:mm'}}</td>
+              <td class="text-center">
+                  <div class="d-flex align-items-center"
+                       [ngClass]="isOrderCompleted(data) ? 'order_completed_status' : 'order_preparing_status'">
+                    <img alt="image"
+                         [src]="isOrderCompleted(data) ? '/assets/images/order-completed-icon.svg' : '/assets/images/order-running-icon.svg'"
+                         class="mr_5" />
+                    <span>{{ isOrderCompleted(data) ? 'Ready' : 'Being Prepared' }}</span>
+                  </div>
+              </td>
+
+              <td>
+                <div class="d-flex align-items-center">
+                  <button *ngIf="data.isPaid == true" class="btn btn-orders w-maxcontent edit mr_14"
+                    (click)="changeItemStatus(data.orderId)">Complete</button>
+                  <button *ngIf="data.isPaid == false" class="btn btn-orders edit mr_14"
+                    (click)="payNow(data,data.orderId)"><i class="fa fa-money" aria-hidden="true"></i> Pay Now</button>
+                  <!-- <button *ngIf="isCompanyAdmin" class="btn btn-orders edit mr_14"
+                  (click)="addEvent(voidpassword,data.orderId,i)">Void Order</button> -->
+                  <!-- <img alt="image" src="/assets/images/edit-icon.svg" class="mr_14 cursor-pointer"/> -->
+                  <img alt="image" src="/assets/images/view-icon.svg" class="mr_14 cursor-pointer"
+                    (click)="orderDetailsView(data.orderId)">
+                  <img *ngIf="!isCompanyAdmin" alt="image" src="/assets/images/delete-icon.svg" class="cursor-pointer"
+                    (click)="onDelete(data.orderId,i)" />
+                  <!-- <button *ngIf="!isCompanyAdmin" class="btn btn-orders edit" (click)="onDelete(data.orderId,i)"><i
+                    class="fa fa-trash" aria-hidden="true"></i></button> -->
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- <div class="total_entries">
+        <select class="len_per_page" (change)="changedLength($event)">
+          <option value="5">5</option>
+          <option value="10">10&nbsp;</option>
+          <option value="20">20&nbsp;</option>
+          <option value="-1">All&nbsp;</option>
+        </select>
+        <label>Total :</label>
+        <label> {{tableListRecord.total}}</label>
+      </div> -->
+      </div>
+    </div>
+  </div>
+  <!-- pop-up for void password-->
+  <ng-template #voidpassword let-close="close">
+    <div class="modal-header edit_popup p_30">
+      <h2 class="font_20 fw-semi text_pri">Void Password</h2>
+      <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer"
+        (click)="closeAction()" />
+    </div>
+    <div class="modal-body p_0">
+      <div class="row modal_input_row">
+        <div class="col-md-12">
+          <label class="font_14 fe-reg text_pri mb_5">Enter Password :</label>
+          <input type="text" class="form-control form-design" (keyup)="Password($event)" placeholder="Enter Password" />
+          <span *ngIf="!isCorrectPass" class="font_10 fe-reg text-red">Password is Incorrect</span>
+        </div>
+      </div>
+      <div class="row modal_input_row">
+        <div class="col-md-6 pb_0">
+          <button class="cancel_btn" type="reset" (click)="closeAction()">Cancel</button>
+        </div>
+        <div class="col-md-6 pb_0">
+          <button class="btn_primary" name="btn_login" (click)="voidOrder()">Submit</button>
+        </div>
+      </div>
+      <!-- <div class="pl-0 mt-4 text-right">
+          <div class="form-group edit_popup_button">
+            <button class="btn btn-lg btn-primary active btn-block m-0" type="reset" (click)="closeAction()">Cancel
+            </button>
+            <button class="btn btn-lg btn-primary active action-btn btn-block my-0 mr_16" (click)="voidOrder()"
+              style="margin-left: 5px; ">
+              Submit
+            </button>
+          </div>
+        </div> -->
+    </div>
+  </ng-template>
+</div>

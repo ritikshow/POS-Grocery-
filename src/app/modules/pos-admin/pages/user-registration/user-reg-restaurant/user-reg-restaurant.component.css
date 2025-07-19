@@ -1,0 +1,51 @@
+.field_1{
+    width: 49%;
+}
+.select {
+    height: 100px;
+    overflow: scroll;
+}
+.required-asterisk{
+    color: red;
+    font-weight: bold;
+    margin-left: 3px;
+    font-size: 1.2em;
+}
+.modifier{
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid #c9c7c7;
+    border-radius: 5px;
+    padding: 10px 10px 10px 5px;
+    margin-top: 20px;
+}
+.mod_check{
+    width: auto;
+    margin-right: 15px;
+}
+
+.selCheck{
+    margin-top: 0px !important;
+}
+.link-div{
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 4px;
+    padding: 5px;
+    border-color: rgb(0 0 0 / 20%);
+}
+.title{
+    width: 30%;
+    background-color: #e0ded8;
+    padding: 5px;
+}
+.Property{
+    width: 70%;
+    background-color: #fbf9f9;
+    padding: 5px;
+    word-break: break-all;
+}
+.titleHead{
+    text-align: center ;
+    margin-bottom: 0px !important;
+}

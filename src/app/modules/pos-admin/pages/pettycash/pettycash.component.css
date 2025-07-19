@@ -1,0 +1,143 @@
+.edit {
+  background-color: rgb(43, 43, 214);
+  color: white;
+}
+.field_1 {
+  width: 24%;
+}
+.field_2 {
+  width: 34%;
+}
+.field_3 {
+  width: 14%;
+}
+.edit:hover {
+  background-color: rgb(86, 86, 247);
+}
+.table_header {
+  display: flex;
+  justify-content: space-between;
+}
+.div_1 {
+  width: 20%;
+}
+.div_2 {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.Order_div {
+  display: flex;
+  justify-content: space-between;
+}
+.button {
+  width: 33%;
+}
+.btn-orders {
+  border-color: #d6d6e2;
+  font-size: 13px;
+  font-weight: 600;
+  height: 30px;
+  line-height: 14px;
+  width: auto;
+}
+.tables:hover {
+  background-color: #4171ac;
+}
+.tables {
+  color: white;
+  background-color: #335d90;
+}
+.order {
+  background-color: #ffffff;
+  color: #335d90;
+}
+.order:hover {
+  color: white;
+  background-color: #335d90;
+}
+.btn-group {
+  width: 75%;
+}
+.horizontal_line {
+  margin-top: 5px;
+  border-bottom: 2px solid rgb(105, 104, 104);
+}
+.orderTd {
+  cursor: pointer;
+  color: #007bff;
+  text-decoration: underline;
+}
+.green_class {
+  color: green;
+}
+.red_class {
+  color: red;
+}
+.delete {
+  color: white;
+  background-color: rgb(43, 43, 214);
+}
+.delete:hover {
+  background-color: rgb(86, 86, 247);
+}
+@media only screen and (min-width: 700px) and (max-width: 900px) {
+  .btn-group {
+    width: 100%;
+    margin-right: 5px;
+  }
+  .btn-orders {
+    height: auto;
+  }
+}
+.required-asterisk {
+  color: red;
+  font-weight: bold;
+  margin-left: 3px;
+  font-size: 1.2em;
+}
+.OutletName {
+  width: 50%;
+  font-weight: 600;
+  padding-right: 10px;
+  float: left;
+  padding-left: 16px;
+}
+.row.online-order > .col-md-3 {
+  width: 20% !important;
+}
+.online-order {
+  display: flex;
+  align-items: center;
+}
+.online-order > * {
+  margin-right: 25px;
+  width: 100%;
+}
+.btn-action-popup-accept {
+  background-color: #28a745 !important;
+  border-color: #d6d6e2;
+  font-size: 13px;
+  font-weight: 600;
+  height: 30px;
+  line-height: 14px;
+  width: auto;
+}
+
+ /* ===========================Detales popup */
+/* .date-range-field {
+  min-width: 100%;
+}
+
+.date-range-field input {
+  min-width: 140px;
+}
+
+.mat-date-range-input-inner {
+  display: flex;
+  gap: 12px;
+} */
+::ng-deep .mat-form-field-underline {
+  display: none !important;
+}

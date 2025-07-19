@@ -1,0 +1,64 @@
+<div class="modal-header">
+    <h5 *ngIf="orderData?.wmOrderNumber != null" class="font_20 fw-semi text_pri mb_15" id="SKUModalLabel">Order No: {{orderData?.wmOrderNumber}}</h5>
+    <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer" (click)="closeModal(false)"/>
+</div>
+<div class="table-responsive" id="checkBoxes">
+    <table class="w-100 m-0">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Product Name</th>
+                <th>Unit</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th  *ngIf="orderData?.status != 'Received' && orderData?.isDispatched" scope="col">Received Quantity</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of items; let i=index">
+                <td>{{i+1}}</td>
+                <td>{{data.productName}}</td>
+                <td>{{data.unit}}</td>
+                <td>{{data.price}}</td>
+                <td>{{data.quantity}}</td>
+                <td  *ngIf="orderData?.status != 'Received' && orderData?.isDispatched"> 
+                    <input type="text" value="{{data.quantity}}" class="form-control" (keyup)="liveEvent($event,i)"></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <div *ngIf="orderData?.status != 'Received' && orderData?.isDispatched" class="d-flex align-items-center">
+                            <input type="checkbox" class="remember_input mr_10" (click)="MarkReceive($event,data)">
+                            <span class="font_14 fw-reg text_pri">Mark Received</span>
+                        </div>
+                        <img  *ngIf="orderData?.status == 'Planned'"alt="image" src="/assets/images/edit-icon.svg" class="mr_14 cursor-pointer" (click)="editDetails(data)"/>
+                        <img *ngIf="orderData?.status == 'Planned'" alt="image" src="/assets/images/delete-icon.svg" class="cursor-pointer" (click)="remove(i)"/>
+                    </div>
+                    <!-- <button *ngIf="orderData?.status == 'Planned'" class="btn btn-orders btn_add" (click)="editDetails(data.rangeId)">Edit</button>
+                    <button *ngIf="orderData?.status == 'Planned'" class="btn btn-orders btn_add" (click)="remove(i)">Remove</button>
+                    <span *ngIf="orderData?.status != 'Received' && orderData?.isDispatched"><input type="checkbox" class="btn btn-orders btn_add" (click)="MarkReceive($event,data)">&nbsp;&nbsp;&nbsp;Mark Received</span> -->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    
+    <!-- <span *ngIf="orderData?.status != 'Received' && orderData?.isDispatched"> Remarks:
+    <input type="text" class="btn btn-orders btn_add" (keyup)="Remarks($event)">
+    <b *ngIf="remarksIMP" style="color: red;">Remarks is mandatory</b></span> -->
+    <!-- <div *ngIf="orderData?.isDispatched" class="pl-0 mt-4 text-center">
+        <button *ngIf="this.liveItems.length != 0" class="btn btn-lg btn-primary active action-btn btn-block my-0 mr_16" (click)="SaveGRN()">Save</button>
+    </div> -->
+</div>
+<div class="row modal_input_row" *ngIf="orderData?.status != 'Received' && orderData?.isDispatched">
+    <div class="col-md-4">
+      <label class="font_14 fe-reg text_pri mb_5">Remarks<span class="required-asterisk">*</span></label>
+      <input type="text" class="form-control" (keyup)="Remarks($event)">
+      <span *ngIf="remarksIMP" class="font_12 fw-reg text-red">Remarks is mandatory</span>
+    </div>
+</div>
+<div class="row modal_input_row" *ngIf="orderData?.isDispatched">
+   <div class="col-md-6 pb_0"></div>
+    <div class="col-md-6 pb_0">
+        <button *ngIf="this.liveItems.length != 0" class="btn_primary" name="btn_login" type="submit" (click)="SaveGRN()">Save</button>
+    </div>
+</div>

@@ -1,0 +1,72 @@
+
+  <div class="modal-header">
+    <h5 *ngIf="orderData?.wmOrderNumber != null" class="modal-title" id="SKUModalLabel">
+      Order No:
+      {{orderData?.wmOrderNumber}}
+    </h5>
+    <h5 *ngIf="orderData?.wmOrderNumber == null" class="modal-title" id="SKUModalLabel">
+     <!-- Nothing added this check only to float export btn on right side if order num is not there -->
+    </h5>
+    <div class="d-flex align-items-center justify-content-end">
+       <div class="d-flex align-items-center cursor-pointer mr_15" (click)="downloadFile()">
+        <img alt="image" src="/assets/images/export-icon.svg" class="mr_8">
+        <span class="font_16 fw-med text-underline text-sec">Export</span>
+      </div>
+      <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer" (click)="closeModal()"/>
+    </div>
+  </div>
+  <div class="container-fluid p-0 h-100 signup p-3">
+    <div class="data-table mt-4 mb-4 pb-1 w-100" id="checkBoxes">
+      <div class="table-responsive">
+        <span *ngIf="isEditable" style="float: right;">Remarks :<input type="text" [(ngModel)]="remarks" (keyup)="Remarks($event)" class="form-control mr_10"><b *ngIf="isError" style="color: red;">Remark is mandatory</b></span>
+        <table class="table table-striped table-bordered dataTable no-footer nowrap" style="width:100%">
+          <caption>GRN Table</caption>
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col">Product Name</th>
+              <th scope="col">Unit</th>
+              <th scope="col">Price</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Received Quantity</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of items; let i=index">
+              <td>{{i+1}}</td>
+              <td class="text-center">{{data.productName}}</td>
+              <td class="text-center">{{data.unit}}</td>
+              <td class="text-center">{{data.price}}</td>
+              <td class="text-center">{{data.quantity}}</td>
+              <td class="text-center">
+                <table class="table table-striped table-bordered dataTable no-footer nowrap" style="width:100%">
+                  <caption>GRN Sub Table</caption>
+                  <thead class="thead-dark">
+                    <tr>
+                      <th scope="col">No</th>
+                      <th scope="col">Product Name</th>
+                      <th scope="col">Received Quantity</th>
+                      <th scope="col">Received Date</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of data.receivedItems; let i=index">
+                      <td>{{i+1}}</td>
+                      <td class="text-center">{{item.productName}}</td>
+                      <td class="text-center"><input type="number" [readonly]="!isEditable" value="{{item.quantity}}" (keyup)="ChangedValue($event,item)"></td>
+                      <td class="text-center">{{item.itemReceivedDate | date: 'dd-MM-yyyy HH:mm'}}</td>
+                      <td>
+                        <button *ngIf="!isEditable" class="btn btn-orders btn_add" (click)="Edit()">Edit</button>
+                        <button *ngIf="isEditable" class="btn btn-orders btn_add" (click)="Save(item)">Save</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

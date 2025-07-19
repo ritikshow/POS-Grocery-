@@ -1,0 +1,19 @@
+.modal-title {
+  font-size: 16px !important;
+  color: rgb(30, 182, 202);
+}
+.titleHead {
+  text-align: center;
+  margin-bottom: 0px !important;
+}
+.title {
+  width: 30%;
+  background-color: #e0ded8;
+  padding: 5px;
+}
+.Property {
+  width: 70%;
+  background-color: #fbf9f9;
+  padding: 5px;
+  word-break: break-all;
+}

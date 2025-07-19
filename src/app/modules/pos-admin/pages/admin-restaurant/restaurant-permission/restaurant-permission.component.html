@@ -1,0 +1,52 @@
+<div class="main-div">
+  <div class="modal-header">
+    <h4 class="font_20 fw-semi text_pri" id="SKUModalLabel">Restaurant Name : {{this.getRestaurantData?.restaurantName}}
+    </h4>
+    <h4 class="font_20 fw-semi text_pri" id="SKUModalLabel">Add Restaurant Permissions</h4>
+    <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer"
+      (click)="closeModal()" />
+  </div>
+  <div class="modal-body create_order_blk this_mon_blk form_popup">
+    <div class="row modal_input_row">
+      <div class="col-md-12 pb_0">
+        <label class="font_16 fe-semi text_pri mb_10" for="sel1">Select Forms <span
+            class="required-asterisk">*</span></label>
+      </div>
+      <div class="col-md-3" *ngFor="let module of Modules; index as k;">
+        <div class="role_switch_container">
+          <div class="d-flex align-items-center justify-content-between">
+            <span class="font_14 fe-reg text_pri m-0">{{module.moduleName}}</span>
+            <label class="switch">
+              <input type="checkbox" [checked]="module.isChecked" id={{module.moduleId}}
+                (change)="switchModuleButton(module,k)">
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="row modal_input_row mt_20" *ngIf="module.isChecked">
+            <div class="pb_0 p-0" *ngFor="let feature of DisplayFeaturesList; index as i;">
+              <div class="col-md-12 pb_0 mb_10" *ngFor="let data of feature.Features; index as j">
+                <div *ngIf="feature.ModuleId == module.moduleId && data.status != 0"
+                  class="role_switch_container d-flex align-items-center justify-content-between">
+                  <span class="font_14 fe-reg text_pri m-0">{{data.featureName}}</span>
+                  <label class="switch">
+                    <input type="checkbox" [checked]="data.isChecked" id={{data.featureId}}
+                      (click)="switchFeaturesButton(data, i, j)">
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row modal_input_row">
+      <div class="col-md-6 pb_0">
+        <button class="cancel_btn" type="reset" (click)="closeModal()">Cancel</button>
+      </div>
+      <div class="col-md-6 pb_0">
+        <button class="btn_primary" name="btn_login" (click)="updatePermissions()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>

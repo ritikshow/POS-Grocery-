@@ -1,0 +1,83 @@
+<div class="page_container table_details_blk">
+  <h2 class="text_pri font_20 fw-semi mb_7">Settings</h2>
+  <div class="d-flex align-items-start settings_nav_main_blk">
+    <app-settings></app-settings>
+    <div class="settings_nav_info_container" >
+      <div *ngIf="commonService.checkRolePermissions('UPDATE_GENERAL_SETTINGS')">
+        <h5 class="font_16 cursor-pointer fw-med text_sec text-end text-underline mb_20" *ngIf="edit == false"
+        (click)="onClickEdit()">Edit General Settings</h5>
+      <h5 class="font_16 cursor-pointer fw-med text_sec text-end text-underline mb_20" *ngIf="edit == true"
+        (click)="saveGeneralSettings()">Save General Settings</h5>
+      </div>
+      <div class="row modal_input_row">
+        <form class="ng-invalid ng-touched ng-dirty" [formGroup]="generalSettings">
+          <div class="row modal_input_row">
+            <div class="col-md-4">
+              <div class="role_switch_container d-flex align-items-center justify-content-between">
+                <span class="font_14 fe-reg text_pri m-0">Direct Order Place<span
+                    class="required-asterisk"></span></span>
+                <mat-slide-toggle class="discount_slider_btn" color="accent" name="directPlaceOrder"
+                formControlName="directPlaceOrder"
+                  [disabled]="edit == false">
+                </mat-slide-toggle>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="font_14 fe-reg text_pri mb_5"><span class="required-asterisk">*</span>
+                  Kitchen Name:</label>
+                <input type="text" class="form-control" placeholder="Enter Kitchen Name" formControlName="kitchenName"
+>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="font_14 fe-reg text_pri mb_5"><span class="required-asterisk">*</span>
+                  Bar Name:</label>
+                <input type="text" class="form-control" placeholder="Enter Bar Name" formControlName="barName"
+                  >
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="font_14 fe-reg text_pri mb_5"><span class="required-asterisk">*</span>
+                  Currency Symbol/Name:</label>
+                <input type="text" class="form-control" placeholder="Enter Currency" formControlName="currency" maxlength="4"
+                  >
+              </div>
+            </div>
+          </div>
+        </form>
+        <!-- <div class="col-md-6">
+        <div class="role_switch_container d-flex align-items-center justify-content-between">
+          <span class="font_14 fe-reg text_pri m-0">is Swiggy Available</span>
+          <mat-slide-toggle class="discount_slider_btn" color="accent" [checked]="isSwiggyAvailable" (change)="changeSwiggyAvailibilityStatus($event)" [disabled]="edit == false">
+          </mat-slide-toggle>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="role_switch_container d-flex align-items-center justify-content-between">
+          <span class="font_14 fe-reg text_pri m-0">is Zomato Available</span>
+          <mat-slide-toggle class="discount_slider_btn" color="accent" [checked]="isZomatoAvailable" (change)="changeZomattoAvailibilityStatus($event)" [disabled]="edit == false">
+          </mat-slide-toggle>
+        </div>
+      </div> -->
+      </div>
+      <!-- <div>
+        <label for="sel1" class="font_14 fe-reg text_pri mb_5">Direct Order Place</label>
+        <mat-slide-toggle class="discount_slider_btn" color="accent" [checked]="isDirectOrderPlaceAvailable" (change)="changeDirectOderPlaceStatus($event)" [disabled]="edit == false">
+        </mat-slide-toggle>
+      </div>
+      <div>
+        <label for="sel1" class="font_14 fe-reg text_pri mb_5">is Swiggy Available</label>
+        <mat-slide-toggle class="discount_slider_btn" color="accent" [checked]="isSwiggyAvailable" (change)="changeSwiggyAvailibilityStatus($event)" [disabled]="edit == false">
+        </mat-slide-toggle>
+      </div>
+      <div>
+        <label for="sel1" class="font_14 fe-reg text_pri mb_5">is Zomato Available</label>
+        <mat-slide-toggle class="discount_slider_btn" color="accent" [checked]="isZomatoAvailable" (change)="changeZomattoAvailibilityStatus($event)" [disabled]="edit == false">
+        </mat-slide-toggle>
+      </div> -->
+    </div>
+  </div>
+</div>

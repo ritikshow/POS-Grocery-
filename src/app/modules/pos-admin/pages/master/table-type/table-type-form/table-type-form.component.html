@@ -1,0 +1,48 @@
+<div class="modal-header">
+        <h5 *ngIf="!isUpdate" class="font_20 fw-semi text_pri" id="SKUModalLabel">Add Restaurant Section</h5>
+        <h5 *ngIf="isUpdate" class="font_20 fw-semi text_pri" id="SKUModalLabel">Edit Restaurant Section</h5>
+        <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer" (click)="closeModal()"/>
+    </div>
+    <div class="modal-body create_order_blk this_mon_blk form_popup">
+        <form #tableTypeForm="ngForm" class="ng-invalid ng-touched ng-dirty" [formGroup]="tableForm">
+            <div class="row modal_input_row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label> Restaurant Section Name<span class="required-asterisk">*</span></label>
+                        <input type="text" class="form-control" id="email" placeholder="Enter Table type Name"
+                            formControlName="tableTypeName">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="sel1"> Select Outlet<span class="required-asterisk">*</span></label>
+                        <div class="position-relative">
+                            <select class="form-control select-control" id="sel1" formControlName="outletId" disabled>
+                                <option value="" [disabled]="true">Select Outlet</option>
+                                <option *ngFor="let outlet of resData?.outlets" value="{{outlet.outletId}}"
+                                    [disabled]="isActiveOutlet">{{outlet.outletName}}</option>
+                            </select>
+                            <img alt="image" src="/assets/images/dropdown-arrow.svg" class="select_input_arrow">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label> Description</label>
+                        <textarea class="form-control" placeholder="Description" formControlName="description"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-6 pb_0">
+                    <button class="cancel_btn" type="reset"
+                    (click)="closeModal()">Cancel</button>
+                </div>
+                <div class="col-md-6 pb_0">
+                    <button *ngIf="isUpdate" class="btn_primary" ngbAutofocus
+                    name="btn_login" (click)="updateTableType(tableTypeForm.value)">Update</button>
+
+                <button *ngIf="!isUpdate" class="btn_primary" ngbAutofocus
+                    name="btn_login" (click)="addTableType(tableTypeForm.value)">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>

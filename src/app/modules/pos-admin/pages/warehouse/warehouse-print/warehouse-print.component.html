@@ -1,0 +1,66 @@
+
+<div class="modal-header">
+  <h5 class="font_20 fw-semi text_pri mb_15" id="SKUModalLabel">Order Print</h5>
+  <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer" (click)="closeModal()"/>
+</div>
+<div id="print_Section" class="border-none">
+  <div class="printMainDiv" class="mb_15">
+    <div class="order_print_title_body">
+      <h4 class="font_16 fw-semi text_pri mb_12 text-center">Order Print</h4>
+      <span class="font_14 fw-semi text_pri mb_10 d-block"> Order No: {{orderDataById?.orderNo}}</span>
+      <div class="order_print_type_blk ">
+        <h5 class="font_14 fw-semi text_pri mb_10">Order Type : <span class="fw-reg">{{orderDataById?.orderType}}</span></h5>
+        <h5 class="font_14 fw-semi text_pri mb_10">Server : <span class="fw-reg">{{orderDataById?.createdByName}}</span></h5>
+        <h5 class="font_14 fw-semi text_pri mb_10" *ngIf="orderDataById?.customerName != '' && orderDataById?.customerName != null">Customer : <span class="fw-reg">{{orderDataById?.customerName}}</span></h5>
+      </div>
+      <div class="d-flex align-items-center justify-content-between mb_15">
+        <div class="font_12 fw-semi text_pri">{{currentTime}}</div>
+        <div class="font_12 fw-semi text_pri">{{date}}</div>
+      </div>
+      <div class="print_body">
+        <table class="table m-0 thead_color_th">
+          <!-- <caption>Warehouse Print Table</caption> -->
+          <thead>
+            <tr>
+              <th>Table No</th>
+              <th>Item</th>
+              <th>Qty</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let data of orderDataById?.items; let i=index">
+              <ng-container *ngIf="data.itemLocation === 'Warehouse'">
+                <tr>
+                  <td>{{data.tableNo}}</td>
+                  <td>{{data.itemName}}
+                    <div *ngIf="data.notes != null && data.notes != ''"><b>Note : </b>{{data.notes}}</div>
+                  </td>
+                  <td>{{data.orderQuantity}}</td>
+                </tr>
+               <tr *ngIf="data.modifiers.length" style="border-top: 0px">
+                  <td colspan="4" class="mod_list_td">
+                    <ul class="mod_ul">
+                      <li *ngFor="let modifier of data.modifiers" class="mod_li">{{modifier.modifierName}}: +
+                        {{modifier.orderQuantity}}
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+              </ng-container>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row modal_input_row">
+  <div class="col-md-6 pb_0">
+      <button class="cancel_btn" name="btn_login" (click)="closeModal()" type="reset">
+        Close
+    </button>
+  </div>
+  <div class="col-md-6 pb_0">
+    <button  class="btn_primary" name="btn_login" printSectionId="print_Section" [useExistingCss]="true" ngxPrint>Print</button>
+  </div>
+</div>

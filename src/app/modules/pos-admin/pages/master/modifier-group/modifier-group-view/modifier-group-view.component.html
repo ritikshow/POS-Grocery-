@@ -1,0 +1,45 @@
+
+<div class="modal-header">
+        <!-- <h5 class="font_20 fw-semi text_pri mb_15" id="SKUModalLabel">Modifier Group Id: {{modData?.id}}</h5> -->
+        <h5 class="font_20 fw-semi text_pri mb_15" id="SKUModalLabel">Modifier Details</h5>
+        <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer" (click)="closeModal()"/> 
+</div>
+<div class="modal-body">
+    <div class="view_details_blk mb_15">
+        <div class="row modal_input_row">
+            <div class="col-md-3">
+                <h6 class="font_14 fw-reg text_pri mb_5">Group Name</h6>
+                <h4 class="font_14 fw-semi text-black m-0">{{modData?.groupName}}</h4>
+            </div>
+            <div class="col-md-3">
+                <h6 class="font_14 fw-reg text_pri mb_5">Modifier Name</h6>
+                <h4 class="font_14 fw-semi text-black m-0">{{modData?.modifierName}}</h4>
+            </div>
+            <div *ngIf="modData?.description" class="col-md-3">
+                <h6 class="font_14 fw-reg text_pri mb_5">Description</h6>
+                <h4 class="font_14 fw-semi text-black m-0">{{modData?.description}}</h4>
+            </div>
+        </div> 
+    </div>
+    <!-- <h5 class="font_20 fw-semi text_pri mb_10">Modifier Items</h5>
+    <div class="view_details_blk">
+        <div class="row modal_input_row tax_details_view_row" *ngFor="let data of modData?.modifierItems">
+            <div class="col-md-3">
+                <h6 class="font_14 fw-reg text_pri mb_5">Item From</h6>
+                <h4 class="font_14 fw-semi text-black m-0">{{data.itemFrom}}</h4>
+            </div>
+            <div class="col-md-3">
+                <h6 class="font_14 fw-reg text_pri mb_5">Item Id</h6>
+                <h4 class="font_14 fw-semi text-black m-0">{{data.itemFrom}}</h4>
+            </div>
+            <div class="col-md-3">
+                <h6 class="font_14 fw-reg text_pri mb_5">Item Name</h6>
+                <h4 class="font_14 fw-semi text-black m-0">{{data.itemFrom}}</h4>
+            </div>
+            <div class="col-md-3">
+                <h6 class="font_14 fw-reg text_pri mb_5">Price</h6>
+                <h4 class="font_14 fw-semi text-black m-0">{{data.price}}</h4>
+            </div>
+        </div>
+    </div> -->
+</div>

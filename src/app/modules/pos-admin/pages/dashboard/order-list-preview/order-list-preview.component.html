@@ -1,0 +1,60 @@
+<div class="modal-header">
+  <h2 class="font_20 fw-semi text_pri mb_15" id="modal-basic-title">{{modalTitle}}</h2>
+  <a *ngIf="closeView == true" href="javascript:void(0)" class="modal_close_icon" (click)="closeModal()"><img
+      alt="image" src="/assets/images/modal-close-icon.svg" class=" cursor-pointer" /> </a>
+</div>
+<div class="modal-body">
+  <div class="text-right mb_15">
+    <button *ngIf="isExportEnable == true" class="dashboard_sec_btn" (click)="downloadFile()">
+      Export
+    </button>
+  </div>
+  <div class="w-100" id="checkBoxes">
+    <div class="table-responsive">
+      <table id="example" class="buyer_table w-100 nowrap m-0" id="table-request">
+        <caption>Order List Table</caption>
+        <thead>
+          <tr>
+            <th *ngIf="!Tip" id="unique_name" scope="col">Customer Name</th>
+            <th *ngIf="voidOrder" id="unique_name" scope="col">Voided By User</th>
+            <th *ngIf="voidOrder" id="unique_name" scope="col">Voided On</th>
+            <th *ngIf="Tip" id="unique_name" scope="col">Date</th>
+            <th id="status_name" scope="col">Order Type</th>
+            <th id="status_name" scope="col">Order Number</th>
+            <th *ngIf="Tip" id="unique_name" scope="col">InvoiceNo</th>
+            <th *ngIf="Tip" id="unique_name" scope="col">Total</th>
+            <th *ngIf="Tip" id="unique_name" scope="col">Tip Amount</th>
+            <th *ngIf="!Tip" id="order_unique_name" scope="col">Amount</th>
+            <th id="order_unique_name" scope="col">Payment Mode</th>
+            <th *ngIf="!Tip" id="buyer_company_name" scope="col">Status</th>
+            <th id="buyer_company_name" scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let data of TodaySalesList; let i=index">
+          <tr>
+            <td *ngIf="data.orderType != 'DineIn'">{{data.customerName}}</td>
+            <td *ngIf="data.orderType == 'DineIn'">{{data.createdByName}}</td>
+            <td *ngIf="voidOrder">{{data.lastModifiedByName}}</td>
+            <td *ngIf="Tip">{{data.createdOn | date: 'dd/MM/yyyy'}}</td>
+            <td *ngIf="voidOrder">{{data.lastModifiedOn | date: 'dd/MM/yyyy'}}</td>
+            <td>{{data.orderType}}</td>
+            <td>{{data.orderNo}}</td>
+            <td *ngIf="Tip">{{data.invoiceNo}}</td>
+            <td *ngIf="data?.dynamicPaymentsList != undefined || data?.dynamicPaymentsList != null">{{data?.dynamicPaymentsList[0]?.totalSum | number}}</td>
+           <td *ngIf="data?.dynamicPaymentsList == undefined || data?.dynamicPaymentsList == null">{{data?.total | number}}</td>
+            <td *ngIf="Tip">{{data.tipAmount}}</td>
+            <td *ngIf="data?.dynamicPaymentsList != undefined || data?.dynamicPaymentsList != null">{{data.dynamicPaymentsList[0]?.paymentMode}}</td>
+            <td *ngIf="data?.dynamicPaymentsList == undefined || data?.dynamicPaymentsList == null">{{" "}}</td>
+            <td>{{data.orderStatus}}</td>
+            <td  *ngIf="data?.dynamicPaymentsList != undefined || data?.dynamicPaymentsList != null" (click)="viewPaymentBrakage()"> View Payment Breakage</td>
+          </tr>
+          <tr *ngFor="let pay of data.paymentBreakage">
+            <td *ngIf="openPaymentBlock && pay?.cardType != null">{{pay?.cardType}}</td>
+            <td *ngIf="openPaymentBlock && pay?.cardType == null">{{pay?.paymentMode}}</td>
+            <td *ngIf="openPaymentBlock">{{pay?.amount}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,103 @@
+<div class="page_container">
+  <h2 class="text_pri font_20 fw-semi mb_15">Inventory</h2>
+  <div class="d-flex align-items-end justify-content-between">
+    <ul class="p-0 mb_7 d-flex align-items-center order_nav_blk">
+      <li *ngIf="commonService.checkRolePermissions('LIST_STOCK')" class="mr_6"><a routerLink="/pos-dashboard/Inventory">Stock</a></li>
+      <li *ngIf="commonService.checkRolePermissions('LIST_PRODUCT')" class="mr_6"><a routerLink="/pos-dashboard/Inventory/product">Product</a></li>
+      <li *ngIf="commonService.checkRolePermissions('LIST_SUPPLIER')" class="mr_6"><a routerLink="/pos-dashboard/Inventory/supplier">Supplier</a></li>
+      <li *ngIf="commonService.checkRolePermissions('LIST_SUPPLIER_ORDER')" class="mr_6"><a routerLink="/pos-dashboard/Inventory/supplier-order">Supplier Orders</a></li>
+      <li *ngIf="commonService.checkRolePermissions('LIST_BATCH_ITEM')" class="mr_6"><a routerLink="/pos-dashboard/Inventory/batch-item" class="active">Batch Item</a></li>
+    </ul> 
+    <div class="d-flex align-items-center mb_12" *ngIf="commonService.checkRolePermissions('ADD_BATCH_ITEM')">
+      <img alt="image" src="/assets/images/add-icon.svg" class="mr_5">
+      <span class="font_16 fw-semi text-underline text-sec cursor-pointer respons_wmax_content"  (click)="openForm()">Add Item</span>
+    </div>
+  </div>
+  
+  <div class="order_info_blk order_info_container floor_container">
+        <!-- <div class="table_header mb_20 create_order_blk this_mon_blk">
+            <div class="w-100">
+              <div class="OutletName">Outlet Name : {{outletName}}</div>
+            </div>
+            <div class="col-md-3 d-flex align-items-end" style="margin-left: 74%;">
+              <button class="create_order_btn w-100 d-flex align-items-center justify-content-center"
+                (click)="openForm()">
+                <img src="assets/images/add-circle.svg" alt="add-circle" class="img-fluid mr_16">
+                Add Item
+              </button>
+            </div>
+          </div> -->
+        <!-- <div class="d-flex align-items-center justify-content-between mb_20">
+            <ul class="nav nav-tabs d-flex flex-wrap align-items-center nav_tabs_ul p-0 m-0" id="myTab" role="tablist">
+              <li role="presentation">
+                <a routerLink="/pos-dashboard/Inventory">
+                  Stock
+                </a>
+              </li>
+              <li role="presentation">
+                <a routerLink="/pos-dashboard/Inventory/product">
+                  Product
+                </a>
+              </li>
+              <li role="presentation">
+                <a routerLink="/pos-dashboard/Inventory/supplier">
+                  Supplier
+                </a>
+              </li>
+              <li role="presentation">
+                <a routerLink="/pos-dashboard/Inventory/supplier-order">
+                  Supplier Orders
+                </a>
+              </li>
+              <li role="presentation">
+                <a class="active" routerLink="/pos-dashboard/Inventory/batch-item">
+                  Batch Item
+                </a>
+              </li>
+            </ul>
+          </div> -->
+          <div class="table-responsive">
+              <table aria-describedby="desc" datatable [dtOptions]="dtOptions" *ngIf="isDataLoaded" class="buyer_table w-100">
+                  <thead>
+                      <tr>
+                          <th scope="col">Category Name</th>
+                          <th scope="col">Item Name</th>
+                          <th scope="col">Item Amount</th>
+                          <th scope="col">Unit</th>
+                          <th scope="col">Quantity</th>
+                          <th scope="col">Status</th>
+                          <th scope="col">Action</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of allItems; let i=index">
+                        <td>{{item.categoryName}}</td>
+                        <td>{{item.itemName}}</td>
+                        <td>{{item.itemAmount}}</td>
+                        <td>{{item.unit}}</td>
+                        <td>{{item.quantity}}</td>
+                        <td>
+                          <span class="table_status_text active_status" *ngIf="item.isActive ==true">Active</span>
+                          <span class="table_status_text in_active_status" *ngIf="item.isActive ==false">Inactive</span>
+                        </td>
+                        <td>
+                          <img alt="image" src="/assets/images/edit-icon.svg" class="mr_14 cursor-pointer" *ngIf="commonService.checkRolePermissions('EDIT_BATCH_ITEM')" (click)="edit(item.id)"/>
+                          <img alt="image" src="/assets/images/view-icon.svg" class="mr_14 cursor-pointer" *ngIf="commonService.checkRolePermissions('VIEW_BATCH_ITEM')" (click)="view(item.id)"/>
+                          <img alt="image" src="/assets/images/delete-icon.svg" class="cursor-pointer" *ngIf="commonService.checkRolePermissions('DELETE_BATCH_ITEM')" (click)="onDelete(item.id)" />
+                        </td>
+                    </tr>
+                  </tbody>
+              </table>
+              <!-- <div class="total_entries">
+                  <select class="len_per_page" (change)="changedLength($event)">
+                      <option value="5">5</option>
+                      <option value="10">10&nbsp;</option>
+                      <option value="20">20&nbsp;</option>
+                      <option value="-1">All&nbsp;</option>
+                  </select>
+                  <label>Total :</label>
+                  <label> {{tableListRecord.total}}</label>
+              </div> -->
+          </div>
+    </div>
+</div>

@@ -1,0 +1,116 @@
+
+<div class="modal-header">
+  <h5 *ngIf="editMod !== true" class="font_20 fw-semi text_pri mb_15" id="SKUModalLabel">Add Product</h5>
+  <h5 *ngIf="editMod == true" class="font_20 fw-semi text_pri mb_15" id="SKUModalLabel">Edit Product</h5>
+  <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer" (click)="closeModal()"/>
+</div>
+<div class="d-flex align-items-center mb_20" *ngIf="editMod !== true">
+  <div class="position-relative w-50 mr_15">
+    <input type="text" class="form-control search_icon_input" placeholder="Search" formControlName="quantity" (keyup)="GetVal($event)">
+    <img alt="image" src="/assets/images/search-icon.svg" class="search_input_icon">
+  </div>
+  <button class="searh_btn" (click)="search()">
+    <img alt="image" src="/assets/images/search-icon.svg" class="">
+  </button>
+</div>
+  <!-- <label *ngIf="editMod !== true">Search Product Name:</label>
+  <div *ngIf="editMod !== true" class="d-flex justify-content-between">
+    <input type="text" class="form-control" placeholder="Search" formControlName="quantity" (keyup)="GetVal($event)">
+    <button (click)="search()">Search</button>
+  </div> -->
+    <div class="table-responsive" id="checkBoxes" *ngIf="WPProductData != null">
+      <table id="example" class="w-100 m-0" id="table-request">
+        <thead >
+          <tr>
+            <th>No</th>
+            <th>Product Name</th>
+            <th>Brand</th>
+            <th>Product Category</th>
+            <th>Unit</th>
+            <th>Price</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of WPProductData; let i=index">
+            <td>{{i+1}}</td>
+            <td>{{data.subcategory_name}}</td>
+            <td>{{data.brand}}</td>
+            <td>{{data.category_name}}</td>
+            <td>{{data.base_uom}}</td>
+            <td>
+              <div class="position-relative">
+                <select class="form-control" placeholder="Select Product" name="SelectPricing">
+                  <option [value]="P_Rang" *ngFor="let P_Rang of data.pricing_range">{{P_Rang.list_price }}-{{
+                    P_Rang.display_sku_name}}</option>
+                </select>
+                <img alt="image" src="/assets/images/dropdown-arrow.svg" class="select_input_arrow">
+              </div>
+            </td>
+            <td *ngIf="!data.isBlock"><button class="add_btn font_14 fw-med text_sec m-0" (click)="Add(data,i)">Add</button></td>
+            <td *ngIf="data.isBlock"><button class="add_btn font_14 fw-med text_sec already_added_btn m-0">Already Available</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="d-flex align-items-center justify-content-end">
+      <button class="add_btn font_14 fw-med text_sec mr_14"*ngIf="page > 1" (click)="previous()">Previous</button>
+      <button class="add_btn font_14 fw-med text_sec" (click)="Next()">Next</button>
+    </div>
+    <div *ngIf="!OnlyPopUp">
+      <form class="ng-invalid ng-touched ng-dirty" [formGroup]="productForm" (ngSubmit)="addProductOrder()">
+        <div class="row modal_input_row">
+          <div class="col-md-4">
+            <label class="font_14 fe-reg text_pri mb_5">Product Name<span class="required-asterisk">*</span></label>
+            <input type="text" class="form-control" placeholder="Enter Product Name" formControlName="productName">
+          </div>
+          <div class="col-md-4">
+            <label  class="font_14 fe-reg text_pri mb_5">Price<span class="required-asterisk">*</span></label>
+            <input type="number" class="form-control" placeholder="Enter Price" formControlName="price">
+          </div>
+          <div class="col-md-4" *ngIf="iswMDataIsNull == true">
+            <label class="font_14 fe-reg text_pri mb_5">Select Supplier<span class="required-asterisk">*</span></label>
+            <div class="position-relative">
+              <select class="form-control" formControlName="supplierId">
+                  <option value="" [disabled]="true">Select Supplier</option>
+                  <option *ngFor="let supplierForDrop of manuallyAddedSupplier" value="{{supplierForDrop.supplierId}}">
+                    {{supplierForDrop.supplierName}}</option>
+              </select>
+              <img alt="image" src="/assets/images/dropdown-arrow.svg" class="select_input_arrow">
+            </div>
+          </div>
+          <div *ngIf="iswMDataIsNull == false" class="col-md-4">
+              <label class="font_14 fe-reg text_pri mb_5">Supplier<span class="required-asterisk">*</span></label>
+              <input type="text" class="form-control" value="{{productData.wMData.wMSupplierName }}" readonly>
+          </div>
+          <div class="col-md-4">
+            <label  class="font_14 fe-reg text_pri mb_5">Unit<span class="required-asterisk">*</span></label>
+            <input type="text" class="form-control" placeholder="Enter Unit" formControlName="unit">
+          </div>
+        </div>
+        <div class="row modal_input_row">
+          <div class="col-md-6 pb_0">
+              <button class="cancel_btn" name="btn_login" (click)="closeModal()" type="reset">
+                  Cancel
+            </button>
+          </div>
+          <div class="col-md-6 pb_0">
+            <button *ngIf="editMod !== true" class="btn_primary" name="btn_login" type="submit">Add Product</button>
+            <button *ngIf="editMod == true" class="btn_primary" name="btn_login" type="submit">Save</button>
+          </div>
+       </div>
+        <!-- <div class="pl-0 mt-4">
+          <button class="btn btn-lg btn-primary active btn-block mb-1 mt-2 mr-2" type="reset" (click)="closeModal()">
+            Cancel
+          </button>
+          <button *ngIf="editMod !== true" class="btn btn-lg btn-primary active action-btn btn-block mb-1" ngbAutofocus
+            name="btn_login" type="submit">
+            Add Product
+          </button>
+          <button *ngIf="editMod == true" class="btn btn-lg btn-primary active action-btn btn-block mb-1" ngbAutofocus
+            name="btn_login" type="submit">
+            Save
+          </button>
+        </div> -->
+      </form>
+    </div>

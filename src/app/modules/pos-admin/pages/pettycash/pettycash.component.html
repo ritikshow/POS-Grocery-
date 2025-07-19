@@ -1,0 +1,210 @@
+<div class="page_container ">
+  <div class="d-flex align-items-center justify-content-between mb_15">
+    <h2 class="text_pri font_20 fw-semi m-0">Cash Counter : {{currentDate | date:'dd/MM/yyyy'}}</h2>
+    <div class="download_report_btn cursor-pointer online_pri_btn d-flex align-items-center" name=""
+      (click)="OnClickDownload(DetailsReportPopUp)"  *ngIf="commonService.checkRolePermissions('DOWNLOAD_REPORT')">
+      <img alt="image" src="/assets/new-images/csv.svg" class="mr_8" />
+      <span class="font_14 fw-semi text-sec text-underline"> Download Report </span>
+    </div>
+  </div>
+  <div class="order_info_blk">
+    <!-- <div class="order_info_container border-bottom-lightgrey">
+       <form class="ng-invalid ng-touched ng-dirty" [formGroup]="filterForm"
+          *ngIf="commonService.checkRolePermissions('DOWNLOAD_REPORT')">
+          <div class="row">
+            <div class="col-md-4">
+            <div class="position-relative table_search_blk">
+              <mat-form-field class="mulit_select_calendar_blk">
+                <mat-date-range-input [rangePicker]="picker">
+                  <input matStartDate placeholder="Start date" formControlName="fromDate">
+                  <input matEndDate placeholder="End date" formControlName="toDate">
+                </mat-date-range-input>
+                <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+              </mat-form-field>
+            </div> 
+          </div>
+          <div class="col-md-8 d-flex align-items-end">
+            <div class="form-group d-flex align-items-center justify-content-between">
+              <button class="table_reset_btn reset_btn">
+                <img alt="image" src="/assets/images/reset-icon.svg" (click)="resetPage()" />
+              </button>
+              <div class="download_report_btn m-0 online_pri_btn d-flex align-items-center" name=""(click)="OnClickDownload(DetailsReportPopUp)" >
+                <img alt="image" src="/assets/new-images/csv.svg" class="mr_8" />
+                <span class="font_14 fw-semi text-sec"> Download Report </span>
+              </div>
+            </div>
+          </div>
+          </div>
+        </form>
+      
+    </div> -->
+    <div class="order_info_container">
+      <form #tableTypeForm="ngForm" class="ng-invalid ng-touched ng-dirty mb_20" [formGroup]="pettyCashForm"
+        (ngSubmit)="addPettyCash(false)">
+        <div class="add_online_order d-flex align-items-center">
+          <div>
+            <input type="text" class="form-control" placeholder="Paid / Received From"
+              formControlName="paidOrReceiveFrom">
+          </div>
+          <div>
+            <input type="text" class="form-control" placeholder="Purpose" formControlName="purpose">
+          </div>
+          <div>
+            <input type="number" class="form-control" placeholder="Cash Out" formControlName="cashOut">
+          </div>
+          <div>
+            <input type="number" class="form-control" placeholder="Cash In" formControlName="cashIn">
+          </div>
+          <div *ngIf="commonService.checkRolePermissions('ADD_CASH')">
+            <button class="add_btn m-0 online_pri_btn d-flex align-items-center" name="btn_login">
+              <img alt="image" src="/assets/images/add-icon.svg" class="mr_8" />
+              <span class="font_14 fw-semi text-sec"> Add </span>
+            </button>
+          </div>
+        </div>
+      </form>
+      <div class="table-responsive" *ngIf="viewDiv">
+        <table *ngIf="isDataLoaded" datatable [dtOptions]="dtOptions" class="buyer_table w-100" id="table-request">
+          <thead class="thead-dark">
+            <tr>
+              <th id="unique_name">SL. No</th>
+              <th id="status_name">Paid / Receive From</th>
+              <th id="order_unique_name">Purpose</th>
+              <th id="buyer_company_name">Cash Out</th>
+              <th id="buyer_company_name">Cash In</th>
+              <th id="buyer_company_name">Balance [O/P Balance : {{openingBalance}}]</th>
+              <th id="buyer_company_name">Created By</th>
+              <th id="unique_name" class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of pettyCashData; let i=index">
+              <td>{{i+1}}</td>
+              <td>{{data.paidOrReceiveFrom}}</td>
+              <td>{{data.purpose}}</td>
+              <td>{{data.cashOut | number}}</td>
+              <td>{{data.cashIn | number}}</td>
+              <td>{{data.balance}}</td>
+              <td>{{data.createdByName}}</td>
+
+              <td>
+                <div class="d-flex align-items-center justify-content-center">
+                  <img alt="image" src="/assets/images/edit-icon.svg" class="mr_14 cursor-pointer"
+                    *ngIf="commonService.checkRolePermissions('EDIT_CASH')"
+                    (click)="EidtPettyCash(data, editPettyCash)" />
+                  <img alt="image" src="/assets/images/delete-icon.svg" class="cursor-pointer"
+                    *ngIf="commonService.checkRolePermissions('DELETE_CASH')" (click)="onDelete(data._id)" />
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <p>Opening Balance = {{ openingBalance }}</p>
+        <p>Cash In = {{CashIn}}</p>
+        <p>Cash Out = {{CashOut}}</p>
+        <p>Available Total Balance = {{ TotalBalance }}</p>
+      </div>
+    </div>
+  </div>
+  <ng-template #editPettyCash let-close="close">
+    <div class="modal-header mb_14">
+      <h5 class="font_20 fw-semi text_pri" id="SKUModalLabel">Edit Cash Counter</h5>
+      <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer"
+        (click)="closeAction()" />
+    </div>
+    <div class="create_order_blk this_mon_blk modal-body form_popup">
+      <form #tableDetailsForm="ngForm" class="ng-invalid ng-touched ng-dirty" [formGroup]="pettyCashForm">
+        <div class="row modal_input_row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="font_14 fe-reg text_pri mb_5">Paid / Received From <span
+                  class="required-asterisk">*</span></label>
+              <input type="text" class="form-control" placeholder="Paid / Received From"
+                formControlName="paidOrReceiveFrom">
+            </div>
+          </div>
+          <div class="col-md-6 ">
+            <div class="form-group ">
+              <label class="font_14 fe-reg text_pri mb_5">Purpose</label>
+              <input type="text" class="form-control" placeholder="Purpose" formControlName="purpose">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group ">
+              <label class="font_14 fe-reg text_pri mb_5">Cash Out</label>
+              <input type="number" class="form-control" placeholder="Cash Out" formControlName="cashOut">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group ">
+              <label class="font_14 fe-reg text_pri mb_5">Cash In</label>
+              <input type="number" class="form-control" placeholder="Cash In" formControlName="cashIn">
+            </div>
+          </div>
+          <div class="col-md-6 pb_0">
+            <button class="cancel_btn" type="reset" (click)="closeAction()">Cancel</button>
+          </div>
+          <div class="col-md-6 pb_0">
+            <button class="btn_primary" name="btn_login" (click)="addPettyCash(true)">Update</button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </ng-template>
+  <ng-template #DetailsReportPopUp let-itemnote="itemnote">
+      <!-- Modal Header -->
+      <div class="modal-header mb_15 d-flex justify-content-between align-items-center">
+        <h4 class="font_20 fw-semi text_pri mb-0">Download Cash Counter Report</h4>
+        <img alt="close" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer"
+          (click)="closeModal(false)" />
+      </div>
+
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <div class="mb_15">
+          <form [formGroup]="filterForm" *ngIf="commonService.checkRolePermissions('DOWNLOAD_REPORT')">
+            <div class="row">
+              <!-- Date Range Picker -->
+              <div class="col-md-6">
+                <label class="font_14 fe-reg text_pri mb_5">Select the Date Range</label>
+                <div class="position-relative table_search_blk">
+                  <mat-form-field class="mulit_select_calendar_blk">
+                    <mat-date-range-input [rangePicker]="picker">
+                      <input matStartDate placeholder="Start date" formControlName="fromDate">
+                      <input matEndDate placeholder="End date" formControlName="toDate">
+                    </mat-date-range-input>
+                    <mat-hint>MM/DD/YYYY   MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <!-- Reset Button -->
+              <div class="col-md-2 d-flex align-items-end">
+                <button class="table_reset_btn reset_btn" type="button" (click)="resetPage()">
+                  <img alt="reset" src="/assets/images/reset-icon.svg"/>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- Footer Buttons -->
+        <div class="row">
+          <div class="col-md-6 text-start">
+            <button class="cancel_btn" type="button" (click)="closeModal(false)">Cancel</button>
+          </div>
+          <div class="col-md-6 text-end">
+            <button class="btn_primary" type="button" (click)="getPettyCashToDownloadReport()">Download</button>
+          </div>
+        </div>
+      </div>
+  </ng-template>
+
+</div>

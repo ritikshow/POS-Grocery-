@@ -1,0 +1,70 @@
+@page
+    {
+     size: 2.95276in !important;
+     size: landscape;
+   }
+   /* @media print and (width: 8.5in) and (height: 11in) {
+    @page {
+        size: 2.95276in;
+    }
+} */
+.printMainDiv{ 
+     max-width: 295px;
+     width: 298px; 
+    /* border: 1px solid grey;  */
+     margin: auto; 
+     margin-top: 10px; 
+}
+/* .print_header{
+    text-align: center;
+    font-weight: 600;
+}
+.print_footer{
+    text-align: center;
+    font-weight: 600;
+}
+.horizontal_line{
+    border-bottom: 2px solid black;
+}
+.print_title{
+    font-size: 18px;
+    text-align: center;
+    font-weight: 600;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.print_title_orderno{
+    font-size: 16px;
+    text-align: left;
+    font-weight: 600;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-right: 4rem;
+}
+.print_body{
+    border-bottom: 1px solid grey;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    }
+  table tr {
+    border-top: 1px solid #d1d1d1;
+    } */
+/* table tr td{
+    text-align: center !important;
+} */
+/* .mod_li {
+    font-size: 12px;
+    text-align: left !important;
+}
+.mod_list_td{
+    padding: 0px !important;
+    text-align: left !important;
+}
+.mod_ul {
+    margin-bottom: 0px !important;
+}
+.date_time{
+    width: 48%;
+} */

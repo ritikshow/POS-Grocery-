@@ -1,0 +1,33 @@
+<div class="modal-header">
+  <h5 *ngIf="!isUpdate" class="font_20 fw-semi text_pri" id="SKUModalLabel">Add User Role</h5>
+  <h5 *ngIf="isUpdate" class="font_20 fw-semi text_pri" id="SKUModalLabel">Edit User Role</h5>
+  <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer"
+    (click)="closeModal()" />
+</div>
+<div class="modal-body create_order_blk this_mon_blk form_popup">
+  <form #rolesForm="ngForm" class="ng-invalid ng-touched ng-dirty" [formGroup]="roleForm">
+    <div class="modal_input_row row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label class="font_14 fe-reg text_pri mb_5">Role Name<span class="required-asterisk">*</span></label>
+          <input type="text" class="form-control" placeholder="Enter User Role Name" formControlName="roleName">
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label class="font_14 fe-reg text_pri mb_5"> Description</label>
+          <textarea class="form-control" placeholder="User Role Description" formControlName="description"></textarea>
+        </div>
+      </div>
+      <div class="col-md-6 pb_0">
+        <button class="cancel_btn" type="reset" (click)="closeModal()">Cancel</button>
+      </div>
+      <div class="col-md-6 pb_0">
+        <button *ngIf="isUpdate" class="btn_primary" (click)="updateRoleFormData(rolesForm.value)"
+          type="submit">Save</button>
+        <button *ngIf="!isUpdate" class="btn_primary" (click)="addRoleFormData(rolesForm.value)"
+          type="submit">Save</button>
+      </div>
+    </div>
+  </form>
+</div>

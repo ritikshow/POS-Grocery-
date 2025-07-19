@@ -1,0 +1,89 @@
+<div class="modal-header">
+  <!-- <h5 class="font_20 fw-semi text_pri mb_15" id="SKUModalLabel">Restaurant Id: {{resData?.restaurantId}}</h5> -->
+  <h5 class="font_20 fw-semi text_pri mb_15">User Details</h5>
+  <!-- <h5 class="font_20 fw-semi text_pri mb_15" id="SKUModalLabel">User Id: {{userData?.userId}}</h5> -->
+  <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer"
+    (click)="closeModal()" />
+</div>
+<div class="modal-body">
+  <div class="view_details_blk mb_15">
+    <div class="row modal_input_row">
+      <div class="col-md-6">
+        <h6 class="font_14 fw-reg text_pri mb_5">User Name</h6>
+        <h4 class="font_14 fw-semi text-black m-0">{{userData?.userName}}</h4>
+      </div>
+      <div class="col-md-6">
+        <h6 class="font_14 fw-reg text_pri mb_5">User User Role</h6>
+        <h4 class="font_14 fw-semi text-black m-0">{{userData?.roleName}}</h4>
+      </div>
+    </div>
+  </div>
+  <h5 class="font_20 fw-semi text_pri mb_10">Phone Numbers</h5>
+  <div class="view_details_blk mb_15">
+    <div class="row modal_input_row" *ngFor="let phone of userData?.phoneNo; let i=index">
+      <div class="col-md-6">
+        <h6 class="font_14 fw-reg text_pri mb_5">Number {{i+1}}</h6>
+        <h4 class="font_14 fw-semi text-black m-0">{{phone.number}}</h4>
+      </div>
+      <div class="col-md-6">
+        <h6 class="font_14 fw-reg text_pri mb_5">Is Primary </h6>
+        <h4 class="font_14 fw-semi text-black m-0">{{phone.isPrimary}}</h4>
+      </div>
+    </div>
+  </div>
+  <h5 class="font_20 fw-semi text_pri mb_10">Address Details</h5>
+  <div class="view_details_blk mb_15">
+    <div class="row modal_input_row">
+      <div class="col-md-3">
+        <h6 class="font_14 fw-reg text_pri mb_5">Email Id </h6>
+        <h4 class="font_14 fw-semi text-black m-0">{{userData?.emailId}}</h4>
+      </div>
+      <div class="col-md-3">
+        <h6 class="font_14 fw-reg text_pri mb_5">Address </h6>
+        <h4 class="font_14 fw-semi text-black m-0">{{userData?.address}}</h4>
+      </div>
+      <div class="col-md-3">
+        <h6 class="font_14 fw-reg text_pri mb_5">Country </h6>
+        <h4 class="font_14 fw-semi text-black m-0">{{userData?.country}}</h4>
+      </div>
+      <div class="col-md-3">
+        <h6 class="font_14 fw-reg text_pri mb_5">City </h6>
+        <h4 class="font_14 fw-semi text-black m-0">{{userData?.city}}</h4>
+      </div>
+      <div class="col-md-3">
+        <h6 class="font_14 fw-reg text_pri mb_5">Reporting To </h6>
+        <h4 class="font_14 fw-semi text-black m-0">{{userData?.reportingTo}}</h4>
+      </div>
+      <div class="col-md-3">
+        <h6 class="font_14 fw-reg text_pri mb_5">Id Card No</h6>
+        <h4 *ngIf="userData?.idCardNo != 'null'&& userData?.idCardNo !=null " class="font_14 fw-semi text-black m-0">
+          {{userData?.idCardNo }}</h4>
+      </div>
+      <!-- <div class="col-md-3">
+        <h6 class="font_14 fw-reg text_pri mb_5">Image Name</h6>
+        <h4  *ngIf="userData?.imageName !='null' && userData?.imageName !=null" class="font_14 fw-semi text-black m-0">{{userData?.imageName}}</h4>
+      </div> -->
+      <!-- <div class="col-md-3">
+        <h6 class="font_14 fw-reg text_pri mb_5">Image Extension</h6>
+        <h4 *ngIf="userData?.imageExtension !='null' && userData?.imageExtension !=null"  class="font_14 fw-semi text-black m-0">{{userData?.imageExtension}}</h4>
+      </div> -->
+      <div class="col-md-3">
+        <h6 class="font_14 fw-reg text_pri mb_5">Image</h6>
+        <img alt="image" src="{{BaseUrl + profileImage}}" class="qr_resto_logo mb_5" *ngIf="profileImage" />
+        <!-- <img alt="image" [src]="userData?.imagePath" /> -->
+      </div>
+    </div>
+  </div>
+  <h5 class="font_20 fw-semi text_pri mb_10">Restaurants Details</h5>
+  <div class="view_details_blk mb_15">
+    <div *ngFor="let data of userMappedRestaurantList">
+      <h5 class="font_16 fw-semi text_pri mb_10">Restaurant : {{data?.restaurantName}}</h5>
+      <div class="row modal_input_row">
+        <div class="col-md-6" *ngFor="let outlet of data?.userMappedOutlets; let i=index">
+          <h6 class="font_14 fw-reg text_pri mb_5">Outlet Name {{i+1}}</h6>
+          <h4 class="font_14 fw-semi text-black m-0">{{outlet?.outletName}}</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

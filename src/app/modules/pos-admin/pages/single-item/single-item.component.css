@@ -1,0 +1,47 @@
+.main_div {
+  font-size: 14px;
+}
+.item_card_footer {
+  border-top: 1px dotted black;
+  margin-bottom: 10px;
+}
+.item_sub_total {
+  display: flex;
+  text-align: right;
+}
+.item_total {
+  display: flex;
+  text-align: right;
+}
+.quantity {
+  display: flex;
+  justify-content: center;
+}
+.minus {
+  background: #d3d5d8;
+}
+.minus :hover {
+  background: #b1b4b7;
+}
+.total {
+  padding-right: 10%;
+}
+.qty {
+  margin-top: 0px !important;
+  width: 40px;
+  padding: 0px;
+  text-align: center !important;
+  color: black;
+}
+.model_footer {
+  text-align: end;
+}
+@media only screen and (min-width: 700px) and (max-width: 900px) {
+  .main_div {
+    font-size: 13px;
+  }
+  .qty {
+    width: 30px;
+    text-align: center !important;
+  }
+}

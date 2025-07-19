@@ -1,0 +1,417 @@
+<div class="page_container">
+  <div class="d-flex align-items-center justify-content-between mb_10" *ngIf="IsDataLoad == true">
+    <div class="d-flex align-items-center">
+      <img alt="image" src="/assets/images/back-arrow.svg" (click)="backToPage(saveOrderConfirmation)"
+        class="mr_2 cursor-pointer" />
+      <h2 class="text_pri font_20 fw-semi mb_0 mr_15" *ngIf="customerDetails?.customerName">
+        / Order : New</h2>
+      <span class="text_pri font_20 fw-semi">Order ID : #{{PrimaryOrder?.orderNo}}</span>
+    </div>
+  </div>
+  <div class="row take_order_info_container">
+    <div class="col-md-8">
+      <div class="order_items_blk">
+        <ul class="order_main_category_blk d-flex align-items-start justify-content-start m-0">
+          <li class="d-flex align-items-center flex-column justify-content-center cursor-pointer mr_4"
+            *ngFor="let category of allCategoryList; let i = index" (click)="selectCategoryMenu(category.categoryId,i)"
+            [ngClass]="{'active': activeCategoryIndex === i}">
+            <img alt="image" *ngIf="!category.CategoryImage" src="/assets/images/all-items-icon.svg" class="mb_4" />
+            <img alt="image" *ngIf="category.CategoryImage" src="{{BaseUrl + category.CategoryImage}}" class="mb_4" />
+            <span class="font_14 fw-reg text-black">{{category.categoryName}}</span>
+          </li>
+        </ul>
+        <div class="sub_category_blk">
+          <div class="position-relative w-50 mb_25">
+            <input type="search" class="form-control search_icon_input" placeholder="search"
+              (keyup)="SearchItems($event)">
+            <img alt="image" src="/assets/images/search-icon.svg" class="search_input_icon" />
+          </div>
+          <h4 class="font_16 fw-semi text_pri mb_10">Choose items</h4>
+          <div class="sub_category_item_row" *ngIf="itemsOfSelectedCategory.length != 0">
+            <div class="row m-0">
+              <div class="col-md-3" *ngFor="let item of itemsOfSelectedCategory">
+                <div (click)="OnClickItem(item)"
+                  class="food_item_blk d-flex align-items-center flex-column cursor-pointer justify-content-between">
+                  <div class="d-flex align-items-center flex-column">
+                    <!-- Bind the image -->
+                    <img alt="image" *ngIf="!item.imagePath" src="/assets/images/chicken-pizza-image.svg"
+                      class="mb_7 item_img" />
+
+                    <img alt="image" *ngIf="item.imagePath" src="{{BaseUrl + item.imagePath}}" class="mb_7 item_img" />
+                    <span class="font_14 fw-semi text-black mb_23">{{item.itemName}}</span>
+                  </div>
+                  <div class="d-flex align-items-center justify-content-between w-100">
+                    <h6 class="font_14 fw-reg text-black m-0">₹{{item.itemAmount}}</h6>
+                    <img alt="image" src="/assets/images/pri-filled-plus-icon.svg" class="cursor-pointer" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row no_items_available_blk" *ngIf="itemsOfSelectedCategory.length == 0">
+            <div class="col-md-12 text-center">
+              <img alt="image" src="/assets/images/no_data_icon.svg" class="mb_12" />
+              <h6 class="font_14 fw-semi">No Items Available</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="PrimaryOrder" class="col-md-4">
+      <div class="h-100">
+        <div class="order_cart_blk d-flex flex-column justify-content-between">
+          <div>
+            <div class="d-flex align-items-center justify-content-between mb_25">
+              <span class="font_14 fw-reg text-black">Overall Items : {{PrimaryOrder.items.length}}</span>
+              <!-- <span class="font_14 fw-reg text-black">No.of People : {{selectedPersonsCount}}</span> -->
+
+            </div>
+            <div class="added_item_container">
+              <div class="added_item_blk mb_12" *ngFor="let cartItem of PrimaryOrder.items; let it = index;">
+                <div class=" d-flex align-items-center justify-content-between mb_12">
+                  <div class="d-flex align-items-center cart_menu_img_blk">
+                    <img alt="image" *ngIf="!cartItem.imagePath" src="/assets/images/chicken-pizza-image.svg"
+                      class="mr_8 cart_added_img" />
+
+                    <img alt="image" *ngIf="cartItem.imagePath" src="{{BaseUrl + cartItem.imagePath}}"
+                      class="mr_8 cart_added_img" />
+                    <div>
+                      <h6 class="font_14 fw-semi text-black m-0">{{cartItem.itemName}}</h6>
+                      <span class="font_14 fw-reg text-black m-0">₹{{cartItem.itemAmount}}</span>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <img alt="image" src="/assets/images/count-minus-icon.svg" class="cursor-pointer"
+                      (click)="QuantityDecreament(it)" />
+                    <input type="text" class="count_input" value="{{cartItem.orderQuantity}}" [maxLength]="4" min="1"
+                      (keyup)="ManualQuantityChange($event.target.value,it)">
+                    <img alt="image" src="/assets/images/count-plus-icon.svg" class="cursor-pointer"
+                      (click)="QuantityIncreament(it)" />
+                  </div>
+                </div>
+
+                <!-- Display selected Discount / Promocode / Modifier -->
+                <ul class="p-0 add_resto_note_blk d-flex align-items-center" *ngIf="cartItem.discount.length > 0">
+                  <li class="font_12" *ngFor="let discount of cartItem.discount">
+                    <span class="font_12 fw-semi" *ngIf="discount.promocodeDiscountType ==null">
+                      <!-- Before Update order -->
+                      {{PromocodeDiscountTypeToOpenPopUp}} Applied : {{discount.discountName}} - ₹
+                      {{discount.discountedAmount}}
+                    </span>
+                    <span class="font_12 fw-semi" *ngIf="discount.promocodeDiscountType !=null">
+                      <!-- BefAfter Update order -->
+                      {{discount.promocodeDiscountType}} Applied : {{discount.discountName}} - ₹
+                      {{discount.discountedAmount}}
+                    </span>
+                    <span class="font_12 fw-semi" (click)="RemoveDiscount(it)">
+                      ⛔
+                    </span>
+                  </li>
+                </ul>
+                <ul class="p-0 add_resto_note_blk d-flex align-items-center" *ngIf="cartItem.notes != null">
+                  <li class="font_12">
+                    <span class="font_12 fw-semi">
+                      Notes : {{cartItem?.notes}}
+                    </span>
+                  </li>
+                </ul>
+                <ul class="p-0 add_resto_note_blk d-flex align-items-center"
+                  *ngFor="let data of cartItem.modifiers; let dt = index">
+                  <li class="font_12">
+                    <span class="font_12 fw-semi">
+                      Modifiers {{dt + 1}} : {{data?.modifierName}} - ₹ {{data.price}} (Qty : {{data.orderQuantity}})
+                    </span>
+                  </li>
+                </ul>
+
+                <ul class="p-0 add_resto_note_blk d-flex align-items-center">
+                  <li class="font_12"><span class="font_12 fw-semi text-sec text-underline cursor-pointer"
+                      (click)="OnClickNote(1, itemNote, it)">Add Note</span></li>
+                  <li class="font_12"><span class="font_12 fw-semi text-sec text-underline cursor-pointer"
+                      (click)="OpenDiscountDialog('Discount', openDiscountModifierAddPopup, it)">Discount</span></li>
+                  <li class="font_12"><span class="font_12 fw-semi text-sec text-underline cursor-pointer"
+                      (click)="OpenPrmocodeDialog('Promocode', openDiscountModifierAddPopup, it)">Promocode</span></li>
+                  <li class="font_12"><span class="font_12 fw-semi text-sec text-underline cursor-pointer"
+                      (click)="onClickModifier(modifiers, it)">Modifiers</span></li>
+                </ul>
+              </div>
+            </div>
+            <div class="d-flex align-items-center justify-content-between mb_5" *ngIf="PrimaryOrder?.orderNotes !=null">
+              <span class="font_12 fw-semi text-black">Order Notes : {{PrimaryOrder?.orderNotes}}</span>
+            </div>
+          </div>
+          <div class="pt_10" [class.disabled-section]="!PrimaryOrder?.items?.length">
+            <div class="d-flex align-items-center justify-content-between mb_10">
+              <button class="order_apply_note_btn mr_10" (click)="OnClickNote(2, orderNote, 0)">Add Note</button>
+              <!-- Needs to work for this -->
+              <button class="order_apply_note_btn mr_10"
+                (click)="OpenOrderDiscountDialog('Discount',openOrderWiseDiscount)">Add Discount</button>
+              <!-- Needs to work for this -->
+              <button class="order_apply_note_btn"
+                (click)="OpenOrderDiscountDialog('Promocode',openOrderWiseDiscount)">Add Promocode</button>
+              <!-- Needs to work for this -->
+            </div>
+            <div class="d-flex align-items-center justify-content-between mb_5">
+              <span class="font_12 fw-semi text-black">Sub Total :</span>
+              <span class="font_12 fw-semi text-black">₹{{PrimaryOrder.subTotal.toFixed(2)}}</span>
+            </div>
+            <div class="d-flex align-items-center justify-content-between mb_5">
+              <span class="font_12 fw-semi text-black">Discount :</span>
+              <span class="font_12 fw-semi text-black">₹{{PrimaryOrder.totalDiscount}}</span>
+            </div>
+            <div class="border_bottom_dashed mb_5" *ngIf="itemTaxList?.length">
+              <div class="d-flex align-items-center justify-content-between mb_5"
+                *ngFor="let itemtax of itemTaxList; let itx=index">
+                <span class="font_12 fw-semi text-black">({{itemtax.itemName}}){{itemtax.taxName}}
+                  {{itemtax.taxPercentage}}% :</span>
+                <span class="font_12 fw-semi text-black">₹{{itemtax.taxAmount | number:'1.2-2'}}</span>
+              </div>
+            </div>
+            <div class="border_bottom_dashed mb_5" *ngIf="PrimaryOrder.taxDetails?.length">
+              <div class="d-flex align-items-center justify-content-between mb_5"
+                *ngFor="let tax of PrimaryOrder.taxDetails; let tx=index">
+                <span class="font_12 fw-semi text-black">{{tax.taxName}} {{tax.taxPercentage}}% :</span>
+                <span class="font_12 fw-semi text-black">₹{{tax.taxAmount | number:'1.2-2'}}</span>
+              </div>
+            </div>
+            <div class="d-flex align-items-center justify-content-between mb_5"
+              *ngFor="let orderwiseDiscount of PrimaryOrder.orderDiscounts">
+              <span class="font_12 fw-semi text-black"
+                *ngIf="orderwiseDiscount.discountType == 'Percentage'">{{orderwiseDiscount?.discountName}} :
+                {{orderwiseDiscount?.discountValue}} %</span>
+              <span class="font_12 fw-semi text-black"
+                *ngIf="orderwiseDiscount.discountType != 'Percentage'">{{orderwiseDiscount?.discountName}} : ₹
+                {{orderwiseDiscount?.discountValue}}</span>
+            </div>
+            <div class="d-flex align-items-center justify-content-between mb_42">
+              <span class="font_16 fw-semi text-black">Total :</span>
+              <span class="font_16 fw-semi text-black">₹{{PrimaryOrder.total | number:'1.2-2'}}</span>
+            </div>
+            <div class="row modal_input_row d-flex align-items-center">
+              <div class="col-md-6 pb_0">
+                <button class="cancel_btn" (click)="PayNow();">Pay Now</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- add item notes popup -->
+    <ng-template #itemNote let-itemnote="itemnote" class="newmodel-popup">
+      <div>
+        <div class="modal-header">
+          <h4 class="font_20 fw-semi text_pri mb_15" id="SKUModalLabel">Note</h4>
+          <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer"
+            (click)="closeModal(false)" />
+        </div>
+        <!-- <h3 class="modal-title" style="color: rgb(26, 243, 26);" id="SKUModalLabel">{{PrimaryOrder.items[itemIndex].itemName}}</h3> -->
+        <div class="modal-body">
+          <textarea class="form-control mb_20" placeholder="Enter Note to chef"
+            (keyup)="saveLiveNote($event)"></textarea>
+          <button class="btn_primary" (click)="savenote()">Save</button>
+        </div>
+      </div>
+    </ng-template>
+    <!-- add order level notes popup -->
+    <ng-template #orderNote let-itemnote="itemnote" class="newmodel-popup">
+      <div>
+        <div class="modal-header">
+          <h4 class="font_20 fw-semi text_pri mb_15" id="SKUModalLabel">Order Note</h4>
+          <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer"
+            (click)="closeModal(false)" />
+        </div>
+
+        <div class="modal-body">
+          <textarea class="form-control mb_20" placeholder="Enter Note to chef"
+            (keyup)="saveLiveOrderNote($event)"></textarea>
+          <button class="btn_primary" (click)="savenote()">Save</button>
+        </div>
+      </div>
+    </ng-template>
+    <!-- add modifiers popup -->
+    <ng-template #modifiers let-itemnote="itemnote" class="newmodel-popup">
+      <div>
+        <div class="modal-header">
+          <h4 class="font_20 fw-semi text_pri" id="SKUModalLabel">Add Modifier</h4>
+          <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer"
+            (click)="closeModifierModal(false)" />
+        </div>
+        <div class="modal-body">
+          <h3 *ngIf="itemModifier?.length==0">This Item Dont have any Modifier </h3>
+          <div class="row p-0 mt_20 mb_0">
+            <div class="col-md-4 mb_20" *ngFor="let data of itemModifier; let ind = index">
+              <div class="position-relative" >
+                <input type="checkbox" class="modifier_items_input" name="discountItem" [checked]="data.isChecked" id={{data.id}}
+                  (click)="selecteModifier(data, ind)" />
+                <div class="add_modifier_popup_blk order_add_modifier_blk d-flex flex-column align-items-center">
+                  <img alt="image" src="/assets/images/chicken-pizza-image.svg" class="mb_7 item_img" />
+                  <h5 class="font_14 fw-semi text_pri m-0">{{data.modifierName}}</h5>
+                  <h5 class="font_14 fw-semi text_pri m-0">Price - ₹ {{data.price}}</h5>
+                  <div class="d-flex align-items-center mt_10" *ngIf="data.isChecked">
+                    <img alt="image" src="/assets/images/count-minus-icon.svg" class="cursor-pointer"
+                      (click)="ModifierQuantityDecreament(data, ind)" />
+                    <input type="text" class="count_input" value="{{data.quantity}}" [maxLength]="4" min="1"
+                      (keyup)="ModifierManualQuantityChange($event.target.value,ind)">
+                    <img alt="image" src="/assets/images/count-plus-icon.svg" class="cursor-pointer"
+                      (click)="ModifierQuantityIncreament(data, ind)" />
+                  </div>
+                  <div class="modifier_selection_status d-flex align-items-center justify-content-center"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+    <!-- add discount/promocode popup -->
+    <ng-template #openDiscountModifierAddPopup let-itemnote="itemnote" class="newmodel-popup">
+      <div>
+        <div class="modal-header">
+          <h4 class="font_20 fw-semi text_pri" id="SKUModalLabel"
+            *ngIf="PromocodeDiscountTypeToOpenPopUp == 'Discount'">Add Discount</h4>
+          <h4 class="font_20 fw-semi text_pri" id="SKUModalLabel"
+            *ngIf="PromocodeDiscountTypeToOpenPopUp == 'Promocode'">Add Promocode</h4>
+          <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer"
+            (click)="closeModal(false)" />
+        </div>
+        <div class="modal-body">
+          <h6 class="font_12 fw-semi text-black " *ngIf="PromocodeDiscountTypeToOpenPopUp == 'Discount'">Discount Code
+          </h6>
+          <h6 class="font_12 fw-semi text-black " *ngIf="PromocodeDiscountTypeToOpenPopUp == 'Promocode'">Promo Code
+          </h6>
+          <div class="discount_input_blk position-relative">
+            <input type="text" class="discount_add_input">
+            <button class="discount_add_btn discount_btn position-absolute" *ngIf="PromocodeDiscountTypeToOpenPopUp == 'Discount'"
+              (click)="ApplyDiscountOrPromocodeForItem('Discount')">Apply</button>
+            <button class="discount_add_btn discount_btn position-absolute" *ngIf="PromocodeDiscountTypeToOpenPopUp == 'Promocode'"
+              (click)="ApplyDiscountOrPromocodeForItem('Promocode')">Apply</button>
+          </div>
+          <!-- <span class="font_10 text-red fw-reg">Code is invalid</span> -->
+          <ul class="p-0 mt_20 mb_0" *ngIf="PromocodeDiscountTypeToOpenPopUp == 'Discount'">
+            <h3 *ngIf="ItemDiscountPromocode.length==0"> This Item Don't have any Discount</h3>
+            <li class="position-relative mb_10" *ngFor="let discount of ItemDiscountPromocode">
+              <input type="radio" name="discountItem" class="discount_input"
+                (click)="selectedDiscount('Discount', discount)">
+              <div class="discount_items_blk d-flex flex-column">
+                <h5 class="font_14 fw-semi text_pri m-0" *ngIf="discount.discountType == 'Percentage'">
+                  {{discount.discountName}} - {{discount.discountValue}} % </h5>
+                <h5 class="font_14 fw-semi text_pri m-0" *ngIf="discount.discountType == 'Amount'">
+                  {{discount.discountName}} - ₹ {{discount.discountValue}}</h5>
+                <h5 class="font_14 fw-semi text_pri m-0">Discount Applied Amount - ₹ {{discount.discountedAmount}}</h5>
+                <span class="font_12 fw-reg text_pri" *ngIf="discount.discoutNotes != null">Discount Notes :
+                  {{discount.discoutNotes}}</span>
+                <span class="font_12 fw-reg text_pri">Discount Type : {{discount.discountType}}</span>
+                <div class="discount_selection_blk d-flex align-items-center justify-content-center"></div>
+              </div>
+            </li>
+          </ul>
+          <ul class="p-0 mt_20 mb_0" *ngIf="PromocodeDiscountTypeToOpenPopUp == 'Promocode'">
+            <h3 *ngIf="ItemDiscountPromocode.length==0"> This Item Don't have any Discount</h3>
+            <li class="position-relative mb_10" *ngFor="let promocode of ItemDiscountPromocode">
+              <input type="radio" name="discountItem" class="discount_input"
+                (click)="selectedDiscount('Promocode', promocode)">
+              <div class="discount_items_blk d-flex flex-column">
+                <h5 class="font_14 fw-semi text_pri m-0">Promocode - {{promocode.promocode}}</h5>
+                <h5 class="font_14 fw-semi text_pri m-0" *ngIf="promocode.promocodeType == 'Percentage'">
+                  {{promocode.promocodeName}} - {{promocode.promocodeValue}} % </h5>
+                <h5 class="font_14 fw-semi text_pri m-0" *ngIf="promocode.promocodeType == 'Amount'">
+                  {{promocode.promocodeName}} - ₹ {{promocode.promocodeValue}}</h5>
+                <span class="font_12 fw-reg text_pri">Promocode Applied Amount - ₹ {{promocode.discountedAmount}}</span>
+                <span class="font_12 fw-reg text_pri" *ngIf="promocode.discoutNotes !=null">Promocode Notes :
+                  {{promocode.discoutNotes}}</span>
+                <span class="font_12 fw-reg text_pri">Promocode Type : {{promocode.promocodeType}}</span>
+                <div class="discount_selection_blk d-flex align-items-center justify-content-center"></div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </ng-template>
+
+    <!-- add discount/promocode popup -->
+    <ng-template #openOrderWiseDiscount let-itemnote="itemnote" class="newmodel-popup">
+      <div>
+        <div class="modal-header">
+          <h4 class="font_20 fw-semi text_pri" id="SKUModalLabel"
+            *ngIf="OrderwisePromocodeDiscountTypeToOpenPopUp == 'Discount'">Add Discount</h4>
+          <h4 class="font_20 fw-semi text_pri" id="SKUModalLabel"
+            *ngIf="OrderwisePromocodeDiscountTypeToOpenPopUp == 'Promocode'">Add Promocode</h4>
+          <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer"
+            (click)="closeModal(false)" />
+        </div>
+        <div class="modal-body">
+          <h6 class="font_12 fw-semi text-black " *ngIf="OrderwisePromocodeDiscountTypeToOpenPopUp == 'Discount'">
+            Discount Code</h6>
+          <h6 class="font_12 fw-semi text-black " *ngIf="OrderwisePromocodeDiscountTypeToOpenPopUp == 'Promocode'">Promo
+            Code</h6>
+          <div class="discount_input_blk position-relative">
+            <input type="text" class="discount_add_input">
+            <button class="discount_add_btn" *ngIf="OrderwisePromocodeDiscountTypeToOpenPopUp == 'Discount'"
+              (click)="ApplyDiscountOrPromocodeForOrderLevel('Discount')">Apply</button>
+            <button class="discount_add_btn" *ngIf="OrderwisePromocodeDiscountTypeToOpenPopUp == 'Promocode'"
+              (click)="ApplyDiscountOrPromocodeForOrderLevel('Promocode')">Apply</button>
+          </div>
+          <!-- <span class="font_10 text-red fw-reg">Code is invalid</span> -->
+          <ul class="p-0 mt_20 mb_0" *ngIf="OrderwisePromocodeDiscountTypeToOpenPopUp == 'Discount'">
+            <li class="position-relative mb_10" *ngFor="let discount of allDiscounts">
+              <input type="radio" name="discountItem" class="discount_input"
+                (click)="selectedDiscount('Discount', discount)">
+              <div class="discount_items_blk d-flex flex-column">
+                <h5 class="font_14 fw-semi text_pri m-0" *ngIf="discount.discountType == 'Percentage'">
+                  {{discount.discountName}} - {{discount.discountValue}} % </h5>
+                <h5 class="font_14 fw-semi text_pri m-0" *ngIf="discount.discountType == 'Amount'">
+                  {{discount.discountName}} - ₹ {{discount.discountValue}}</h5>
+                <h5 class="font_14 fw-semi text_pri m-0">Discount Applied Amount - ₹ {{discount.discountedAmount}}</h5>
+                <span class="font_12 fw-reg text_pri" *ngIf="discount.discoutNotes != null">Discount Notes :
+                  {{discount.discoutNotes}}</span>
+                <span class="font_12 fw-reg text_pri">Discount Type : {{discount.discountType}}</span>
+                <div class="discount_selection_blk d-flex align-items-center justify-content-center"></div>
+              </div>
+            </li>
+          </ul>
+          <ul class="p-0 mt_20 mb_0" *ngIf="OrderwisePromocodeDiscountTypeToOpenPopUp == 'Promocode'">
+            <li class="position-relative mb_10" *ngFor="let promocode of allPromocodes">
+              <input type="radio" name="discountItem" class="discount_input"
+                (click)="selectedDiscount('Promocode', promocode)">
+              <div class="discount_items_blk d-flex flex-column">
+                <h5 class="font_14 fw-semi text_pri m-0">Promocode - {{promocode.promocode}}</h5>
+                <h5 class="font_14 fw-semi text_pri m-0" *ngIf="promocode.promocodeType == 'Percentage'">
+                  {{promocode.promocodeName}} - {{promocode.promocodeValue}} % </h5>
+                <h5 class="font_14 fw-semi text_pri m-0" *ngIf="promocode.promocodeType == 'Amount'">
+                  {{promocode.promocodeName}} - ₹ {{promocode.promocodeValue}}</h5>
+                <span class="font_12 fw-reg text_pri">Promocode Applied Amount - ₹ {{promocode.discountedAmount}}</span>
+                <span class="font_12 fw-reg text_pri" *ngIf="promocode.discoutNotes !=null">Promocode Notes :
+                  {{promocode.discoutNotes}}</span>
+                <span class="font_12 fw-reg text_pri">Promocode Type : {{promocode.promocodeType}}</span>
+                <div class="discount_selection_blk d-flex align-items-center justify-content-center"></div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </ng-template>
+    <!-- add notes popup -->
+    <ng-template #saveOrderConfirmation let-itemnote="itemnote" class="newmodel-popup">
+      <div>
+        <div class="modal-header">
+          <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer"
+            (click)="closeModal(false)" />
+        </div>
+        <!-- <h3 class="modal-title" style="color: rgb(26, 243, 26);" id="SKUModalLabel">{{PrimaryOrder.items[itemIndex].itemName}}</h3> -->
+        <div class="modal-body">
+          <h4 class="font_20 fw-semi text_pri mb_15" id="SKUModalLabel">Are you sure you want to go back? All selected items in your cart will be lost.
+          </h4>
+          <div class="row modal_input_row">
+            <div class="col-md-6 pb_0">
+              <button class="cancel_btn" name="btn_login" (click)="closeModal(false)">No</button>
+            </div>
+            <div class="col-md-6 pb_0">
+              <button class="btn_primary" name="btn_login" (click)="closeModal(true)">Yes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>

@@ -1,0 +1,74 @@
+
+    <div class="modal-header">
+        <h5 *ngIf="!isUpdate" class="font_20 fw-semi text_pri mb_15" id="SKUModalLabel">Add Discount</h5>
+        <h5 *ngIf="isUpdate" class="font_20 fw-semi text_pri mb_15" id="SKUModalLabel">Edit Discount</h5>
+        <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer" (click)="closeModal()"/>
+    </div>
+    <div class="modal-body create_order_blk this_mon_blk form_popup">
+        <form #discountsForm="ngForm" class="ng-invalid ng-touched ng-dirty" [formGroup]="discountForm">
+            <div class="row modal_input_row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="font_14 fe-reg text_pri mb_5">Discount Name<span class="required-asterisk">*</span> </label>
+                  <input type="text" class="form-control" id="email" placeholder="Enter Discount Name" formControlName="discountName">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="font_14 fe-reg text_pri mb_5">Select Discount Type</label>
+                  <div class="position-relative">
+                    <select class="form-control select-control" formControlName="discountType"> 
+                        <option value="Percentage">Percentage</option>
+                        <option value="Amount">Amount</option>
+                    </select>
+                    <img  alt="image" src="/assets/images/dropdown-arrow.svg" class="select_input_arrow"></div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="font_14 fe-reg text_pri mb_5">Discount Rate<span class="required-asterisk">*</span> </label>
+                      <input type="number" class="form-control" placeholder="Enter Discount Value" formControlName="discountValue">
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="font_14 fe-reg text_pri mb_5"> Discount Notes <span class="required-asterisk">*</span></label>
+                    <textarea class="form-control" placeholder="Discount Notes" formControlName="discoutNotes"></textarea>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="d-flex align-items-center">
+                    <input type="checkbox" class="mr_5 remember_input" id="discountDineIn" formControlName="discountDineIn"/>
+                    <label class="font_14 fe-reg text_pri m-0" for="discountDineIn">Dine In</label>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="d-flex align-items-center">
+                    <input type="checkbox" class="mr_5 remember_input" id="discountTakeAway" formControlName="discountTakeAway"/>
+                    <label class="font_14 fe-reg text_pri m-0" for="discountTakeAway">Take Away</label>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="d-flex align-items-center">
+                    <input type="checkbox" class="mr_5 remember_input" id="discountEOrder" formControlName="discountEOrder"/>
+                    <label class="font_14 fe-reg text_pri m-0" for="discountEOrder">Online</label>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="d-flex align-items-center">
+                    <input type="checkbox" class="mr_5 remember_input" id="discountOnTotal" formControlName="discountOnTotal"/>
+                    <label class="font_14 fe-reg text_pri m-0" for="discountOnTotal">On Total</label>
+                  </div>
+                </div>
+              </div> 
+              <div class="row modal_input_row">
+                <div class="col-md-6 pb_0">
+                    <button class="cancel_btn" type="reset" (click)="closeModal()">Cancel</button>
+                  </div>
+                <div class="col-md-6 pb_0">
+                    <button *ngIf="isUpdate" class="btn_primary" (click)="updateDiscount(discountsForm.value)" type="submit">Save</button>
+                    <button *ngIf="!isUpdate" class="btn_primary" (click)="addDiscount()" type="submit">Save</button>
+                </div>      
+            </div>
+        </form>
+    </div>

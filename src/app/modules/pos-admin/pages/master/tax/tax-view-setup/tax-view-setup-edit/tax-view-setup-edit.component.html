@@ -1,0 +1,63 @@
+
+    <div class="modal-header">
+        <h3 class="font_20 fw-semi text_pri mb_15" id="SKUModalLabel">Edit Tax Setup</h3>
+        <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer" (click)="closeModal()"/>
+    </div>
+    <div class="modal-body create_order_blk this_mon_blk form_popup">
+        <form class="ng-invalid ng-touched ng-dirty" [formGroup]="taxSetupForm" (ngSubmit)="editTaxSetup()">
+            <div class="row modal_input_row mb_10">
+                <div class="col-md-6">
+                    <div class="mod_check d-flex align-items-center mb_10">
+                        <input type="checkbox" class="remember_input mr_10" id="isItemIncludeTax" formControlName="isItemIncludeTax"(change)="onCheckboxChange($event)" />
+                        <label class="font_14 fe-reg text_pri m-0">Item Price Includes Tax</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mod_check d-flex align-items-center mb_10">
+                        <input type="checkbox" class="remember_input mr_10" id="isSubtractFromSubTotal" (change)="onSubtractCheckboxChange($event)" />
+                        <label class="font_14 fe-reg text_pri m-0">Subtract From Subtotal</label>
+                    </div>
+                </div>
+            </div>
+            <h4 class="font_16 fw-semi text_pri mb_10">Please Select Outlets to visible the item</h4>
+            <div class="row modal_input_row">
+                <!-- <div class="col-md-6 ">
+                    <div class="form-group">
+                        <label class="font_14 fe-reg text_pri mb_5" for="sel1"> Select Outlet<span class="required-asterisk">*</span></label>
+                        <div class="position-relative">
+                            <select class="form-control" id="outletId" formControlName="outletId">
+                                <option value="" [disabled]="true">Select Outlet</option>
+                                <option *ngFor="let outlet of allResData?.outlets" value={{outlet.outletId}} disabled>
+                                    {{outlet.outletName}}</option>
+                            </select>
+                            <img alt="image" src="/assets/images/dropdown-arrow.svg" class="select_input_arrow"/>
+                        </div>
+                        
+                    </div>
+                </div> -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="font_14 fe-reg text_pri mb_5">Percentage<span class="required-asterisk">*</span></label>
+                        <div class="position-relative">
+                            <!-- <select class="form-control" id="percentage" formControlName="percentage">
+                                <option value="" [disabled]="true">Select Percentage</option>
+                                <option *ngFor="let val of percentDataList" value="{{val.taxPercent}}"
+                                    [disabled]="isActiveOutlet">
+                                    {{val.taxPercent}}</option>
+                            </select> -->
+                            <input class="form-control" placeholder="enter percentage"/>
+                            <!-- <img alt="image" src="/assets/images/dropdown-arrow.svg" class="select_input_arrow"/> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row modal_input_row">
+                <div class="col-md-6 pb_0">
+                    <button class="cancel_btn" type="reset" (click)="closeModal()">Cancel</button>
+                  </div>
+                <div class="col-md-6 pb_0">
+                    <button name="btn_login" class="btn_primary" type="submit">Save</button>
+                </div>      
+            </div>
+        </form>
+    </div>

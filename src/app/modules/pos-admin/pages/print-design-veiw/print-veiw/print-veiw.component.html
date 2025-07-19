@@ -1,0 +1,173 @@
+<div class="modal-header border_none">
+  <h3 class="font_16 fw-semi mb_15 text_pri" id="SKUModalLabel">Print Preview</h3>
+  <img (click)="closeModal()" alt="image" src="/assets/images/modal-close-icon.svg"
+    class="modal_close_icon cursor-pointer">
+</div>
+<div id="print_Section" class="order_print_section mx-auto mb_20">
+  <div class="printMainDiv order_complete_pdf_blk">
+    <div class="print_header d-flex justify-content-center" *ngIf="designData?.printHeaderSettings.showHeader == true">
+      <div class="font_16 fw-med text_pri" [innerHTML]="designData?.printHeaderSettings.headerDetails | noSanitize">
+      </div>
+    </div>
+    <div class="d-flex justify-content-center mb_20">
+      <span class="font_16 fw-med text_pri">{{designData?.printGenerealSettings.invoiceTitle}}</span>
+    </div>
+    <div class="print_title_body p-0">
+      <span class="font_16 fw-med text_pri d-block mb_5"><span class="fw-semi">Ordered Date</span> :
+        {{FilterDate(orderData?.createdOn)}}</span>
+      <span *ngIf="invoiceData?.customerName != null && invoiceData?.customerName != ''"
+        class="font_16 fw-med text_pri d-block mb_5">
+        <span class="fw-semi">{{designData?.printGenerealSettings.customer}} : </span>{{invoiceData?.customerName}}
+      </span>
+      <!-- for customer order number -->
+      <span *ngIf="orderData?.orderNumber != null && orderData?.orderNumber != ''"
+        class="font_16 fw-med text_pri d-block mb_5">
+        <span class="fw-semi">{{designData?.printGenerealSettings.orderNo}} : </span>{{orderData?.orderNumber}}
+      </span>
+      <!-- To get order Type -->
+      <span class="font_16 fw-med text_pri d-block mb_5"><span class="fw-semi">Order Type
+          :</span>{{orderData?.orderType}}</span>
+      <!-- End -->
+      <span class="font_16 fw-med text_pri d-block mb_5"><b>{{designData?.printGenerealSettings.servedBy}}
+          :</b>{{orderData?.createdByName}}</span>
+      <div class="mb_10 d-flex align-items-center justify-content-between">
+        <span class="font_16 fw-med text_pri">{{currentTime}}</span>
+        <span class="font_16 fw-med text_pri">{{date}}&nbsp;</span>
+      </div>
+    </div>
+    <table class="m-0">
+      <tr>
+        <th>{{designData?.printItemHeaderSettings.item}}</th>
+        <th>{{designData?.printItemHeaderSettings.quantity}}</th>
+        <th *ngIf="designData?.printItemHeaderSettings.discount !== ''">{{designData?.printItemHeaderSettings.discount}}
+        </th>
+        <th>{{designData?.printItemHeaderSettings.amount}}</th>
+      </tr>
+      <tbody *ngIf="designData?.printItemHeaderSettings">
+        <tr *ngFor="let data of menuItemList; let i=index">
+          <td>{{data.itemName}}</td>
+          <td>{{data.orderQuantity}}</td>
+          <td *ngIf="designData?.printItemHeaderSettings.discount !== ''">{{data.discount[0]?.discountedAmount}}</td>
+          <td>{{data.itemAmount | number:'1.2-2'}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="print_body">
+      <div class="">
+        <!-- <div class="table_header">
+            <span class="table_one">{{designData?.printItemHeaderSettings.item}}</span>
+            <span class="table_two"> {{designData?.printItemHeaderSettings.quantity}}</span>
+            <span class="table_two" *ngIf="designData?.printItemHeaderSettings.discount !== ''">
+              {{designData?.printItemHeaderSettings.discount}}</span>
+            <span class="table_two"> {{designData?.printItemHeaderSettings.amount}}</span>
+          </div> -->
+        <div *ngIf="designData?.printItemHeaderSettings">
+          <ng-container *ngFor="let data of menuItemList; let i=index">
+            <!-- <div class="table_body">
+                <span class="table_one">{{data.itemName}}</span>
+                <span class="table_two">{{data.orderQuantity}}</span>
+                <span class="table_two" *ngIf="designData?.printItemHeaderSettings.discount !== ''">
+                  {{data.discount[0]?.discountedAmount}}</span>
+                <span class="table_two">{{data.itemAmount | number}}</span>
+              </div> -->
+            <div class="table_body" *ngIf="data.modifiers.length">
+              <span *ngFor="let modifier of data.modifiers" class="mod_li">
+                {{modifier.modifierName}} : + {{modifier.price}}</span>
+            </div>
+            <!-- <div class="table_body" *ngIf="data.discount.length">
+                <span *ngFor="let disc of data.discount" class="mod_li">
+                  <div *ngIf="disc.promocode == ''" style="font-size: xx-small;">
+                    {{disc.discountNotes}}
+                    Discount Amount : {{disc.discountedAmount}}
+                  </div>
+                  <div *ngIf="disc.promocode !== ''" style="font-size: xx-small;">
+                    {{disc.discountNotes}}
+                    Discount Amount : {{disc.promocodeAmount}}
+                  </div>
+                </span>
+              </div> -->
+          </ng-container>
+          <div class="mt_10">
+            <div class="d-flex align-items-center justify-content-between mb_5" *ngIf="isSubtract !== 'true'">
+              <span class="font_16 fw-med text_pri">Sub Total </span>
+              <span class="font_16 fw-med text_pri">{{orderData?.subTotal |number:'1.2-2' }}</span>
+            </div>
+            <div class="d-flex align-items-center justify-content-between mb_5" *ngIf="isSubtract == 'true'">
+              <span class="font_16 fw-med text_pri">Sub Total </span>
+              <span class="font_16 fw-med text_pri">{{subTotalTax |number:'1.2-2' }}</span>
+            </div>
+            <div *ngIf="this.invoiceData?.discountedAmount != 0 || this.invoiceData?.promocodeAmount != 0"
+              class="d-flex align-items-center justify-content-between mb_5">
+              <span class="font_16 fw-med text_pri">Order discount </span>
+              <span class="font_16 fw-med text_pri">{{OrderDiscount}}</span>
+            </div>
+
+            <!-- <div class="d-flex align-items-center justify-content-between mb_5" *ngFor="let tax of invoiceData?.taxDetails">
+              <span class="font_16 fw-med text_pri">{{tax.taxName}} </span>
+              <span class="font_16 fw-med text_pri">{{tax.taxPercent}} %{{tax.taxAmount}}</span>
+            </div> -->
+            <!-- <div class="d-flex align-items-center justify-content-between mb_5" *ngIf="invoiceData?.isItemIncludeTax == true && isSubtract == 'true'">
+              <span class="font_16 fw-med text_pri">Includes of VAT: {{invoiceData?.isItemIncludeTaxPercentage}} %</span>
+              <span class="font_16 fw-med text_pri">{{calPercentage}}</span>
+            </div> -->
+
+            <div class="border_bottom_dashed mb_5" *ngIf="menuItemList.length">
+              <div *ngFor="let item of menuItemList">
+                <div *ngFor="let itemtax of item.itemWiseTax; let itx = index"
+                  class="d-flex align-items-center justify-content-between mb_5">
+                  <span class="font_16 fw-med text_pri">
+                    ({{item.itemName}}) {{itemtax.taxName}} {{itemtax.taxPercentage}}% :
+                  </span>
+                  <span class="font_16 fw-med text_pri">
+                    ₹{{itemtax.taxAmount | number:'1.2-2'}}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- <div class="width100" *ngIf="invoiceData?.isItemIncludeTax == true">
+              <div class="d-flex align-items-center justify-content-between mb_5" *ngFor="let itemTax of invoiceData?.itemWiseTax">
+                <span class="font_16 fw-med text_pri">{{itemTax.taxName}} of {{itemTax.itemName}} - {{itemTax.taxPercent}} %</span>
+                <span class="font_16 fw-med text_pri">{{itemTax.taxAmount | number}}</span>
+              </div>
+            </div> -->
+            <div class="border_bottom_dashed mb_5" *ngIf="orderData?.taxDetails?.length">
+              <div class="d-flex align-items-center justify-content-between mb_5"
+                *ngFor="let tax of orderData.taxDetails; let tx=index">
+                <span class="font_16 fw-med text_pri">{{tax.taxName}} {{tax.taxPercentage}}% :</span>
+                <span class="font_16 fw-med text_pri">₹{{tax.taxAmount | number:'1.2-2'}}</span>
+              </div>
+            </div>
+            <div class="d-flex align-items-center justify-content-between mb_5">
+              <span class="font_16 fw-med text_pri">Amount Returned </span>
+              <span class="font_16 fw-med text_pri">{{ReturnAmount || 0 | number:'1.2-2'}}</span>
+            </div>
+            <div class="d-flex align-items-center justify-content-between mb_5">
+              <span class="font_16 fw-med text_pri">Total Tax</span>
+              <span class="font_16 fw-med text_pri">{{orderData?.totalOrderTax || 0 | number:'1.2-2'}}</span>
+            </div>
+            <div class="d-flex align-items-center justify-content-between mb_5">
+              <span class="font_16 fw-med text_pri">Total({{this.commonService.generalSettings.currency}})</span>
+              <span class="font_16 fw-med text_pri">{{orderData?.total|number:'1.2-2' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="print_footer d-flex justify-content-center" *ngIf="designData?.printFooterSettings.showFooter == true">
+      <div class="font_16 fw-med text_pri" [innerHTML]="designData?.printFooterSettings?.footerDetails | noSanitize">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row modal_input_row">
+  <div class="col-md-6 pb_0">
+    <button class="cancel_btn" name="btn_login" (click)="closeModal()" type="reset">
+      Close
+    </button>
+  </div>
+  <div class="col-md-6 pb_0">
+    <button class="btn_primary" printSectionId="print_Section" [useExistingCss]="true" ngxPrint>Print</button>
+  </div>
+</div>

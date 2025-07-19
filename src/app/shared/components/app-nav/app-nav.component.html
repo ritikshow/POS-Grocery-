@@ -1,0 +1,106 @@
+<aside class="sidemenu_container">
+  <div class="aside_menu_img_blk d-flex align-items-center mb_8">
+    <img alt="image" src="/assets/images/POS-logo.svg" class="" />
+    <img alt="image" src="/assets/images/sidemenu-close-icon.svg" class="sidemenu_close_icon d-none" />
+  </div>
+  <ul class="sidemenu m-0 p-0">
+    <li id="612626104d9ab38e75f63b47" *ngIf="commonService.checkRolePermissions('VIEW_DASHBOARD_MODULE')"
+      class="nav-item">
+      <a class="nav-link d-flex align-items-center" [routerLinkActive]="['active']"
+        routerLink="/pos-dashboard/dashboard">
+        <img alt="image" src="/assets/images/dashboard-icon.svg" class="mr_10" />
+        <span class="font_14 fw-reg text-white">Dashboard</span>
+      </a>
+    </li>
+    <!-- For Cash Counter -->
+    <li class="nav-item" *ngIf="commonService.checkRolePermissions('VIEW_CASH_COUNTER')">
+      <a class="nav-link" class="nav-link" [routerLinkActive]="['active']" routerLink="/pos-dashboard/pettycash">
+        <img alt="image" src="/assets/images/orders-icon.svg" class="mr_10" />
+        <span class="font_14 fw-reg text-white">Cash Counter</span>
+      </a>
+    </li>
+    <!-- For Cash Counter -->
+    <li id="616fcbe64754880a6f3053f5"
+      *ngIf="userData?.roleName == 'Company Admin' || userData.roleName == 'Super Admin' || commonService.checkMenuDisplayPermission(Settings)"
+      class="nav-item">
+      <!-- <a class="nav-link" [routerLinkActive]="['active']" *ngIf="userData.roleName == 'Company Admin' || userData.roleName == 'Super Admin' routerLink="/pos-dashboard/admin-table-details"> -->
+      <a class="nav-link" [routerLinkActive]="['active']" *ngIf="userData.roleName == 'Super Admin'"
+        routerLink="/pos-dashboard/admin-table-details">
+        <img alt="image" src="/assets/images/settings-icon.svg" class="mr_10" />
+        <span class="font_14 fw-reg text-white">Settings</span>
+      </a>
+
+      <a class="nav-link" [routerLinkActive]="['active']" href="javascript:void(0)"      
+        *ngIf="userData.roleName != 'Super Admin'"
+        (click)="commonService.NavigateUserBasedOnPermissions(false, Settings)">
+        <img alt="image" src="/assets/images/settings-icon.svg" class="mr_10" />
+        <span class="font_14 fw-reg text-white">Settings</span>
+      </a>
+    </li>
+    <li id="616ff45193a8d65d6c50a439" *ngIf="commonService.checkRolePermissions('LIST_MENU')" class="nav-item">
+      <a class="nav-link" [routerLinkActive]="['active']" routerLink="/pos-dashboard/item-master">
+        <img alt="image" src="/assets/images/menu-icon.svg" class="mr_10" />
+        <span class="font_14 fw-reg text-white">Menu</span>
+      </a>
+    </li>
+    <!-- If in one menu we have sub menus then use checkMenuDisplayPermission method -->
+    <li class="nav-item" *ngIf="commonService.checkMenuDisplayPermission(InventoryMenu)">
+      <a class="nav-link" [routerLinkActive]="['active']" *ngIf="userData.roleName == 'Super Admin'"
+        routerLink="/pos-dashboard/Inventory">
+        <img alt="image" src="/assets/images/inventory-icon.svg" class="mr_10" />
+        <span class="font_14 fw-reg text-white">Inventory</span>
+      </a>
+      <a class="nav-link" [routerLinkActive]="['active']" href="javascript:void(0)"
+        *ngIf="userData.roleName != 'Super Admin'"
+        (click)="commonService.NavigateUserBasedOnPermissions(false, InventoryMenu)">
+        <img alt="image" src="/assets/images/inventory-icon.svg" class="mr_10" />
+        <span class="font_14 fw-reg text-white">Inventory</span>
+      </a>
+    </li>
+    <li class="nav-item" id="616fcb634754880a6f3053f1" *ngIf="commonService.checkMenuDisplayPermission(Orders)"
+      class="nav-item">
+      <a class="nav-link" class="nav-link" [routerLinkActive]="['active']" *ngIf="userData.roleName == 'Super Admin'" routerLink="/pos-dashboard/dine-in">
+        <img alt="image" src="/assets/images/orders-icon.svg" class="mr_10" />
+        <span class="font_14 fw-reg text-white">Orders</span>
+      </a>
+      <a class="nav-link" class="nav-link" [routerLinkActive]="['active']" *ngIf="userData.roleName != 'Super Admin'" (click)="commonService.NavigateUserBasedOnPermissions(false, Orders)">
+        <img alt="image" src="/assets/images/orders-icon.svg" class="mr_10" />
+        <span class="font_14 fw-reg text-white">Orders</span>
+      </a>
+    </li>    
+    <li id="616fcbab4754880a6f3053f3" *ngIf="commonService.checkRolePermissions('LIST_KITCHEN')" class="nav-item">
+      <a class="nav-link" [routerLinkActive]="['active']" routerLink="/pos-dashboard/kitchen">
+        <img alt="image" src="/assets/images/kitchen-icon.svg" class="mr_10" />
+        <span class="font_14 fw-reg text-white">{{this.commonService?.generalSettings?.kitchenName}}</span>
+      </a>
+    </li>
+    <li id="61a208700de641b6533d1aae" *ngIf="commonService.checkRolePermissions('LIST_BAR')" class="nav-item">
+      <a class="nav-link" [routerLinkActive]="['active']" routerLink="/pos-dashboard/warehouse">
+        <img alt="image" src="/assets/images/bar-glass-icon.svg" class="mr_10" />
+        <span class="font_14 fw-med text-white">{{this.commonService?.generalSettings?.barName}}</span>
+      </a>
+    </li>
+    <li id="616fcb914754880a6f3053f2" class="nav-item" *ngIf="commonService.checkMenuDisplayPermission(Sales)">
+      <a class="nav-link" [routerLinkActive]="['active']" *ngIf="userData.roleName == 'Super Admin'" routerLink="/pos-dashboard/sales-by-category">
+        <img alt="image" src="/assets/images/sales-icon.svg" class="mr_10" />
+        <span class="font_14 fw-reg text-white">Sales</span>
+      </a>
+      <a class="nav-link" [routerLinkActive]="['active']" *ngIf="userData.roleName != 'Super Admin'" (click)="commonService.NavigateUserBasedOnPermissions(false, Sales)">
+        <img alt="image" src="/assets/images/sales-icon.svg" class="mr_10" />
+        <span class="font_14 fw-reg text-white">Sales</span>
+      </a>
+    </li>
+    <!-- <li id="616fcb914754880a6f3053f2" class="nav-item">
+      <a class="nav-link" [routerLinkActive]="['active']" routerLink="/pos-dashboard/sales-by-item">
+        <img alt="image" src="/assets/images/dashboard-icon.svg" class="mr_10"/>
+        <span class="font_14 fw-reg text-white">Sales By Item</span>
+      </a>
+    </li>
+    <li id="616fcb914754880a6f3053f2" class="nav-item">
+      <a class="nav-link" [routerLinkActive]="['active']" routerLink="/pos-dashboard/sales-by">
+        <img alt="image" src="/assets/images/dashboard-icon.svg" class="mr_10"/>
+        <span class="font_14 fw-reg text-white">Sales By Order</span>
+      </a>
+    </li> -->
+  </ul>
+</aside>

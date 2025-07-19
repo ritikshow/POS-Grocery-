@@ -1,0 +1,58 @@
+<div class="page_container table_details_blk">
+  <h2 class="text_pri font_20 fw-semi mb_7">Settings</h2>
+  <div class="d-flex align-items-start settings_nav_main_blk">
+  <app-settings></app-settings>
+  <div class="settings_nav_info_container">
+    <div class="d-flex align-items-center justify-content-end mb_21">
+      <!-- <div class="position-relative w-30">
+        <input type="search" class="form-control search_icon_input" placeholder="search">
+        <img alt="image" src="/assets/images/search-icon.svg" class="search_input_icon"/>
+      </div> -->
+      <button *ngIf="isSuperAdmin || commonService.checkRolePermissions('ADD_USER_TYPE')" class="add_btn" (click)="openForm()">
+        <img alt="image" src="/assets/images/add-icon.svg" class="mr_8"/>
+        <span class="font_14 fw-semi text-sec">Add User Role</span>
+      </button>
+    </div>
+      <div class="table-responsive" id="checkBoxes">
+        <table datatable [dtOptions]="dtOptions" *ngIf="isDataLoaded" id="example" class="buyer_table" id="table-request">
+          <thead>
+            <tr>
+              <th>Sl No</th>
+              <th>User Role Name</th>
+              <th>Description</th>
+              <th>Status</th>
+              <th class="text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of roleData; index as i">
+              <td>{{i+1}}</td>
+              <td>{{data.roleName}}</td>
+              <td><span class="desc_text_width" title="{{data.description}}">{{data.description}}</span></td>
+              <td [attr.data-order]="data.activeStatus ? 1 : 0">
+                <mat-slide-toggle class="discount_slider_btn" color="accent" (click) = "changeRoleStatus(data.roleId,data.activeStatus)" [(ngModel)]="data.activeStatus">
+                </mat-slide-toggle>
+              </td>
+              <td>
+                <div class="d-flex align-items-center justify-content-center">
+                  <span *ngIf="isSuperAdmin || commonService.checkRolePermissions('EDIT_PERMISSIONS')" class="font_14 fw-semi text-underline text_sec cursor-pointer mr_14 d-block" (click)="editPermission(data)">Edit Permissions</span>
+                  <img *ngIf="isSuperAdmin || commonService.checkRolePermissions('EDIT_USER_TYPE') " alt="image" src="/assets/images/edit-icon.svg" class="mr_14 cursor-pointer" (click)="edit(data.roleId)"/>
+                  <!-- <img alt="image" src="/assets/images/view-icon.svg" class="mr_14 cursor-pointer" (click)="view(data.roleId)"/> -->
+
+                  <img *ngIf="isSuperAdmin || commonService.checkRolePermissions('DELETE_USER_TYPE')" alt="image" src="/assets/images/delete-icon.svg" class="cursor-pointer" (click)="onDelete(data.roleId)"/>
+                </div>
+                <!-- <button *ngIf="isSuperAdmin" class="btn btn-orders edit" (click)="edit(data.roleId)"><i
+                    class="fa fa-pencil"></i></button>
+                <button class="btn btn-orders edit" (click)="view(data.roleId)">View</button>
+                <button *ngIf="isSuperAdmin" class="btn btn-orders edit" (click)="editPermission(data)">Edit
+                  Permissions</button>
+                <button *ngIf="isSuperAdmin" class="btn btn-orders edit" (click)="onDelete(data.roleId)"><i
+                    class="fa fa-trash" aria-hidden="true"></i></button> -->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

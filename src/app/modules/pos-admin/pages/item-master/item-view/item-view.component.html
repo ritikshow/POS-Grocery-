@@ -1,0 +1,274 @@
+<div class="modal-header">
+  <!-- <h5 class="font_20 fw-semi text_pri mb_15" id="SKUModalLabel">Item Id: {{itemData?.id}}</h5> -->
+  <h5 class="font_20 fw-semi text_pri mb_15" id="SKUModalLabel">Item Details</h5>
+  <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer" (click)="closeModal()"/>
+</div>
+<div class="modal-body accept_menu_block d-flex flex-column align-items-center mb_15" *ngIf="IsAccepted == false && ClickedOnApproveReject == false">
+  <h4 class="font_14 fw-semi text-black mb_10">Do You Want Accept This Item to Your Hotel</h4>
+  <div class="d-flex align-items-center">
+    <button class="d-flex align-items-center mr_14 accept_btn">
+      <img alt="image" src="/assets/images/green_tick.svg" class="mr_5">
+      <span class="font_14 fw-med respons_wmax_content" (click)="OnClickApproveOrReject(true)">Accept</span>
+    </button>
+    <button class="d-flex align-items-center mr_14 accept_btn reject_btn">
+      <img alt="image" src="/assets/images/red_cross.svg" class="mr_5">
+      <span class="font_14 fw-med respons_wmax_content" (click)="OnClickApproveOrReject(false)">Reject</span>
+    </button>
+    </div>
+</div>
+<div class="modal-body d-flex align-items-center mb_15" *ngIf="IsAccepted == true && ClickedOnApproveReject == true">
+  <img alt="image" src="/assets/images/success_gif.gif" class="mr_10 w_23px">
+  <h4 class="font_14 fw-semi text-black m-0">Congrats, You Have Added This Item to Your Hotel</h4>
+</div>
+<div class="modal-body d-flex align-items-center mb_15" *ngIf="IsAccepted == false && ClickedOnApproveReject == true">
+  <img alt="image" src="/assets/images/reject_icon.svg" class="mr_10 w_23px">
+  <h4 class="font_14 fw-semi text-black m-0">You Have Rejected This Item.</h4>
+</div>
+<div class="modal-body view_details_blk">
+  <div class="row modal_input_row">
+      <div class="col-md-3">
+        <h6 class="font_14 fw-reg text_pri mb_5">Item Name</h6>
+        <h4 class="font_14 fw-semi text-black m-0">{{itemData?.itemName}}</h4>
+      </div>
+      <div class="col-md-3">
+        <h6 class="font_14 fw-reg text_pri mb_5">Category Name</h6>
+        <h4 class="font_14 fw-semi text-black m-0">{{itemData?.categoryName}}</h4>
+      </div>
+      <div *ngIf="itemData?.description" class="col-md-6">
+        <h6 class="font_14 fw-reg text_pri mb_5">Item Description</h6>
+        <h4 class="font_14 fw-semi text-black m-0">{{itemData?.description}}</h4>
+      </div>
+      <div class="col-md-3">
+        <h6 class="font_14 fw-reg text_pri mb_5">Item Amount</h6>
+        <h4 class="font_14 fw-semi text-black m-0">{{itemData?.itemAmount}}</h4>
+      </div>
+      <div class="col-md-3">
+        <h6 class="font_14 fw-reg text_pri mb_5">Is Ready Made</h6>
+        <h4 class="font_14 fw-semi text-black m-0">{{itemData?.isReadyMade}}</h4>
+      </div>
+       <div class="col-md-3">
+        <h6 class="font_14 fw-reg text_pri mb_5">Item Types</h6>
+        <h4 class="font_14 fw-semi text-black m-0">{{itemData?.itemTypes}}</h4>
+      </div>
+    </div>
+  <!-- start modifier -->
+  <!-- <div class="mb_20" *ngIf="itemData?.modifierGroupNameId != null && itemData?.modifierGroupNameId != '' ">
+    <h5 class="font_16 fw-semi text_pri mb_10">Modifiers</h5>
+    <table class="m-0">
+      <thead>
+        <tr>
+          <th>Modifiers Groups</th>
+          <th>Modifier Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let idata of itemData?.modifierGroupNameId">
+          <td>{{idata?.modifierGroupName}}</td>
+          <td>{{idata?.price}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div> -->
+  <!-- end modifier -->
+  <!-- start Tax details -->
+  <div class="mb_20" *ngIf="taxData != null && taxData != '' ">
+    <h5 class="font_16 fw-semi text_pri mb_10">Tax Details</h5>
+    <table class="m-0">
+      <thead>
+        <tr>
+          <th>Tax Name</th>
+          <th>Tax Percent</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{taxData.taxName}}</td>
+          <td>{{taxData.taxPercentage}}</td>
+          <!-- <td *ngFor="let tax of taxData?.taxPercent">{{tax.taxPercentage}}</td> -->
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- end Tax details -->
+  <div class="mb_20" *ngIf="DiscountData.length > 0" >
+    <h5 class="font_16 fw-semi text_pri mb_10">Discount</h5>
+    <div class="row modal_input_row" *ngFor="let disc of DiscountData">
+      <div class="col-md-3" >
+        <h6 class="font_14 fw-reg text_pri mb_5" >Discount Name</h6>
+        <h4 class="font_14 fw-semi text-black m-0">{{disc?.discountName}}</h4>
+      </div>
+      <!-- <div class="col-md-3" >
+        <h6 class="font_14 fw-reg text_pri mb_5">Is Promocode Applied</h6>
+        <h4 class="font_14 fw-semi text-black m-0">Static</h4>
+      </div> -->
+      <!-- <div class="col-md-3">
+        <h6 class="font_14 fw-reg text_pri mb_5">Discount Type</h6>
+        <h4 class="font_14 fw-semi text-black m-0">{{disc.discountType}}</h4>
+      </div> -->
+      <!-- <div class="col-md-3">
+        <h6 class="font_14 fw-reg text_pri mb_5">Promocode Discount</h6>
+        <h4 class="font_14 fw-semi text-black m-0">{{disc.promocodeDiscount}}</h4>
+      </div> -->
+      <div class="col-md-3" >
+        <h6 class="font_14 fw-reg text_pri mb_5">Discount Amount</h6>
+        <h4 class="font_14 fw-semi text-black m-0">{{disc.discountValue}}</h4>
+      </div>
+      <div class="col-md-3">
+        <h6 class="font_14 fw-reg text_pri mb_5">Discount Type</h6>
+        <h4 class="font_14 fw-semi text-black m-0">{{disc.discountType}}</h4>
+      </div>
+      <!-- <div class="col-md-3" *ngIf="disc.promocode == ''">
+        <h6 class="font_14 fw-reg text_pri mb_5">Discount Value</h6>
+        <h4 class="font_14 fw-semi text-black m-0">{{disc.discountValue}}</h4>
+      </div> -->
+      <!-- <div class="col-md-3" *ngIf="disc.promocode == ''">
+        <h6 class="font_14 fw-reg text_pri mb_5">Discounted Amount</h6>
+        <h4 class="font_14 fw-semi text-black m-0">{{disc.discountValue}}</h4>
+      </div> -->
+      <div class="col-md-3">
+        <h6 class="font_14 fw-reg text_pri mb_5">Discount Notes</h6>
+        <h4 class="font_14 fw-semi text-black m-0">{{disc.discoutNotes}}</h4>
+      </div>
+    </div>
+  </div>
+
+  
+ 
+  <div class="mb_20" *ngIf="PromocodeData.length > 0" >
+    <h5 class="font_16 fw-semi text_pri mb_10">Promocode </h5>
+    <div class="row modal_input_row" *ngFor="let disc of PromocodeData">
+      <div class="col-md-3" >
+        <h6 class="font_14 fw-reg text_pri mb_5" >PromoCode Name</h6>
+        <h4 class="font_14 fw-semi text-black m-0">{{disc?.promocodeName}}</h4>
+      </div>
+      <!-- <div class="col-md-3" >
+        <h6 class="font_14 fw-reg text_pri mb_5">Is Promocode Applied</h6>
+        <h4 class="font_14 fw-semi text-black m-0">Static</h4>
+      </div> -->
+      <div class="col-md-3">
+        <h6 class="font_14 fw-reg text_pri mb_5">Promocode DiscountType</h6>
+        <h4 class="font_14 fw-semi text-black m-0">{{disc.promocodeType}}</h4>
+      </div>
+      <div class="col-md-3">
+        <h6 class="font_14 fw-reg text_pri mb_5">Promocode</h6>
+        <h4 class="font_14 fw-semi text-black m-0">{{disc.promocode}}</h4>
+      </div>
+      <div class="col-md-3" >
+        <h6 class="font_14 fw-reg text_pri mb_5">Promocode Amount</h6>
+        <h4 class="font_14 fw-semi text-black m-0">{{disc.promocodeValue}}</h4>
+      </div>
+      <div class="col-md-3">
+        <h6 class="font_14 fw-reg text_pri mb_5">Valid Upto</h6>
+        <h4 class="font_14 fw-semi text-black m-0">{{disc.validUpto|date}}</h4>
+      </div>
+    </div>
+  </div>
+  
+
+<!--  Recipe details -->
+  <div class="mb_20 " *ngIf="itemData?.recipe != null && itemData?.recipe != ''" >
+    <h5 class="font_16 fw-semi text_pri mb_10">Recipe</h5>
+    <div class="row modal_input_row" *ngFor="let disc of RecipeData" >
+      <div class="col-md-3"  >
+        <h6 class="font_14 fw-reg text_pri mb_5">productName</h6>
+        <h4 class="font_14 fw-semi text-black m-0">{{disc.productName}}</h4>
+      </div>
+      <div class="col-md-3" >
+        <h6 class="font_14 fw-reg text_pri mb_5">Price</h6>
+        <h4 class="font_14 fw-semi text-black m-0">{{disc.price}}</h4>
+      </div>
+      <div class="col-md-3" >
+        <h6 class="font_14 fw-reg text_pri mb_5">quantity</h6>
+        <h4 class="font_14 fw-semi text-black m-0">{{disc.quantity}}</h4>
+      </div>
+      <div class="col-md-3" >
+        <h6 class="font_14 fw-reg text_pri mb_5">Unit</h6>
+        <h4 class="font_14 fw-semi text-black m-0">{{disc.unit}}</h4>
+      </div>
+      <div class="col-md-3" *ngIf="disc.isBatchRecipe == false" >
+        <h6 class="font_14 fw-reg text_pri mb_5">priority</h6>
+        <h4 class="font_14 fw-semi text-black m-0">{{disc.priority}}</h4>
+      </div>
+    </div>
+  </div>
+
+  <!--  Modifiers details -->
+  <div class="mb_20 " *ngIf="ModifierData.length > 0" >
+    <h5 class="font_16 fw-semi text_pri mb_10">Modifiers</h5>
+    <div class="row modal_input_row" *ngFor="let disc of ModifierData">
+      <div class="col-md-3" >
+        <h6 class="font_14 fw-reg text_pri mb_5">groupName</h6>
+        <h4 class="font_14 fw-semi text-black m-0">{{disc.groupName}}</h4>
+      </div>
+      <div class="col-md-3" >
+        <h6 class="font_14 fw-reg text_pri mb_5">modifierType</h6>
+        <h4 class="font_14 fw-semi text-black m-0">{{disc.modifierType}}</h4>
+      </div>
+      <div class="col-md-3" >
+        <h6 class="font_14 fw-reg text_pri mb_5">price
+          </h6>
+        <h4 class="font_14 fw-semi text-black m-0">{{disc.price}}</h4>
+      </div>
+      
+    </div>
+  </div>
+
+
+
+    <!-- <h3 class="titleHead">Discount</h3>
+    <div *ngFor="let disc of itemData?.discount">
+      <div class="d-flex" *ngIf="disc.promocode !== ''">
+        <div class="title"><b>PromoCode :</b></div>
+        <div class="Property">{{disc.promocode}}</div>
+      </div>
+      <div class="d-flex" *ngIf="disc.promocode !== ''">
+        <div class="title"><b>Is Promocode Applied :</b></div>
+        <div class="Property">{{disc.isPromocodeApplied}}</div>
+      </div>
+      <div class="d-flex" *ngIf="disc.promocode !== ''">
+        <div class="title"><b>Promocode DiscountType :</b></div>
+        <div class="Property">{{disc.promocodeDiscountType}}</div>
+      </div>
+      <div class="d-flex" *ngIf="disc.promocode !== ''">
+        <div class="title"><b>Promocode Discount :</b></div>
+        <div class="Property">{{disc.promocodeDiscount}}</div>
+      </div>
+      <div class="d-flex" *ngIf="disc.promocode !== ''">
+        <div class="title"><b>Promocode Amount :</b></div>
+        <div class="Property">{{disc.promocodeAmount}}</div>
+      </div>
+      <div class="d-flex" *ngIf="disc.promocode == ''">
+        <div class="title"><b>Discount Type :</b></div>
+        <div class="Property">{{disc.discountType}}</div>
+      </div>
+      <div class="d-flex" *ngIf="disc.promocode == ''">
+        <div class="title"><b>Discount Value :</b></div>
+        <div class="Property">{{disc.discountValue}}</div>
+      </div>
+      <div class="d-flex" *ngIf="disc.promocode == ''">
+        <div class="title"><b>Discounted Amount :</b></div>
+        <div class="Property">{{disc.discountedAmount}}</div>
+      </div>
+      <div class="d-flex">
+        <div class="title"><b>Discount Notes :</b></div>
+        <div class="Property">{{disc.discountNotes}}</div>
+      </div>
+    </div>-->
+    <!-- <div class="mb_20">
+      <h5 class="font_16 fw-semi text_pri mb_10">Outlets</h5>
+      <table class="m-0">
+        <thead>
+          <tr>
+            <th>Outlet NO</th>
+            <th>Outlet Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let outlet of outlets; let i=index">
+            <td *ngIf="outlet.outletName !=null && outlet.outletName != '' ">Outlet {{i+1}}</td>
+            <td *ngIf="outlet.outletName !=null && outlet.outletName != '' ">{{outlet.outletName}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div> -->
+</div>

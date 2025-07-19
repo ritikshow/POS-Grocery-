@@ -1,0 +1,6 @@
+/.angular/cache
+.vs/
+node_modules
+dist/BaryonsPOS/
+gitkeybaryons
+gitkeybaryons.pub

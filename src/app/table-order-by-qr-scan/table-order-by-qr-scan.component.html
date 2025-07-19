@@ -1,0 +1,192 @@
+<div *ngIf="PageToLoad==3">
+  <div class="header_section">
+    <h2 class="font_22 fw-semi m-0 text_pri">{{outletName}}</h2>
+  </div>
+  <div class="qr_menu_body_content">
+    <div class="position-relative mb_20">
+      <input type="search" id="searchInput" class="form-control search_icon_input" placeholder="Search for dishes"
+        [(ngModel)]="searchText">
+      <img alt="image" src="/assets/images/search-icon.svg" class="search_input_icon" />
+    </div>
+    <!-- <div class="filter_container d-flex align-items-center mb_20">
+      <div class="filter_item_blk position-relative">
+        <input type="checkbox" name="food_cat_filter" class="check_input cursor-pointer">
+        <span
+          class="font_14 fw-reg text_green veg_selection d-flex align-items-center justify-content-center">Veg</span>
+      </div>
+      <div class="filter_item_blk position-relative">
+        <input type="checkbox" name="food_cat_filter" class="check_input cursor-pointer">
+        <span class="font_14 fw-reg text-red non_veg_selection d-flex align-items-center justify-content-center">Non
+          Veg</span>
+      </div>
+      <div class="filter_item_blk position-relative">
+        <input type="checkbox" class="check_input cursor-pointer">
+        <span
+          class="font_14 fw-reg text_green veg_selection d-flex align-items-center justify-content-center">Bestseller</span>
+      </div>
+      <div class="filter_item_blk position-relative">
+        <input type="checkbox" class="check_input cursor-pointer">
+        <span
+          class="font_14 fw-reg text_green veg_selection d-flex align-items-center justify-content-center">Offer</span>
+      </div>
+      <div class="filter_item_blk position-relative">
+        <input type="checkbox" class="check_input cursor-pointer">
+        <span class="font_14 fw-reg text_green veg_selection d-flex align-items-center justify-content-center">Popular
+          Choice</span>
+      </div>
+    </div> -->
+    <div class="menu_container">
+      <div class="accordion" id="accordionPanelsStayOpenExample">
+        <div class="accordion-item" *ngFor="let Category of  getFilteredCategories(); let i=index">
+          <div class="accordion-header item_accordion_header">
+            <div class="accordion-button d-flex align-items-center justify-content-between" type="button"
+              data-toggle="collapse" [attr.data-target]="'#' + Category.categoryCode" aria-expanded="true"
+              [attr.aria-controls]="Category.categoryCode">
+              <span class="font_14 fw-semi text_pri">{{Category.categoryName}}({{Category.items?.length}})</span>
+              <img alt="image" src="/assets/images/dropdown-arrow.svg" class="">
+            </div>
+          </div>
+          <div [attr.id]="Category.categoryCode" class="accordion-collapse collapse show">
+            <div class="accordion-body">
+              <div class="menu_items_container" *ngFor="let item of Category.items; let it=index;">
+                <div class="d-flex align-items-start menu_items_blk">
+                  <div class="w-60 mr_10">
+                    <h5 class="font_18 fw-semi text_pri mb_5" (click)="OnClickImage(item,openItemDetails)">{{item.itemName}}</h5>
+                    <span class="font_12 fw-med text-black">₹ {{item.itemAmount}}</span>
+                    <h6 class="font_14 fw-med text-black line-clamp m-0" [ngClass]="{'description-text': item.description.length > 100}"
+                      *ngIf="item.description && item.description !== 'null'">
+                      {{ isItemActive(item.id) ? item.description : getShortDescription(item.description) }}
+                    </h6>
+
+                    <span *ngIf="item.description && item.description.length > 100"
+                      class="font_12 fw-semi text_sec text_underline" (click)="toggleIsActive(item.id)">
+                      {{ isItemActive(item.id) ? 'Show less' : 'Show more' }}
+                    </span>
+                  </div>
+                  <div class="menu_img_container">
+                    <div class="menu_img_blk position-relative d-flex align-items-center justify-content-center mb_20">
+                      <img alt="image" src="/assets/images/chicken-pizza-image.svg" *ngIf="!item.imagePath"  />
+                      <img alt="image" class="" *ngIf="item.imagePath" src="{{BaseUrl + item.imagePath}}"
+                        (click)="OnClickImage(item,openItemDetails)" />
+                      <span class="add_item_btn cursor-pointer" (click)="openModifier(openModifierPopup,item)"
+                        *ngIf="!item?.IsAdded">Add</span>
+                      <div class="item_add_blk d-flex align-items-center" *ngIf="item?.IsAdded == true">
+                        <img alt="image" src="/assets/images/count-minus-icon.svg" class="cursor-pointer"
+                          (click)="QuantityDecreament(i,it,item)" />
+                        <input type="text" class="count_input" value="{{item.orderQuantity}}" [maxLength]="4" min="1"
+                          (keyup)="ManualQuantityChange($event.target.value,it)">
+                        <img alt="image" src="/assets/images/count-plus-icon.svg" class="cursor-pointer"
+                          (click)="QuantityIncreament(i,it,item.id)" />
+                      </div>
+                    </div>
+                    <h6 class="font_10 fw-med text_light_black m-0 text-center" *ngIf="item.modifiers?.length>0">
+                      Customisable</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="menu_footer_section d-flex align-items-center justify-content-between">
+    <div class="footer_active_menu d-flex flex-column align-items-center">
+      <img alt="image" src="/assets/images/menu_home_icon.svg" class="mb_3 normal_icon" />
+      <img alt="image" src="/assets/images/menu_home_active_icon.svg" class="mb_3 active_icon d-none" />
+      <h5 class="font_16 fw-med text_light_black m-0">Home</h5>
+    </div>
+    <div class="d-flex flex-column align-items-center" (click)="navigateToCart(1)">
+      <img alt="image" src="/assets/images/menu_shopping_cart_icon.svg" class="mb_3 normal_icon" />
+      <img alt="image" src="/assets/images/menu_shopping_cart_active_icon.svg" class="mb_3 active_icon d-none" />
+      <h5 class="font_16 fw-med text_light_black m-0">Cart <span
+          *ngIf="PrimaryOrder.items?.length">({{PrimaryOrder.items?.length}})</span></h5>
+    </div>
+    <div class="d-flex flex-column align-items-center" (click)="navigateToCart(2)">
+      <img alt="image" src="/assets/images/menu_shopping_cart_icon.svg" class="mb_3 normal_icon" />
+      <img alt="image" src="/assets/images/menu_shopping_cart_active_icon.svg" class="mb_3 active_icon d-none" />
+      <h5 class="font_16 fw-med text_light_black m-0">General Cart <span
+          *ngIf="orderHistory?.items?.length">({{orderHistory?.items?.length}})</span></h5>
+    </div>
+  </div>
+</div>
+<div *ngIf="PageToLoad ==1" class="splash_screen_container d-flex align-items-center justify-content-center">
+  <div>
+    <h5 class="font_24 fw-semi text-white mb_10 text-center">Hi</h5>
+    <span class="font_24 fw-semi text-white">Welcome To {{outletName}}</span>
+  </div>
+</div>
+<div *ngIf="PageToLoad ==2"
+  class="splash_screen_container menu_register_blk d-flex flex-column align-items-between justify-content-center">
+
+  <div class="">
+    <span class="font_24 fw-semi text-white d-block mb_15 text-center">Welcome To {{outletName}}</span>
+  </div>
+  <form [formGroup]="userForm">
+    <div class="w-80">
+      <div class="">
+        <div class="mb_15 position-relative">
+          <span class="font_14 fw-reg text-white mb_5 text-left w-100 d-inline-flex">Customer Name*</span>
+          <input type="text" class="form-control" formControlName="name" />
+        </div>
+        <div class="mb_20 position-relative">
+          <span class="font_14 fw-reg text-white mb_5 text-left w-100 d-inline-flex">Mobile Number*</span>
+          <input type="text" class="form-control" formControlName="mobile" />
+        </div>
+        <button (click)="MenuPage()" class="btn_primary">Continue</button>
+      </div>
+
+    </div>
+  </form>
+</div>
+
+<ng-template #openModifierPopup let-close="close">
+  <div class="modal-header mb_10">
+    <h5 class="font_20 fw-semi text_pri m-0" id="SKUModalLabel">{{itemDataToSelectModifier}}</h5>
+    <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer"
+      (click)="closeAction()" />
+  </div>
+  <div class="customization_body modal-body">
+    <div class="customization_blk mb_15">
+      <div class="customizatin_header_blk" *ngIf="Modifiers?.length >0">
+        <h4 class="font_16 fw-semi text-black m-0">Add Modifier</h4>
+      </div>
+      <div class="customization_content_blk" *ngIf="Modifiers?.length >0">
+        <div class="d-flex align-items-center justify-content-between mb_10" *ngFor="let Data of Modifiers">
+          <h4 class="font_14 fw-semi text-black m-0">{{Data.modifierName}}</h4>
+          <input type="checkbox" (click)="OnSelectModifier($event,Data)" />
+        </div>
+      </div>
+      <div class="customizatin_header_blk" *ngIf="Ingredients?.length >0">
+        <h4 class="font_16 fw-semi text-black m-0">Add Ingredients</h4>
+      </div>
+      <div class="customization_content_blk" *ngIf="Ingredients?.length >0">
+        <div class="d-flex align-items-center justify-content-between mb_10" *ngFor="let Data of Ingredients">
+          <h4 class="font_14 fw-semi text-black m-0">{{Data.modifierName}}</h4>
+          <input type="checkbox" (click)="OnSelectModifier($event,Data)" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="">
+    <button class="btn_primary" (click)="OnAddingModifiers()">Add Item</button>
+  </div>
+</ng-template>
+<ng-template #openItemDetails let-close="close">
+  <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer"(click)="closeAction()" />
+  <div class="img_det_blk">
+    <owl-carousel-o [options]="customOptions">
+    <ng-container *ngFor="let img of ImageDetails.multipleImagePath">
+      <ng-template carouselSlide>
+        <img [src]="img" alt="image"
+             style="width: 100%; height: 250px; object-fit: cover; border-radius: 12px;" />
+      </ng-template>
+    </ng-container>
+  </owl-carousel-o>
+  </div>
+  <div class="modal-body p_15">
+    <h4 class="font_16 fw-semi text-black mb_5">{{ImageDetails.itemName}}</h4>
+    <h6 class="font_12 fw-med text-black m-0"> {{ImageDetails.Discription}} </h6>
+  </div>
+</ng-template>
+

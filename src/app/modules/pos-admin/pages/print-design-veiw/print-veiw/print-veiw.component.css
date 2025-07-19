@@ -1,0 +1,14 @@
+@media print {
+    .print_Section {
+        background: white;
+        color: black;
+        margin: 0;
+        padding: 20px;
+    }
+    /* Optionally make the print section full width */
+    #print_Section {
+      width: 332px !important;
+      max-width: 332px !important;
+    }
+}
+  

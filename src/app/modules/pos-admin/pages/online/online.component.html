@@ -1,0 +1,201 @@
+<div class="page_container">
+  <h2 class="text_pri font_20 fw-semi mb_15">Orders</h2>
+  <ul class="p-0 mb_7 d-flex align-items-center order_nav_blk sales_nav_blk">
+    <li class="mr_6" *ngIf="commonService.checkRolePermissions('LIST_DINE_IN')"><a
+        routerLink="/pos-dashboard/dine-in">Dine In</a></li>
+    <li class="mr_6" *ngIf="commonService.checkRolePermissions('LIST_ONLINE')"><a class="active">Online</a></li>
+    <li class="mr_6" *ngIf="commonService.checkRolePermissions('LIST_TAKEAWAY')"><a
+        routerLink="/pos-dashboard/walk-in">Take Away</a></li>
+  </ul>
+  <div class="order_info_blk">
+    <div class="order_sub_nav_blk">
+      <ul class="d-flex align-items-center p-0 m-0" id="myTab" role="tablist">
+        <li role="presentation" *ngIf="commonService.checkRolePermissions('ONLINE_RUNNING_ORDERS')">
+          <a class="active" routerLink="/pos-dashboard/online"> Running Orders</a>
+        </li>
+        <li role="presentation" *ngIf="commonService.checkRolePermissions('ONLINE_COMPLETED_ORDERS')">
+          <a routerLink="/pos-dashboard/online/completed-order">Completed Orders</a>
+        </li>
+        <li role="presentation" *ngIf="commonService.checkRolePermissions('ONLINE_VOIDED_ORDERS')">
+          <a routerLink="/pos-dashboard/online/online-voided-order">Voided Orders</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="order_info_container border-bottom-lightgrey" *ngIf="commonService.checkRolePermissions('ONLINE_RUNNING_ORDERS')">
+      <form #tableTypeForm="ngForm" class="ng-invalid ng-touched ng-dirty" [formGroup]="customerForm"
+        (ngSubmit)="addCustomer()">
+        <div class="add_online_order d-flex align-items-center"
+          *ngIf="commonService.checkRolePermissions('ONLINE_ADD_ORDER')">
+          <div class="wrapper show ingredient_input_blk mt_1">
+            <input matInput type="text" formControlName="cusName" [matAutocomplete]="auto" name="search" #search
+              class="form-control" placeholder="Enter Customer Name" (ngModelChange)="searchItem()"
+              [(ngModel)]="searchInputItem" aria-label="customerName" />
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="getCustomer($event)">
+              <div *ngIf="search.value.length>=1">
+                <mat-option style="word-wrap: break-word;" *ngFor="let cust of costomerData; let i = index"
+                  value="{{cust.customerId}}">
+                  {{cust.customerName}}
+                </mat-option>
+              </div>
+            </mat-autocomplete>
+          </div>
+          <div>
+            <input type="text" class="form-control" placeholder="Enter Platform Name" formControlName="platformName">
+          </div>
+          <div>
+            <input type="text" class="form-control" placeholder="Enter Online Order No." formControlName="orderNumber">
+          </div>
+          <div>
+            <input type="text" class="form-control" placeholder="Enter Phone Number" formControlName="phone">
+          </div>
+          <div>
+            <input type="text" class="form-control" placeholder="Enter Address" formControlName="address">
+          </div>
+          <div>
+            <button class="add_btn m-0 online_pri_btn d-flex align-items-center" name="btn_login">
+              <img alt="image" src="/assets/images/add-icon.svg" class="mr_8" />
+              <span class="font_14 fw-semi text-sec"> Add Order</span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="order_info_container">
+      <div class="table-responsive" *ngIf="viewDiv">
+        <table *ngIf="isDataLoaded" datatable [dtOptions]="dtOptions" class="buyer_table w-100" id="table-request">
+          <thead class="thead-dark">
+            <tr>
+              <th id="unique_name">Customer Name</th>
+              <th id="status_name">Order Number</th>
+              <th id="order_unique_name">Amount</th>
+              <th id="buyer_company_name">Created At</th>
+              <th id="buyer_company_name">Status</th>
+              <th></th>
+              <th id="unique_name" class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of finalOrder; let i=index">
+              <td>{{data.customerName}}</td>
+              <td>{{data.orderNo}}</td>
+              <td>{{data.total | number:'1.2-2'}}</td>
+              <td>{{data.createdOn}}</td>
+              <td class="text-center">
+                  <div class="d-flex align-items-center"
+                       [ngClass]="isOrderCompleted(data) ? 'order_completed_status' : 'order_preparing_status'">
+                    <img alt="image"
+                         [src]="isOrderCompleted(data) ? '/assets/images/order-completed-icon.svg' : '/assets/images/order-running-icon.svg'"
+                         class="mr_5" />
+                    <span>{{ isOrderCompleted(data) ? 'Ready' : 'Being Prepared' }}</span>
+                  </div>
+              </td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <button class="add_btn font_14 mt_0 fw-med text_sec mr_14"
+                    *ngIf="data.deliverectId != null && data.deliverectId !='' && data?.isAccepted == false"
+                    (click)="addEvent1(actionStatus, data)">Action</button>
+                  <button *ngIf="data.isPaid == true" class="add_btn font_14 fw-med text_sec mt_0 mr_14"
+                    (click)="changeItemStatus(data.orderId,i)">Complete</button>
+                  <button class="add_btn font_14 fw-med text_sec mt_0 mr_14"
+                    (click)="print(data.orderId)">Print</button>
+                  <button *ngIf="data.isPaid == false" class="add_btn font_14 fw-med text_sec mt_0 mr_14"
+                    (click)="orderDetails(data.orderId,false)"><i class="fa fa-money" aria-hidden="true"></i> Pay
+                    Now</button>
+                  <!-- <button *ngIf="isCompanyAdmin" class="add_btn mt_0 font_14 fw-med text_sec"
+                    (click)="RejectOrder(voidpassword,data.orderId)">Void Order</button> -->
+                  <img alt="image" *ngIf="data.deliverectId != null && data.deliverectId !=''"
+                    src="/assets/images/Icon-flag1.svg" />
+                </div>
+              </td>
+              <td>
+                <div class="d-flex align-items-center justify-content-center">
+                  <img alt="image" src="/assets/images/view-icon.svg" class="mr_14 cursor-pointer"
+                    (click)="orderDetailsView(data.orderId)">
+                  <img *ngIf="!isCompanyAdmin" alt="image" src="/assets/images/delete-icon.svg" class="cursor-pointer"
+                    (click)="onDelete(data.orderId)">
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <ng-template #voidpassword let-close="close">
+    <div>
+      <div class="modal-body p_0">
+        <div class="modal-header edit_popup p_30">
+
+          <h2 style="margin-left: 2px;">Void Password</h2>
+          <button type="button" #closebutton class="close" (click)="closeAction()">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="cleartable-input">
+          <div class="col-sm-12 form-group">
+            <label>Enter Password :</label>
+            <input type="text" class="form-control form-design" (keyup)="Password($event)"
+              placeholder="Enter Password" />
+            <span *ngIf="!isCorrectPass" style="color: red;">Password is Incorrect</span>
+          </div>
+        </div>
+
+        <div class="pl-0 mt-4 text-right">
+          <div class="form-group edit_popup_button">
+            <button class="btn btn-lg btn-primary active btn-block m-0" type="reset" (click)="closeAction()">
+              Cancel
+            </button>
+            <button class="btn btn-lg btn-primary active action-btn btn-block my-0 mr_16" (click)="voidOrder()"
+              style="margin-left: 5px; ">
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <!-- pop up for Accept or Reject order-->
+  <ng-template #actionStatus let-close="close">
+    <div>
+      <div class="modal-body p_0">
+        <div class="modal-header edit_popup p_30">
+          <h3>Action to update order</h3>
+          <button type="button" #closebutton class="close" (click)="closeAction()">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <hr>
+        <div class="pl-0 mt-4">
+          <div class="form-group edit_popup_button">
+            <button class="btn btn-orders edit" (click)="Accept(dataForAction.deliverectId)"
+              style="background-color:  #28a745 !important">
+              Accept
+            </button>
+            <button class="btn btn-orders edit" (click)="RejectOrder(voidpassword,dataForAction.orderId)" style="background-color: #f23d3e !important;
+            border-color: #f23d3e !important;">
+              Reject
+            </button>
+          </div>
+        </div>
+        <div class="cleartable-input" *ngIf="isAction">
+          <div class="col-sm-12 form-group">
+            <label>Enter timings to prepare order :</label>
+            <input type="number" class="form-control form-design" (keyup)="prepareTime($event)"
+              placeholder="Enter preparation time" />
+          </div>
+        </div>
+        <hr>
+
+        <div class="pl-0 mt-4 text-right">
+          <div class="form-group edit_popup_button">
+            <button class="btn btn-lg btn-primary active btn-block m-0" type="reset" (click)="closeAction()">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

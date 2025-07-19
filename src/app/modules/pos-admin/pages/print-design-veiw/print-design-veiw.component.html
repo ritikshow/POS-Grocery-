@@ -1,0 +1,359 @@
+<div class="modal-body d-flex align-items-start">
+  <div class="content_container_blk position-relative">
+    <div class="mb_20">
+      <h5 class="font_20 fw-semi text_pri" PrintDesignVeiwComponent id="SKUModalLabel">Add Print Design</h5>
+      <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer"
+        (click)="closeModal()" />
+    </div>
+    <div class="design_content_blk">
+      <form class="ng-invalid ng-touched ng-dirty" [formGroup]="generalForm" (ngSubmit)="generalSubmit()">
+        <div class="order_sub_nav_blk p-0 border-none mb_20">
+          <ul class="d-flex align-items-center p-0 m-0" id="myTab" role="tablist">
+            <li>
+              <a class="cursor-pointer" [class.active]="selectedSectionFormat === 1" (click)="selectSection(1)">General Settings</a>
+            </li>
+            <li role="presentation">
+              <a class="cursor-pointer" [class.active]="selectedSectionFormat === 2" (click)="selectSection(2)">Invoice Header Section</a>
+            </li>
+            <li role="presentation">
+              <a class="cursor-pointer" [class.active]="selectedSectionFormat === 3" (click)="selectSection(3)">Header</a>
+            </li>
+            <li role="presentation">
+              <a class="cursor-pointer" [class.active]="selectedSectionFormat === 4" (click)="selectSection(4)">Footer</a>
+            </li>
+          </ul>
+        </div>
+        <div class="form_blk_container" *ngIf="selectedSectionFormat==1">
+          <div class="row modal_input_row w-100">
+            <div class="col-md-4">
+              <label class="font_14 fe-reg text_pri mb_5">Invocie Title<span class="required-asterisk">*</span></label>
+              <input type="text" class="form-control" placeholder="Enter Title Label" formControlName="invoiceTitle">
+            </div>
+            <div class="col-md-4">
+              <label class="font_14 fe-reg text_pri mb_5">Order Number<span class="required-asterisk">*</span></label>
+              <input type="text" class="form-control" placeholder="Enter online order Label" formControlName="orderNo">
+            </div>
+            <div class="col-md-4">
+              <label class="font_14 fe-reg text_pri mb_5"> Customer<span class="required-asterisk">*</span></label>
+              <input type="text" class="form-control" placeholder="Enter Customer Label" formControlName="customer">
+            </div>
+            <div class="col-md-4">
+              <label class="font_14 fe-reg text_pri mb_5">Served By<span class="required-asterisk">*</span></label>
+              <input type="text" class="form-control" placeholder="Enter Served By Label" formControlName="servedBy">
+            </div>
+            <div class="col-md-4 d-flex align-items-center mt_20">
+              <input class="mr_10" type="checkbox" id="footerCheck" (change)="onNewCheckboxChange($event,2)" />
+              <label class="font_14 fe-reg text_pri mb_5">Show Order Notes</label>
+            </div>
+            <div class="col-md-4 d-flex align-items-center mt_20">
+              <input class="mr_10" type="checkbox" id="footerCheck" (change)="onNewCheckboxChange($event,3)" />
+              <label class="font_14 fe-reg text_pri">Show Loyalty</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Invoice header section-->
+        <div class="form_blk_container" *ngIf="selectedSectionFormat==2">
+          <div class="row modal_input_row w-100">
+            <div class="col-md-4">
+              <label class="font_14 fe-reg text_pri mb_5"> Item<span class="required-asterisk">*</span></label>
+              <input type="text" class="form-control" placeholder="Enter Item Label" formControlName="item">
+            </div>
+            <div class="col-md-4">
+              <label class="font_14 fe-reg text_pri mb_5"> Quantity<span class="required-asterisk">*</span></label>
+              <input type="text" class="form-control" placeholder="Enter Quantity Label" formControlName="quantity">
+            </div>
+            <div class="col-md-4">
+              <label class="font_14 fe-reg text_pri mb_5"> Amount<span class="required-asterisk">*</span></label>
+              <input type="text" class="form-control" placeholder="Enter Amount Label" formControlName="amount">
+            </div>
+            <div class="col-md-4">
+              <label class="font_14 fe-reg text_pri mb_5">Discount</label>
+              <input type="text" class="form-control" placeholder="Enter Discount Label" formControlName="discount">
+            </div>
+            <div class="col-md-4 d-flex align-items-center mt_20">
+              <input class="mr_10" type="checkbox" id="footerCheck" (change)="onNewCheckboxChange($event,5)" />
+              <label class="font_14 fe-reg text_pri">Show Modifiers And Notes</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Header -->
+        <div class="form_blk_container" *ngIf="selectedSectionFormat==3">
+              <div class="mod_check d-flex align-items-center mb_20">
+                <input class="mr_10" type="checkbox" id="headerCheck" formControlName="showHeader" (change)="onCheckboxChange($event)" />
+                <label class="font_14 fe-reg text_pri mb_0 mr_16">Show Header</label>
+                <input class="mr_10" type="checkbox" id="footerCheck" (change)="onNewCheckboxChange($event,1)" />
+                <label class="font_14 fe-reg text_pri m-0">Show Logo</label>
+              </div>
+              <angular-editor id="editor1" formControlName="headerContent" [config]="editorConfig"></angular-editor>
+        </div>
+
+        <!-- Footer -->
+        <div class="form_blk_container" *ngIf="selectedSectionFormat==4">
+              <div class="mod_check d-flex align-items-center mb_20">
+                <input class="mr_10" type="checkbox" id="footerCheck" formControlName="showFooter" (change)="onCheckboxChange($event)" />
+                <label class="font_14 fe-reg text_pri mb_0 mr_16">Show Footer</label>
+                <input class="mr_10" type="checkbox" id="footerCheck" (change)="onNewCheckboxChange($event,4)" />
+                <label class="font_14 fe-reg text_pri m-0">Show Delivery Address</label>
+              </div>
+              <angular-editor id="editor2" formControlName="footerContent" [config]="editorConfig"></angular-editor>
+        </div>
+        <div class="row modal_input_row border-top pt_10 w-100 m-0">
+          <div class="col-md-6 pb_0 pl_0">
+            <button class="cancel_btn" type="reset" (click)="closeModal()">Cancel</button>
+          </div>
+          <div class="col-md-6 pb_0 pr_0">
+            <button class="btn_primary" name="btn_login">Save</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="print_design_preview_blk">
+    <h3 class="font_20 fw-semi text_pri mb_10">Print Preview</h3>
+    <div id="printSectionId" class="printMainDiv">
+      <h6 class="font_14 fw-semi text-center text_pri border-bottom-lightgrey mb_5 ptb_5"
+        *ngIf="this.generalForm.get('showHeader')?.value == true"
+        [innerHTML]="this.generalForm.get('headerContent')?.value | noSanitize"></h6>
+      <h6 class="font_14 fw-semi text-center text_pri border-bottom-lightgrey mb_5 ptb_5">
+        {{this.generalForm.get('invoiceTitle')?.value}}
+      </h6>
+      <div class="print_title_body">
+        <h6 class="font_12 fw-reg text_pri mb_5">{{this.generalForm.get('orderNo')?.value}}:</h6>
+        <h6 class="font_12 fw-reg text_pri mb_5">{{this.generalForm.get('customer')?.value}}:</h6>
+        <h6 class="font_12 fw-reg text_pri m-0">{{this.generalForm.get('servedBy')?.value}}:</h6>
+      </div>
+      <div class="print_body">
+        <table class="table w-100 m-0 border-none border-bottom-lightgrey">
+          <thead>
+            <tr>
+              <th>{{this.generalForm.get('item')?.value}}</th>
+              <th>{{this.generalForm.get('quantity')?.value}}</th>
+              <th>{{this.generalForm.get('discount')?.value}}
+              </th>
+              <th>{{this.generalForm.get('amount')?.value}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Bread</td>
+              <td>2</td>
+              <td>10%</td>
+              <td>18</td>
+            </tr>
+            <tr>
+              <td colspan="3" class="text-right">SubTotal:
+              </td>
+              <td>18</td>
+            </tr>
+            <tr>
+              <td colspan="3" class="text-right">Discount:
+              </td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td colspan="3" class="text-right">Total:
+              </td>
+              <td>18</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <h6 *ngIf="this.generalForm.get('showFooter')?.value == true"
+        class="print_footer font_14 fw-semi text-center text_pri ptb_5 m-0"
+        [innerHTML]="this.generalForm.get('footerContent')?.value | noSanitize"></h6>      
+    </div>
+  </div>
+</div>
+<!-- <div class="d-flex">
+  <div class="container div_1">
+    <div class="modal-body create_order_blk this_mon_blk form_popup">
+      <form class="ng-invalid ng-touched ng-dirty" [formGroup]="generalForm" (ngSubmit)="generalSubmit()">
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" class="expan">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              General Settings
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div>
+            <div class="d-flex justify-content-between">
+              <div class="form-group field_1">
+                <label class="labelIn">Title Label<span class="required-asterisk">*</span></label>
+                <input type="text" class="form-control" placeholder="Enter Title Label" formControlName="title">
+              </div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div class="form-group field_1">
+                <label class="labelIn"> Invoice Number Label<span class="required-asterisk">*</span></label>
+                <input type="text" class="form-control" placeholder="Enter Invoice Number Label" formControlName="invoiceNo">
+              </div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div class="form-group field_1">
+                <label class="labelIn"> Online OrderNo Label<span class="required-asterisk">*</span></label>
+                <input type="text" class="form-control" placeholder="Enter online order Label" formControlName="orderNo">
+              </div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div class="form-group field_1">
+                <label class="labelIn"> Customer Label<span class="required-asterisk">*</span></label>
+                <input type="text" class="form-control" placeholder="Enter Customer Label" formControlName="customer">
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-between">
+              <div class="form-group field_1">
+                <label class="labelIn"> Served By Label<span class="required-asterisk">*</span></label>
+                <input type="text" class="form-control" placeholder="Enter Served By Label" formControlName="servedBy">
+              </div>
+            </div>
+            <div>
+              <label for="'{{'radioTrue'}}" class="mr-1">&nbsp;
+                <input type="radio" id="{{'radioTrue'}}" formControlName="isActive"
+                  (change)="changedesignStatus($event)" [value]=true>Active
+              </label>
+              <label for="{{'radioFalse'}}">
+                &nbsp;
+                <input type="radio" id="{{'radioFalse'}}" formControlName="isActive"
+                  (change)="changedesignStatus($event)" [value]=false>Deactive
+              </label>
+            </div>
+          </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" class="expan">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Invoice Header Section
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div>
+            <div class="d-flex justify-content-between">
+              <div class="form-group field_1">
+                <label class="labelIn"> Item<span class="required-asterisk">*</span></label>
+                <input type="text" class="form-control" placeholder="Enter Item Label" formControlName="item">
+              </div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div class="form-group field_1">
+                <label class="labelIn"> Quantity<span class="required-asterisk">*</span></label>
+                <input type="text" class="form-control" placeholder="Enter Quantity Label" formControlName="quantity">
+              </div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div class="form-group field_1">
+                <label class="labelIn"> Amount<span class="required-asterisk">*</span></label>
+                <input type="text" class="form-control" placeholder="Enter Amount Label" formControlName="amount">
+              </div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div class="form-group field_1">
+                <label class="labelIn">Discount</label>
+                <input type="text" class="form-control" placeholder="Enter Discount Label" formControlName="discount">
+              </div>
+            </div>
+          </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" class="expan">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Header
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div>
+            <div class="mod_check d-flex align-items-center">
+              <input type="checkbox" id="headerCheck" (change)="onCheckboxChange($event)" />
+              <label class="m-0 pl_5 remeber_label">Show Header</label>
+            </div>
+            <angular-editor id="editor1" formControlName="headerContent" [config]="editorConfig"></angular-editor>
+          </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Footer
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div>
+            <div class="mod_check d-flex align-items-center">
+              <input type="checkbox" id="footerCheck" (change)="onCheckboxChange($event)" />
+              <label class="m-0 pl_5 remeber_label">Show Footer</label>
+            </div>
+            <angular-editor id="editor2" formControlName="footerContent" [config]="editorConfig"></angular-editor>
+          </div>
+        </mat-expansion-panel>
+        <div class="pl-0 mt-4 text-right">
+          <button class="btn btn-lg btn-primary active btn-block m-0" type="reset" (click)="closeModal()">
+            Cancel
+          </button>
+          <button class="btn btn-lg btn-primary active action-btn btn-block my-0 mr_16" name="btn_login"
+            type="submit" style="margin-left: 5px;">
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="div_2 p-2">
+    <div>
+      <h3>Sample Preview</h3>
+    </div>
+    <div id="printSectionId" class="printMainDiv">
+      <div class="print_header" *ngIf="previewData?.printHeaderSettings.showHeader == true">
+        <div [innerHTML]="previewData?.printHeaderSettings.headerDetails | noSanitize"></div>
+      </div>
+      <div class="print_title_body">
+        <div class="horizontal_line mt-2"></div>
+        <div class="print_title">{{previewData?.printGenerealSettings.title}}</div>
+        <div class="horizontal_line"></div>
+        <div class="p-2">
+          <div class="invoice_no">{{previewData?.printGenerealSettings.invoiceNumber}}:</div>
+          <div class="invoice_no">{{previewData?.printGenerealSettings.orderNo}}:</div>
+          <div class="invoice_no">{{previewData?.printGenerealSettings.customer}}:</div>
+          <div class="invoice_no">{{previewData?.printGenerealSettings.servedBy}}:</div>
+        </div>
+      </div>
+      <div class="print_body">
+        <table class="table">
+          <caption>Print Design View Table</caption>
+          <thead>
+            <tr>
+              <th>{{previewData?.printItemHeaderSettings.item}}</th>
+              <th>{{previewData?.printItemHeaderSettings.quantity}}</th>
+              <th *ngIf="previewData?.printItemHeaderSettings.discount !== ''">
+                {{previewData?.printItemHeaderSettings.discount}}
+              </th>
+              <th>{{previewData?.printItemHeaderSettings.amount}}</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="previewData?.printItemHeaderSettings">
+            <tr>
+              <td>Bread</td>
+              <td>2</td>
+              <td *ngIf="previewData?.printItemHeaderSettings.discount !== ''">10%</td>
+              <td>18</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>SubTotal:</td>
+              <td>18</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>Discount:</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>Total:</td>
+              <td>18</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="print_footer" *ngIf="previewData?.printFooderSettings.showFooder == true">
+        <div [innerHTML]="previewData?.printFooderSettings.fooderDetails | noSanitize"></div>
+      </div>
+    </div>
+  </div>
+</div> -->

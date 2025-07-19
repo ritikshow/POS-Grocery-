@@ -1,0 +1,41 @@
+.field_1{
+    width: 49%;
+}
+.required-asterisk{
+    color: red;
+    font-weight: bold;
+    margin-left: 3px;
+    font-size: 1.2em;
+}
+
+.btn-orders{
+    border-color: #d6d6e2;
+    color: white;
+    font-size: 13px;
+    height: 30px;
+    line-height: 14px;
+    width: auto;
+}
+
+.OutletName {
+    width: 50%;
+    font-weight: 600;
+    padding-right: 10px;
+}
+.blockInput{
+background: LightGray !important;
+
+}
+.btn_add{
+    background-color: rgb(15, 107, 143);
+}
+.btn_add:hover{
+    background-color: rgb(21, 126, 168);
+}
+.text{
+    color: #407D6A;
+    font-size: 15px;
+    line-height: 28.8px;   
+    margin-bottom: 7px;
+    font-weight: 600;
+}

@@ -1,0 +1,27 @@
+<div class="main_div">
+    <div class="modal-header">
+            <h5 class="modal-title" id="SKUModalLabel">View Tax Id: {{taxData?.id}}</h5>
+            <a href="javascript:void(0)" class="close" (click)="closeModal()"> <span aria-hidden="true">×</span> </a>
+    </div>
+    <div class="container mb-2">
+        <h3 class="titleHead">View Tax Status</h3>
+        <div class="mb-2">
+            <div class="d-flex">
+                <div class="title"><b>Outlet Name :</b></div>
+                <div class="Property">{{taxData?.outletName}}</div>
+            </div>
+            <div class="d-flex">
+                <div class="title"><b>Percentage :</b></div>
+                <div class="Property">{{taxData?.percentage}}</div>
+            </div>
+            <div class="d-flex">
+                <div class="title"><b>Is Item Include :</b></div>
+                <div class="Property">{{taxData?.isItemIncludeTax}}</div>
+            </div>
+            <div class="d-flex">
+                <div class="title"><b>Subtract from Subtotal :</b></div>
+                <div class="Property">{{taxData?.isSubtractFromSubTotal}}</div>
+            </div>
+        </div>
+    </div>
+</div>

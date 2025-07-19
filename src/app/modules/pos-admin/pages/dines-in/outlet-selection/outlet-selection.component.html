@@ -1,0 +1,29 @@
+<div class="main_div">
+  <div class="modal-header">
+    <h2 class="modal-title" id="modal-basic-title">Please Select Outlet First To Continue..</h2>
+    <a *ngIf="closeView == true" href="javascript:void(0)" class="close" (click)="closeModal()"> <span
+        aria-hidden="true">×</span> </a>
+  </div>
+  <div class="modal-body create_order_blk this_mon_blk">
+    <form class="ng-invalid ng-touched ng-dirty" [formGroup]="outletForm" (ngSubmit)="addOutlet()">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group mb_20">
+            <label for="sel1"><span class="required-asterisk">*</span> Select Outlet:</label>
+            <select class="form-control select-control" id="outlet" formControlName="outlet" (change)="select()">
+              <option value="" [disabled]="true">Select Outlet</option>
+              <option *ngFor="let outlet of resData?.outlets" value="{{outlet.outletId}}">
+                {{outlet.outletName}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <button class="btn btn-lg btn-primary active action-btn btn-block mb-1" ngbAutofocus name="btn_login"
+            type="submit">
+            Save
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

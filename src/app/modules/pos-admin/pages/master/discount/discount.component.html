@@ -1,0 +1,126 @@
+<div class="page_container table_details_blk">
+  <h2 class="text_pri font_20 fw-semi mb_7">Settings</h2>
+  <div class="d-flex align-items-start settings_nav_main_blk">
+  <app-settings></app-settings>
+  <div class="settings_nav_info_container">
+    <div class="d-flex align-items-center justify-content-end mb_21">
+      <!-- <div class="position-relative w-30">
+        <input type="search" class="form-control search_icon_input" placeholder="search">
+        <img alt="image" src="/assets/images/search-icon.svg" class="search_input_icon"/>
+      </div> -->
+      <button class="add_btn" *ngIf="commonService.checkRolePermissions('ADD_DISCOUNT')" (click)="openForm()">
+        <img alt="image" src="/assets/images/add-icon.svg" class="mr_8"/>
+        <span class="font_14 fw-semi text-sec">Add Discount</span>
+      </button>
+    </div>
+    <!-- <div class="OutletName">Outlet Name : {{outletName}}</div>
+    <div class="create_order_blk this_mon_blk">
+      <div class="row">
+        <div class="col-md-9 empty"></div>
+        <div class="col-md-3 d-flex align-items-end">
+          <button class="create_order_btn w-100 d-flex align-items-center justify-content-center" (click)="openForm()">
+            <img src="assets/images/add-circle.svg" alt="add-circle" class="img-fluid mr_16">
+            Add Discount
+          </button>
+        </div>
+      </div>
+    </div> -->
+      <div class="table-responsive respons_inventory_table" id="checkBoxes">
+        <table datatable [dtOptions]="dtOptions" *ngIf="isDataLoaded" id="example" class="buyer_table w-100 nowrap" id="table-request">
+          <thead>
+            <tr>
+              <th>Discount Name</th>
+              <th>Discount Type</th>
+              <th>Discount Value</th>
+              <th>Discount Note</th>
+              <th>Dine In</th>
+              <th>Take Away</th>
+              <th>Online</th>
+              <th>On Total</th>
+              <th>Status</th>
+              <th class="text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of discountData; let i=index">
+              <td>{{data.discountName}}</td>
+              <td>{{data.discountType}}</td>
+              <td>{{data.discountValue}}</td>
+              <td>{{data.discoutNotes}}</td>
+              <div *ngIf="data.discountOnDineIn; then dineInBlock else dineInBlockNo"></div>
+              <ng-template #dineInBlock>
+                <td>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="50" height="30" fill="green" class="bi bi-check" viewBox="0 0 16 16">
+                  <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                  </svg>
+                </td>
+              </ng-template>
+              <ng-template #dineInBlockNo>
+                <td>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="50" height="30" fill="red" class="bi bi-x" viewBox="0 0 16 16">
+                  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                  </svg>
+                </td>
+              </ng-template>
+              <div *ngIf="data.discountOnTakeAway; then takeAwayBlock else takeAwayBlockNo"></div>
+              <ng-template #takeAwayBlock>
+                <td>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="50" height="30" fill="green" class="bi bi-check" viewBox="0 0 16 16">
+                  <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                  </svg>
+                </td>
+              </ng-template>
+              <ng-template #takeAwayBlockNo>
+                <td>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="50" height="30" fill="red" class="bi bi-x" viewBox="0 0 16 16">
+                  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                  </svg>
+                </td>
+              </ng-template>
+              <div *ngIf="data.discountOnOnline; then eOrderBlock else eOrderBlockNo"></div>
+              <ng-template #eOrderBlock>
+                <td>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="50" height="30" fill="green" class="bi bi-check" viewBox="0 0 16 16">
+                  <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                  </svg>
+                </td>
+              </ng-template>
+              <ng-template #eOrderBlockNo>
+                <td>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="50" height="30" fill="red" class="bi bi-x" viewBox="0 0 16 16">
+                  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                  </svg>
+                </td>
+              </ng-template>  
+              <div *ngIf="data.discountOnTotal; then onTotalBlock else onTotalBlockNo"></div>
+              <ng-template #onTotalBlock>
+                <td>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="50" height="30" fill="green" class="bi bi-check" viewBox="0 0 16 16">
+                  <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                  </svg>
+                </td>
+              </ng-template>
+              <ng-template #onTotalBlockNo>
+                <td>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="50" height="30" fill="red" class="bi bi-x" viewBox="0 0 16 16">
+                  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                  </svg>
+                </td>
+              </ng-template>
+              <td [attr.data-order]="data.discountStatus ? 1 : 0"> 
+                <mat-slide-toggle class="discount_slider_btn" color="accent" (click) ="changeDiscountStatus(data.discountId)" [(ngModel)]="data.activeStatus">
+                </mat-slide-toggle>
+              </td>
+              <td>
+                <div class="d-flex align-items-center justify-content-center">
+                  <img alt="image" src="/assets/images/edit-icon.svg" class="mr_14 cursor-pointer" *ngIf="commonService.checkRolePermissions('EDIT_DISCOUNT')" (click)="edit(data.discountId)"/>
+                  <!-- <img alt="image" src="/assets/images/view-icon.svg" class="mr_14 cursor-pointer" (click)="view(data.discountId)"/> -->
+                  <img alt="image" src="/assets/images/delete-icon.svg" class="cursor-pointer" *ngIf="commonService.checkRolePermissions('DELETE_DISCOUNT')" (click)="onDelete(data.discountId)"/>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  </div>
+</div>

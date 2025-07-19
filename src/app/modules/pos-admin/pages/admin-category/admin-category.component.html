@@ -1,0 +1,195 @@
+<div class="page_container table_details_blk">
+  <h2 class="text_pri font_20 fw-semi mb_7">Settings</h2>
+  <div class="d-flex align-items-start settings_nav_main_blk">
+  <app-settings></app-settings>
+  <div class="settings_nav_info_container">
+    <div class="d-flex align-items-center justify-content-end mb_21">
+      <!-- <div class="position-relative w-30"> -->
+        <!-- <input type="search" class="form-control search_icon_input" placeholder="search"> -->
+        <!-- <img alt="image" src="/assets/images/search-icon.svg" class="search_input_icon"/> -->
+      <!-- </div> -->
+      <button class="add_btn mr_14" *ngIf="commonService.checkRolePermissions('ADD_COURSE')" (click)="openAddCoursePopUp(openCoursePopUp)">
+        <img alt="image" src="/assets/images/add-icon.svg" class="mr_8"/>
+        <span class="font_14 fw-semi text-sec"> Add Course</span>
+      </button>
+      <button class="add_btn" *ngIf="commonService.checkRolePermissions('ADD_CATEGORY')" (click)="openForm()">
+        <img alt="image" src="/assets/images/add-icon.svg" class="mr_8"/>
+        <span class="font_14 fw-semi text-sec"> Add Category</span>
+      </button>
+    </div>
+    <div class="table-responsive respons_inventory_table"  [ngClass]="commonService.checkRolePermissions('ADD_CATEGORY') || commonService.checkRolePermissions('ADD_COURSE') ? '' : 'm-0'">
+      <table datatable [dtOptions]="dtOptions" *ngIf="isDataLoaded" class="nowrap buyer_table w-100" id="table-request">
+        <thead>
+          <tr>
+            <th>Sl No</th>
+            <th>Category Name</th>
+            <th>Category Code</th>
+            <th>Course</th>
+            <th>Location</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of allItems; index as i">
+            <td>{{i+1}}</td>
+            <td>{{item.categoryName}}</td>
+            <td>{{item.categoryCode}}</td>
+            <td >{{ item.course!='null' ? item.course : '' }}</td>
+            <td>
+              <span *ngIf="item.location == 'Kitchen'">{{item.location}}</span>
+              <span *ngIf="item.location == 'Warehouse'">Bar</span>
+            </td>
+            <td> <span class="desc_text_width" title={{item.description}}>{{item.description}}</span></td>
+            <td [attr.data-order]="item.activeStatus ? 1 : 0"> 
+              <mat-slide-toggle  class="discount_slider_btn" color="accent" (click) = "changeCategoryStatus(item.categoryId,item.activeStatus)" [(ngModel)]="item.activeStatus">
+              </mat-slide-toggle>
+            </td>
+            <td>
+              <div class="d-flex align-items-center justify-content-center">
+                <img alt="image" src="/assets/images/edit-icon.svg" *ngIf="commonService.checkRolePermissions('EDIT_CATEGORY')" class="mr_14 cursor-pointer" (click)="edit(item.categoryId)"/>
+                <!-- <img alt="image" src="/assets/images/view-icon.svg" class="mr_14 cursor-pointer" (click)="view(item,vieweditEventModel)"/> -->
+                <img alt="image" src="/assets/images/delete-icon.svg" *ngIf="commonService.checkRolePermissions('DELETE_CATEGORY')" class="cursor-pointer" (click)="onDelete(item.categoryId)"/>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</div>
+  <!-- <div class="weekly_report view_order_blk white_bg">
+    <div class="OutletName float-left">Outlet Name : {{outletName}}</div>
+    <div class="create_order_blk this_mon_blk">
+      <div class="row">
+        <div class="col-md-9 empty"></div>
+        <div class="col-md-3 d-flex align-items-end">
+          <button class="create_order_btn w-100 d-flex align-items-center justify-content-center" (click)="openForm()">
+            <img src="assets/images/add-circle.svg" alt="add-circle" class="img-fluid mr_16">
+            Add Category
+          </button>
+        </div>
+        <div class="col-md-3 d-flex align-items-end" style="margin-top: -5%;margin-left: 49%;">
+          <button class="create_order_btn w-100 d-flex align-items-center justify-content-center" (click)="openAddCoursePopUp(openCoursePopUp)">
+            <img src="assets/images/add-circle.svg" alt="add-circle" class="img-fluid mr_16">
+            Add Course
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="mt-2 mb-4 pb-1 w-100" id="checkBoxes">
+      <div class="table-responsive">
+        <table aria-describedby="desc" datatable [dtOptions]="dtOptions" *ngIf="isDataLoaded"
+          class="nowrap buyer_table w-100" id="table-request">
+          <thead>
+            <tr>
+              <th scope="col">Sl No</th>
+              <th scope="col">Category Name</th>
+              <th scope="col">Category Code</th>
+              <th scope="col">Course</th>
+              <th scope="col">
+                Location
+              </th>
+              <th scope="col">
+                Description
+              </th>
+              <th scope="col">
+                Edit
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of allItems; index as i">
+              <td>{{i+1}}</td>
+              <td>{{item.categoryName}}</td>
+              <td>{{item.categoryCode}}</td>
+              <td>{{item.course}}</td>
+              <td *ngIf="item.location == 'Kitchen'">{{item.location}}</td>
+              <td *ngIf="item.location == 'Warehouse'">Bar</td>
+              <td>{{item.description}}</td>
+              <td>
+                <button class="btn btn-orders edit" (click)="edit(item.categoryId)"><i
+                    class="fa fa-pencil"></i></button>
+                <button class="btn btn-orders edit" (click)="view(item,vieweditEventModel)">View</button>
+                <button class="btn btn-orders edit" (click)="onDelete(item.categoryId)"><i class="fa fa-trash"
+                    aria-hidden="true"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="total_entries">
+          <select class="len_per_page" (change)="changedLength($event)">
+            <option value="5">5</option>
+            <option value="10">10&nbsp;</option>
+            <option value="20">20&nbsp;</option>
+            <option value="-1">All&nbsp;</option>
+          </select>
+          <label>Total :</label>
+          <label> {{tableListRecord.total}}</label>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  <ng-template #vieweditEventModel let-close="close">
+    <div>
+      <div class="modal-body p_0">
+        <div class="modal-header edit_popup p_30">
+          <h5 class="modal-title" id="SKUModalLabel">Category Id: {{viewData?.categoryId}}</h5>
+          <button type="button" #closebutton class="close" (click)="closeAction()">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+
+        <div class="container mb-2">
+          <h3 class="titleHead">Category Details</h3>
+          <div class="d-flex">
+            <div class="title"><b>Category Name :</b></div>
+            <div class="Property">{{viewData.categoryName}}</div>
+          </div>
+          <div class="d-flex">
+            <div class="title"><b>Category Code:</b></div>
+            <div class="Property">{{viewData.categoryCode}}</div>
+          </div>
+          <div class="d-flex" *ngIf="viewData.course !=null">
+            <div class="title"><b>Course:</b></div>
+            <div class="Property">{{viewData.course}}</div>
+          </div>
+          <div class="d-flex">
+            <div class="title"><b>Category Location :</b></div>
+            <div class="Property">{{viewData.location}}</div>
+          </div>
+          <div class="d-flex">
+            <div class="title"><b>Category Description :</b></div>
+            <div class="Property">{{viewData.description}}</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </ng-template>
+
+
+  <ng-template #openCoursePopUp let-close="close">
+    <div class="modal-header">
+      <h5 class="font_20 fw-semi text_pri" id="SKUModalLabel">Add Course</h5>
+      <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer" (click)="closeAction()"/>
+    </div>
+    <div class="create_order_blk this_mon_blk modal-body form_popup">
+      <div class="row modal_input_row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label class="font_14 fe-reg text_pri mb_5">Course</label>
+            <input type="text" class="form-control" placeholder="Enter Course Name" (keyup)="course($event)" >
+          </div>
+        </div>
+        <div class="col-md-6 pb_0">
+          <button class="cancel_btn" type="reset" (click)="closeAction()">Cancel</button>
+        </div>
+        <div class="col-md-6 pb_0">
+          <button class="btn_primary" ngbAutofocus name="btn_login" (click)="addCourse()">Save</button>
+        </div>
+      </div>
+    </div>
+  </ng-template>

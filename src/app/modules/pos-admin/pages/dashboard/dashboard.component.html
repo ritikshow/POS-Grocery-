@@ -1,0 +1,488 @@
+<div class="page_container dashboard_container">
+  <div class="d-flex align-items-center justify-content-between mb_15">
+    <h2 class="text_pri font_20 fw-semi m-0">Dashboard</h2>
+    <div *ngIf="userData?.roleName == 'Super Admin' || userData?.roleName == 'Company Admin'">
+      <button *ngIf="commonService.checkRolePermissions('DETAILED_REPORT')" class="dashboard_sec_btn"
+        (click)="detailedReport()">Detailed Report</button>
+      <!-- <button *ngIf="commonService.checkRolePermissions('PETTY_CASH_REPORT')" class="dashboard_sec_btn mr_10"
+        (click)="PettyCashReport(PettyCashPopUp)">Petty Cash Report</button> -->
+      <!-- <button *ngIf="commonService.checkRolePermissions('SALES_REPORT')" class="dashboard_sec_btn" (click)="addEvent(editEventModel)">Print
+        Sales Report</button> -->
+      <!-- <button *ngIf="restaurantView == true" class="btn btn-orders edit" (click)="getRestaurantModalView()">Change -->
+      <!-- Restaurant</button> -->
+      <!-- <button class="btn btn-orders edit" (click)="getOutletModalView()">Change Outlet</button> -->
+    </div>
+  </div>
+  <div class="welcome_note_blk d-flex align-items-center justify-content-between mb_15">
+    <div class="d-flex align-items-center">
+      <img alt="image" src="/assets/images/greeting-icon.svg" class="mr_4" />
+      <h5 class="font_16 fw-semi text-black mr_5 mb_0">Hi {{userCredential.userName}},</h5>
+      <span class="font_14 fw-reg grey_text">here’s what happening with your store today</span>
+    </div>
+
+    <form class="ng-invalid ng-touched ng-dirty" [formGroup]="dashboardForm">
+      <div class="row this_mon_blk dash_filter_row dash_row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label class="font_12 fw-reg text_black m-0">From Date</label>
+            <div class="position-relative">
+              <input type="date" class="form-control dash_inputs" placeholder="Enter From Date" formControlName="fromDate" required>
+              <!-- <img alt="image" src="/assets/images/input-calendar-icon.svg" class="input_calendar_left_align"/> -->
+            </div>
+
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label class="font_12 fw-reg text_black m-0">To Date</label>
+            <div class="position-relative">
+              <input type="date" class="form-control dash_inputs" placeholder="Enter To Date" formControlName="toDate" required>
+              <!-- <img alt="image" src="/assets/images/input-calendar-icon.svg" class="input_calendar_left_align"/> -->
+            </div>
+
+          </div>
+        </div>
+        <div class="col-md-3 d-flex align-items-end">
+          <div class="form-group d-flex align-items-center">
+            <button class="filter_button dash_filter_btn mr_10" ngbAutofocus name="btn_login" type="button" (click)="getDashboardData()">
+              <img alt="image" src="/assets/images/filter-icon.svg"/>
+            </button>
+            <button class="table_reset_btn dash_filter_btn reset_btn" (click)="OnClickReset()">
+              <img alt="image" src="/assets/images/reset-icon.svg"/>
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="row dashboard_row_blk">
+    <div class="col-md-3">
+      <div class="dashboard_info_blk">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-start flex-column">
+            <h4 class="font_20 fw-semi text-black mb_4">{{this.commonService?.generalSettings?.currency}}
+              {{dashBoardData?.totalOrderValue | number:'1.2-2'}}</h4>
+            <span class="font_12 text_light_grey fw-reg">Total Sales</span>
+          </div>
+          <div class="dashboard_icon_blk d-flex align-items-center justify-content-center">
+            <img alt="image" src="/assets/images/total-menu-icon.svg" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="dashboard_info_blk">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-start flex-column">
+            <h4 class="font_20 fw-semi text-black mb_4">{{this.commonService?.generalSettings?.currency}}
+              {{dashBoardData?.takeAwaySales | number:'1.2-2'}}</h4>
+            <span class="font_12 text_light_grey fw-reg">Take Away Sales</span>
+          </div>
+          <div class="dashboard_icon_blk total_order_blk d-flex align-items-center justify-content-center">
+            <img alt="image" src="/assets/images/total-orders-icon.svg" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="dashboard_info_blk">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-start flex-column">
+            <h4 class="font_20 fw-semi text-black mb_4">{{this.commonService?.generalSettings?.currency}}
+              {{dashBoardData?.dineInSales | number:'1.2-2'}}</h4>
+            <span class="font_12 text_light_grey fw-reg">Dine-In Sales</span>
+          </div>
+          <div class="dashboard_icon_blk total_client_blk d-flex align-items-center justify-content-center">
+            <img alt="image" src="/assets/images/total-clients-icon.svg" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="dashboard_info_blk">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-start flex-column">
+            <h4 class="font_20 fw-semi text-black mb_4">{{this.commonService?.generalSettings?.currency}}
+              {{dashBoardData?.onlineSales | number:'1.2-2'}}</h4>
+            <span class="font_12 text_light_grey fw-reg">Online Sales</span>
+          </div>
+          <div class="dashboard_icon_blk total_revenue_blk d-flex align-items-center justify-content-center">
+            <img alt="image" src="/assets/images/total-revenue-icon.svg" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="d-flex justify-content-between mt-2">
+      <div class="card view-card bg-success d-flex w-100 m-0">view-card-title">INR {{dashBoardData?.totalOrderValue | number}}</div>
+        <p class="card-text">Total Sales</p>
+      </div>
+      <div class="card view-card bg-success d-flex w-100 m-0">view-card-title">INR {{dashBoardData?.takeAwaySales | number}}</div>
+        <p class="card-text">Take Away Sales</p>
+      </div>
+      <div class="card view-card bg-success d-flex w-100 m-0">view-card-title">INR {{dashBoardData?.dineInSales | number}}</div>
+        <p class="card-text">Dine-In Sales</p>
+      </div>
+      <div class="card view-card bg-success d-flex w-100 m-0">view-card-title">INR {{dashBoardData?.onlineSales | number}}</div>
+        <p class="card-text">Online Sales</p>
+      </div>
+    </div> -->
+
+    <div class="col-md-6 tab_w_100">
+      <div class="dashboard_info_blk dashboard_graph_blk">
+        <div class="d-flex align-items-center justify-content-between mb_12">
+          <h6 class="font_16 fw-semi text-black m-0">Sales</h6>
+          <ul class="graph_nav_section p-0 m-0 d-flex align-items-center">
+            <li [class.active]="selectedSalesFormat === 1" class="d-flex align-items-center">
+              <!-- <a href="javascript:void(0)" (click)="selectFormat(1)">Monthly</a> -->
+            </li>
+            <!-- <li class="d-flex align-items-center">
+              <a href="javascript:void(0)" (click)="selectFormat(2)">Weekly</a>
+            </li> -->
+            <li [class.active]="selectedSalesFormat === 3" class="d-flex align-items-center">
+              <!-- <a href="javascript:void(0)" (click)="selectFormat(3)">Today</a> -->
+            </li>
+          </ul>
+        </div>
+        <div id="chartdivsales" [ngStyle]="{'display': isSalesMonthlyFormatActive ? 'block' : 'none'}"
+          style="width: 100%; height: 400px;"></div>
+        <div id="chartdivsalesDaily" [ngStyle]="{'display': isSalesDailyFormatActive ? 'block' : 'none'}"
+          style="width: 100%; height: 400px;"></div>
+        <div id="chartdivWeeklySales" [ngStyle]="{'display': isSalesWeeklyFormatActive ? 'block' : 'none'}"
+          style="width: 100%; height: 400px;"></div>
+        <!-- <div *ngIf="isSalesMonthlyFormatActive" id="chartdivsales" style="width: 100%; height: 400px;"></div> -->
+        <!-- <div *ngIf="isSalesDailyFormatActive" id="chartdivsalesDaily" style="width: 100%; height: 400px;"></div>
+        <div *ngIf="isSalesWeeklyFormatActive" id="chartdivWeeklySales" style="width: 100%; height: 400px;"></div> -->
+        <!-- <div id="chartdiv"></div> -->
+      </div>
+    </div>
+    <div class="col-md-6 tab_w_100">
+      <div class="dashboard_info_blk dashboard_graph_blk">
+        <div class="d-flex align-items-center justify-content-between mb_12">
+          <h6 class="font_16 fw-semi text-black m-0">Order Summary</h6>
+          <ul class="graph_nav_section p-0 m-0 d-flex align-items-center">
+            <li [class.active]="selectedFormat === 1" class="d-flex align-items-center">
+              <!-- <a href="javascript:void(0)" (click)="selectFormatForOrder(1, 'order')">Monthly</a> -->
+            </li>
+            <!-- <li [class.active]="selectedFormat === 2" class="d-flex align-items-center">
+              <a href="javascript:void(0)" (click)="selectFormatForOrder(2)">Weekly</a>
+            </li> -->
+            <li [class.active]="selectedFormat === 3" class="d-flex align-items-center">
+              <!-- <a href="javascript:void(0)" (click)="selectFormatForOrder(3, 'order')">Today</a> -->
+            </li>
+          </ul>
+        </div>
+        <div id="chartdiv" [ngStyle]="{'display': isOrderMonthlyFormatActive ? 'block' : 'none'}"
+          style="width: 100%; height: 400px;"></div>
+        <div id="chartdivOrderDaily" [ngStyle]="{'display': isOrderDailyFormatActive ? 'block' : 'none'}"
+          style="width: 100%; height: 400px;"></div>
+      </div>
+    </div>
+    <div class="col-md-12 tab_w_100">
+      <div class="dashboard_info_blk dashboard_graph_blk">
+        <div class="d-flex align-items-center justify-content-between mb_12">
+          <h6 class="font_16 fw-semi text-black m-0">Payments</h6>
+          <ul class="graph_nav_section p-0 m-0 d-flex align-items-center">
+            <li [class.active]="selectedFormatForPayment === 1" class="d-flex align-items-center">
+              <!-- <a href="javascript:void(0)" (click)="selectFormatForOrder(1, 'payment')">Monthly</a> -->
+            </li>
+            <!-- <li [class.active]="selectedFormatForPayment === 2" class="d-flex align-items-center">
+              <a href="javascript:void(0)" (click)="selectFormatForOrder(2)">Weekly</a>
+            </li> -->
+            <li [class.active]="selectedFormatForPayment === 3" class="d-flex align-items-center">
+              <!-- <a href="javascript:void(0)" (click)="selectFormatForOrder(3, 'payment')">Today</a> -->
+            </li>
+          </ul>
+        </div>
+        <div id="chartdivMonthlyPayments" [ngStyle]="{'display': isPaymentMonthlyFormatActive ? 'block' : 'none'}"
+          style="width: 100%; height: 400px;"></div>
+        <div id="chartdivDailyPayments" [ngStyle]="{'display': isPaymentDailyFormatActive ? 'block' : 'none'}"
+          style="width: 100%; height: 400px;"></div>
+      </div>
+      <!-- </div>
+    <div class="col-md-3">
+      <div class="dashboard_info_blk dashboard_graph_blk">
+        <h6 class="font_16 fw-semi text-black mb_12">Menus</h6>
+        <div id="chartdiv"></div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="dashboard_info_blk dashboard_graph_blk">
+        <h6 class="font_16 fw-semi text-black mb_12">Inventory</h6>
+        <div id="chartdiv"></div>
+      </div>
+    </div> -->
+    </div>
+    <div class="col-md-6 tab_w_100">
+      <div class="dashboard_info_blk">
+        <div class="d-flex align-items-center justify-content-between mb_15">
+          <h2 class="text_pri font_20 fw-semi m-0">Sales Count</h2>
+          <h4 class="font_12 fw-med text_black m-0 text-underline cursor-pointer" (click)="getTodayOrderList('TodayTotalOrder')">Total Sales : {{dashBoardData?.totalOrders | number:'1.2-2'}}</h4>  
+        </div>
+        <div class="row dashboard_row_blk">
+          <div class="col-md-4">
+            <div class="chart_content_info_blks">
+              <div class="d-flex align-items-start justify-content-between">
+                <div>
+                  <h4 class="font_12 fw-med text_black mb_2">Take Away Sales</h4>  
+                  <p class="font_18 fw-med text_black m-0">{{dashBoardData?.walkIn | number:'1.2-2'}}</p>
+                </div>
+                <img alt="image" src="/assets/images/dash_next_icon.svg" class=" cursor-pointer" (click)="getTodayOrderList('TodayTakeAwayOrder')" />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="chart_content_info_blks">
+              <div class="d-flex align-items-start justify-content-between">
+                <div>
+                  <h4 class="font_12 fw-med text_black mb_2">Dine-In Sales</h4>  
+                  <p class="font_18 fw-med text_black m-0">{{dashBoardData?.dineIn | number:'1.2-2'}}</p>
+                </div>
+                <img alt="image" src="/assets/images/dash_next_icon.svg" class=" cursor-pointer" (click)="getTodayOrderList('TodayDineOrder')" />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="chart_content_info_blks">
+              <div class="d-flex align-items-start justify-content-between">
+                <div>
+                  <h4 class="font_12 fw-med text_black mb_2">Online Sales</h4>  
+                  <p class="font_18 fw-med text_black m-0">{{dashBoardData?.online | number:'1.2-2'}}</p>
+                </div>
+                <img alt="image" src="/assets/images/dash_next_icon.svg" class=" cursor-pointer" (click)="getTodayOrderList('TodayOnlineOrder')" />
+              </div>
+            </div>
+          </div>
+          <!-- <div class="col-md-3">
+            <button type="button" (click)="getTodayOrderList('TodayTakeAwayOrder')"
+              class="card view-card bg-success d-flex w-100 m-0">
+              <div class="view-card-title">{{dashBoardData?.walkIn | number:'1.2-2'}}</div>
+              <p class="card-text">Take Away Sales</p>
+            </button>
+          </div>
+          <div class="col-md-3">
+            <button type="button" (click)="getTodayOrderList('TodayDineOrder')"
+              class="card view-card bg-success d-flex w-100 m-0">
+              <div class="view-card-title">{{dashBoardData?.dineIn | number:'1.2-2'}}</div>
+              <p class="card-text">Dine-In Sales</p>
+            </button>
+          </div>
+          <div class="col-md-3">
+            <button type="button" (click)="getTodayOrderList('TodayOnlineOrder')"
+              class="card view-card bg-success d-flex w-100 m-0">
+              <div class="view-card-title">{{dashBoardData?.online | number:'1.2-2'}}</div>
+              <p class="card-text">Online Sales</p>
+            </button>
+          </div> -->
+          <!-- <div class="col-md-6 pb_0">
+            <div class="dashboard_info_blk dashboard_graph_blk">
+              <div id="todaySalesCountDiv" class="hide-icon" style="width: 100%; height: 200px"></div>
+            </div>
+          </div>
+          <div class="col-md-6 pb_0">
+            <div class="dashboard_info_blk dashboard_graph_blk">
+              <label style="float: left; margin: 0%;">Total Cover : {{totalCover}}</label><br>
+              <label style="float: left; margin-right: 10%;">Total Sales : {{dashBoardData?.dineInSales | number}}</label>
+              <div id="container" class="hide-icon" style="width: 100%; height: 200px; padding-left: 10%;"></div>
+            </div>
+          </div> -->
+          <!-- Pie chart graph for sales count, start -->
+            <div class="col-md-12 tab_w_100 pb_0">
+              <div id="chartdivForSalesCount" style="width: 100%; height: 400px;"></div>
+            </div>
+          
+          </div>
+        </div>
+        <!-- Pie chart graph for sales count, end -->
+        <!-- Line graph for sales count, start -->
+        <!-- Line graph for sales count, end -->
+      </div>
+    <!-- implement line graph here -->
+     <div class="col-md-6 tab_w_100">
+        <div class="dashboard_info_blk">
+          <h2 class="text_pri font_20 fw-semi mb_15">Order By Status</h2>
+          <div class="row dashboard_row_blk">
+            <div class="col-md-4">
+              <div class="chart_content_info_blks">
+                <div class="d-flex align-items-start justify-content-between">
+                  <div>
+                    <h4 class="font_12 fw-med text_black mb_2">Running Order</h4>  
+                    <p class="font_18 fw-med text_black m-0">{{dashBoardData?.runningOrders}}</p>
+                  </div>
+                  <img alt="image" src="/assets/images/dash_next_icon.svg" class=" cursor-pointer" (click)="getTodayOrderList('RunningOrder')"   />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="chart_content_info_blks">
+                <div class="d-flex align-items-start justify-content-between">
+                  <div>
+                    <h4 class="font_12 fw-med text_black mb_2">Completed Order</h4>  
+                    <p class="font_18 fw-med text_black m-0">{{dashBoardData?.completedOrders}}</p>
+                  </div>
+                  <img alt="image" src="/assets/images/dash_next_icon.svg" class=" cursor-pointer" (click)="getTodayOrderList('CompletedOrder')" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="chart_content_info_blks">
+                <div class="d-flex align-items-start justify-content-between">
+                  <div>
+                    <h4 class="font_12 fw-med text_black mb_2">Void Order</h4>  
+                    <p class="font_18 fw-med text_black m-0">{{dashBoardData?.voidOrder}}</p>
+                  </div>
+                  <img alt="image" src="/assets/images/dash_next_icon.svg" class=" cursor-pointer" (click)="getTodayOrderList('VoidOrder')" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 tab_w_100 pb_0">
+              <div id="chartdivForOrderStatusSection" style="width: 100%; height: 400px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 tab_w_100">
+        <div class="dashboard_info_blk">
+          <h2 class="text_pri font_20 fw-semi mb_15">Sales Cover</h2>
+          <div class="d-flex align-items-center justify-content-between mb_15">
+            <h6 class="text_pri font_16 fw-med m-0">Total Cover : {{totalCover | number:'1.2-2'}}</h6>
+            <h6 class="text_pri font_16 fw-med m-0">Total Sales : {{dashBoardData?.dineInSales | number:'1.2-2'}}</h6>
+          </div>
+          <div id="chartdivForSalesCoverLineGraph" style="width: 100%; height: 400px;"></div>
+        </div>
+      </div>
+      <!-- <div class="col-md-12 pb_0">
+        <div class="dashboard_info_blk dashboard_graph_blk">
+          <h6 class="font_16 fw-semi text-black m-0">Payments</h6>
+          <div id="takeAwaySalesPieChartDiv" class="hide-icon"></div>
+        </div>
+      </div> -->
+  <!-- new Code -->
+  <div class="col-md-12 tab_w_100">
+    <div class="dashboard_info_blk">
+      <h2 class="text_pri font_20 fw-semi mb_15">Sales Value</h2>
+      <div class="row dashboard_row_blk sales_value_chart_info">
+        <div class="col-md-4">
+          <div class="chart_content_info_blks">
+            <div class="d-flex align-items-start justify-content-between">
+              <div>
+                <h4 class="font_12 fw-med text_black mb_2">Total Sales</h4>  
+                <p class="font_18 fw-med text_black m-0">INR {{dashBoardDataFromPrint?.allOrdersValue | number:'1.2-2'}}</p>
+              </div>
+              <img alt="image" src="/assets/images/dash_next_icon.svg" class=" cursor-pointer" (click)="getTodayOrderList('TodayTotalOrder')" />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4" *ngFor="let data of dashBoardDataFromPrint?.distinctPaymentsTotal">
+          <div class="chart_content_info_blks">
+            <div class="d-flex align-items-start justify-content-between">
+              <div>
+                <h4 class="font_12 fw-med text_black mb_2">{{data?.paymentMode}}</h4>  
+                <p class="font_18 fw-med text_black m-0">INR {{data?.totalAmount | number:'1.2-2'}}</p>
+              </div>
+              <img alt="image" src="/assets/images/dash_next_icon.svg" class=" cursor-pointer" (click)="getOrderViewList(data?.paymentMode)" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-around mt-2">
+        <!-- <button class="card view-card bg-success d-flex"
+          (click)="getTodayOrderList('TodayTotalOrder')">
+          <div class="view-card-title">INR {{dashBoardDataFromPrint?.allOrdersValue | number:'1.2-2'}}</div>
+          <p class="card-text">Total Sales</p>
+        </button> -->
+        <!-- <button class="card view-card bg-success d-flex" style="margin: 0.5%;"
+          (click)="getOrderViewList('TodayOrderByCard')">
+          <div class="view-card-title">INR {{dashBoardDataFromPrint?.byCardValue | number}}</div>
+          <p class="card-text">By Card</p>
+        </button>
+        <button class="card view-card bg-success d-flex" style="margin: 0.5%;"
+          (click)="getOrderViewList('TodayOnlineOrderValue')">
+          <div class="view-card-title">INR {{dashBoardDataFromPrint?.byOnlineValue | number}}</div>
+          <p class="card-text">By Online</p>
+        </button>
+        <button class="card view-card bg-success d-flex" style="margin: 0.5%;" (click)="getOrderViewList('TodayByCash')">
+          <div class="view-card-title">INR {{dashBoardDataFromPrint?.byCashValue | number}}</div>
+          <p class="card-text">By Cash</p>
+        </button>
+        <button class="card view-card bg-success d-flex" style="margin: 0.5%;"
+          (click)="getOrderViewList('TodayByTapAndGo')">
+          <div class="view-card-title">INR {{dashBoardDataFromPrint?.byTapAndGoValue | number}}</div>
+          <p class="card-text">By TapAndGo</p>
+        </button>
+        <button class="card view-card bg-success d-flex" style="margin: 0.5%;"
+        (click)="getOrderViewList('TodayOrderByWallet')">
+        <div class="view-card-title">INR {{dashBoardDataFromPrint?.byWalletValue | number}}</div>
+        <p class="card-text">By Wallet</p>
+      </button> -->
+
+        <!-- Dynamic Payments based on orders, Start -->
+        <!-- <button class="card view-card bg-success d-flex" style="margin: 0.5%;"
+          *ngFor="let data of dashBoardDataFromPrint?.distinctPaymentsTotal" (click)="getOrderViewList(data?.paymentMode)">
+          <div class="view-card-title">INR {{data?.totalAmount | number:'1.2-2'}}</div>
+          <p class="card-text">{{data?.paymentMode}}</p>
+        </button> -->
+        <!-- Dynamic Payments based on orders, End -->
+        <!-- <button class="card view-card bg-success d-flex" style="margin: 0.5%;" (click)="getOrderViewList('Tip')">
+          <div class="view-card-title">INR {{dashBoardDataFromPrint?.totalTip | number}}</div>
+          <p class="card-text">Tip</p>
+        </button> -->
+      </div>
+      <div class="col-md-12 pb_0">
+        <div id="chartdivForSalesValueSection" style="width: 100%; height: 400px;"></div>
+      </div>
+    </div>
+  </div>
+  <!-- new Code End -->
+   <div class="col-md-12 tab_w_100">
+    <div class="dashboard_info_blk">
+      <h2 class="text_pri font_20 fw-semi mb_15">Dine-In,Take Away and Online Items Sales</h2>
+      <div id="AllTypesOrderPieChart" style="width: 100%; height: 400px;"></div>
+    </div>
+  </div>
+  <!-- <div class="d-flex justify-content-center  mt-2 dashboard_cart flex-wrap">
+    <p class="card-text w-100">Take Away Sales</p>
+    <div class="d-flex justify-content-center w-100">
+      <div id="takeAwayPieChartDiv" style="width: 200px; height : 200px;" class="hide-icon"></div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-center mt-2 dashboard_cart flex-wrap">
+    <p class="card-text w-100">Online Sales</p>
+    <div class="d-flex justify-content-center w-100">
+      <div id="onlinePieChartDiv" style="width: 200px; height : 200px;" class="hide-icon"></div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-center mt-2 dashboard_cart flex-wrap">
+    <p class="card-text w-100">Dine In Sales</p>
+    <div class="d-flex justify-content-center w-100">
+      <div id="dineInChartDiv" style="width: 200px; height : 200px;" class="hide-icon"></div>
+    </div> -->
+
+    <!--popup for selecting date to view sales report-->
+    <ng-template #editEventModel let-close="close">
+      <div>
+        <div class="modal-header mb_15">
+          <h5 class="font_20 fw-semi text_pri">Print Sales Report</h5>
+          <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer"
+            (click)="closeAction()" />
+        </div>
+        <div class="modal-body">
+          <div class="row modal_input_row">
+            <div class="col-md-12">
+              <label>Select Date :</label>
+              <input type="date" class="form-control" (change)="SelectedDatefun($event)">
+            </div>
+          </div>
+          <div class="row modal_input_row">
+            <div class="col-md-6 pb_0">
+              <button class="cancel_btn" type="reset" (click)="closeAction()">Cancel</button>
+            </div>
+            <div class="col-md-6 pb_0">
+              <button class="btn_primary" name="btn_login" (click)="Openprintview()">Print</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>

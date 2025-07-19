@@ -1,0 +1,274 @@
+<div class="page_container">
+  <div class="d-flex align-items-center justify-content-between mb_15">
+    <h2 class="text_pri font_20 fw-semi m-0">Bar</h2>
+    <div class="d-flex align-items-center">
+      <img alt="image" src="/assets/images/kitchen-calendar-icon.svg" class="mr_10">
+      <span class="font_14 fw-semi text-sec">{{Week}} {{CurrentDate}}</span>
+    </div>
+  </div>
+  <div class="order_info_blk">
+    <div class="order_sub_nav_blk kitchen_nav_blk d-flex align-items-center justify-content-between">
+      <ul class="d-flex align-items-center p-0 m-0" id="myTab" role="tablist">
+        <li>
+          <a class="active">Active [{{order?.length}}]</a>
+        </li>
+        <!-- <li role="presentation">
+          <a routerLink="">Scheduled [12]</a>
+        </li> -->
+      </ul>
+      <button class="add_btn m-0" (click)="preparedAll()">
+        <span class="font_14 fw-semi text-sec">All Prepared</span>
+      </button>
+    </div>
+    <div class="kitchen_order_blk">
+      <div class="order_items_contianer row">
+        <div class="col-md-3" *ngFor="let data of order; let i=index">
+          <div class="kitchen_order_container" *ngIf="data.TimeToPreapareOrder != '00:00:00'">
+            <div class="order_id_info_blk">
+                <div class="d-flex align-items-center justify-content-between mb_7">
+                  <h6 class="font_14 fw-semi text_pri m-0 kitchen_order_no_blk">#{{data.orderNo}} - <span class="font_12 fw-reg text-black">{{data.orderTakenBy}}</span></h6>
+                  <span class="font_12 fw-semi text_pri m-0">Due {{data.TimeToPreapareOrder}}</span>
+                </div>
+                <div class="d-flex align-items-center justify-content-between">
+                  <h6 class="font_12 fw-reg text-black m-0">{{data.customerName}} - {{data.orderType}}</h6>
+                  <span class="font_10 text-white fw-semi m-0 order_food_status cooking_status">{{data.orderStatus}}</span>
+                </div>
+            </div>
+            <div class="order_food_info_blk">
+              <div class="order_content_blk d-flex align-items-start justify-content-between" *ngFor="let item of data.items; let j=index">
+                <div class="w-70 d-flex align-items-start">
+                  <span class="font_14 fw-semi text_pri mr_5 min-w-20px text-end">{{item.orderQuantity}}</span>
+                  <div class="d-flex flex-column align-items-start food_content_text">
+                    <h5 class="font_14 fw-reg text-black m-0">{{item.itemName}}</h5>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center prepared_btn cursor-pointer" (click)="prepareSingle(item.id,data.orderId,j,i)">
+                  <img alt="image" src="/assets/images/fire-icon.svg" class="mr_2">
+                  <span class="font_10 fw-reg text_pri">Prepared</span>
+                </div>  
+              </div>
+            </div>
+            <div class="place_order_btn_blk d-flex align-items-center">
+              <button class="mr_6 place_order_btn cooking_status_order_btn d-flex align-items-center justify-content-between" (click)="prepare(i)">
+                <span class="font_16 fw-semi text-white">Finish Cooking</span>
+                <span class="font_12 fw-reg text-white">{{data.diffTime}}</span>
+              </button>
+              <div class="print_btn d-flex align-items-center justify-content-center cursor-pointer" (click)="print(data.orderId)">
+                <img alt="image" src="/assets/images/printer-icon.svg" >
+              </div>
+            </div>
+          </div>
+          <div class="kitchen_order_container delayed_order_blk" *ngIf="data.TimeToPreapareOrder == '00:00:00'">
+            <div class="order_id_info_blk">
+                <div class="d-flex align-items-center justify-content-between mb_7">
+                  <h6 class="font_14 fw-semi text_pri m-0 kitchen_order_no_blk">#{{data.orderNo}} - <span class="font_12 fw-reg text-black">Patrick Wilson</span></h6>
+                  <span class="font_12 fw-semi text_pri m-0">Due {{data.TimeToPreapareOrder}}</span>
+                </div>
+                <div class="d-flex align-items-center justify-content-between">
+                  <h6 class="font_12 fw-reg text-black m-0">{{data.customerName}} - {{data.orderType}}</h6>
+                  <span class="font_10 text-white fw-semi m-0 order_food_status delayed_status">DELAYED</span>
+                </div>
+            </div>
+            <div class="order_food_info_blk">
+              <div class="order_content_blk d-flex align-items-start justify-content-between" *ngFor="let item of data.items; let j=index">
+                <div class="w-70 d-flex align-items-start">
+                  <span class="font_14 fw-semi text_pri mr_5 min-w-20px text-end">{{item.orderQuantity}}</span>
+                  <div class="d-flex flex-column align-items-start food_content_text">
+                    <h5 class="font_14 fw-reg text-black m-0">{{item.itemName}}</h5>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center prepared_btn cursor-pointer" (click)="prepareSingle(item.id,data.orderId,j,i)">
+                  <img alt="image" src="/assets/images/fire-icon.svg" class="mr_2">
+                  <span class="font_10 fw-reg text_pri">Prepared</span>
+                </div>
+              </div>
+            </div>
+            <div class="place_order_btn_blk d-flex align-items-center">
+              <button class="mr_6 place_order_btn delayed_status_order_btn d-flex align-items-center justify-content-between" (click)="prepare(i)">
+                <span class="font_16 fw-semi text-white">Finish Cooking</span>
+                <span class="font_12 fw-reg text-white">{{data.diffTime }}</span>
+              </button>
+              <div class="print_btn d-flex align-items-center justify-content-center cursor-pointer" (click)="print(data.orderId)">
+                <img alt="image" src="/assets/images/printer-icon.svg" >
+              </div>
+            </div>
+          </div>
+        <!-- <div class="col-md-3">
+          <div class="kitchen_order_container">
+            <div class="order_id_info_blk">
+                <div class="d-flex align-items-center justify-content-between mb_7">
+                  <h6 class="font_14 fw-semi text_pri m-0">#4567 - <span class="font_12 fw-reg text-black">Patrick Wilson</span></h6>
+                  <span class="font_12 fw-semi text_pri m-0">Due 11:36</span>
+                </div>
+                <div class="d-flex align-items-center justify-content-between">
+                  <h6 class="font_12 fw-reg text-black m-0">Keenu Reeves - Pickup</h6>
+                  <span class="font_10 text-white fw-semi m-0 order_food_status completed_status">COMPLETED</span>
+                </div>
+            </div>
+            <div class="order_food_info_blk">
+              <div class="order_content_blk d-flex align-items-start justify-content-between">
+                <div class="w-70 d-flex align-items-start">
+                  <span class="font_14 fw-semi text_pri mr_5 min-w-20px text-end">2</span>
+                  <div class="d-flex flex-column align-items-start food_content_text">
+                    <h5 class="font_14 fw-reg text-black m-0">Vegan Salad</h5>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center prepared_btn cursor-pointer">
+                  <img alt="image" src="/assets/images/fire-icon.svg" class="mr_2">
+                  <span class="font_10 fw-reg text_pri">Prepared</span>
+                </div>
+              </div>
+              <div class="order_content_blk d-flex align-items-start justify-content-between">
+                <div class="w-70 d-flex align-items-start">
+                  <span class="font_14 fw-semi text_pri mr_5 min-w-20px text-end">2</span>
+                  <div class="d-flex flex-column align-items-start food_content_text">
+                    <h5 class="font_14 fw-reg text-black m-0">Vegan Salad</h5>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center prepared_btn cursor-pointer">
+                  <img alt="image" src="/assets/images/fire-icon.svg" class="mr_2">
+                  <span class="font_10 fw-reg text_pri">Prepared</span>
+                </div>
+              </div>
+              <div class="order_content_blk d-flex align-items-start justify-content-between">
+                <div class="w-70 d-flex align-items-start">
+                  <span class="font_14 fw-semi text_pri mr_5 min-w-20px text-end">1</span>
+                  <div class="d-flex flex-column align-items-start food_content_text">
+                    <h5 class="font_14 fw-reg text-black mb_7">Real Grab California Roll</h5>
+                    <h5 class="font_14 fw-reg text-black mb_7">1 Premium White Rice</h5>
+                    <h5 class="font_14 fw-reg text-black m-0">1 Spicy Mango</h5>
+                  </div>
+                </div>
+                <button class="d-flex align-items-center prepared_btn cursor-pointer">
+                  <img alt="image" src="/assets/images/fire-icon.svg" class="mr_2">
+                  <span class="font_10 fw-reg text_pri">Prepared</span>
+                </button>
+              </div>
+              <div class="order_content_blk d-flex align-items-start justify-content-between">
+                <div class="w-70 d-flex align-items-start">
+                  <span class="font_14 fw-semi text_pri mr_5 min-w-20px text-end">10</span>
+                  <div class="d-flex flex-column align-items-start food_content_text">
+                    <h5 class="font_14 fw-reg text-black mb_7">Real Grab California Roll</h5>
+                    <h5 class="font_14 fw-reg text-black mb_7">1 Premium White Rice</h5>
+                    <h5 class="font_14 fw-reg text-black m-0">1 Spicy Mango</h5>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center food_completed_status">
+                  <img alt="image" src="/assets/images/white-flag.svg" class="mr_2">
+                  <span class="font_10 fw-reg text-white">Completed</span>
+                </div>
+              </div>
+            </div>
+            <div class="place_order_btn_blk d-flex align-items-center">
+              <button class="mr_6 place_order_btn completed_status_order_btn d-flex align-items-center justify-content-between">
+                <span class="font_16 fw-semi text-white">Finish Cooking</span>
+                <span class="font_12 fw-reg text-white">00:28:02</span>
+              </button>
+              <div class="print_btn d-flex align-items-center justify-content-center cursor-pointer">
+                <img alt="image" src="/assets/images/printer-icon.svg" >
+              </div>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  <!-- <h1 class="page_heading font_16 text_gray fw-med m-0 text-uppercase">Outlet Name : {{outletName}}</h1>
+  <div class="create_order_blk this_mon_blk pt_25">
+    <div class="row">
+      <div class=" col-md-4 d-flex align-items-end">
+        <div class="form-group">
+          <input type="text" style="margin-top: 0px !important;" class="form-control shadow p-3 bg-white rounded"
+            placeholder="Search order by number" value="{{order?.orderNo}}" (keyup)="search($event)"
+            aria-label="Search" />
+
+          <div class="search_input_blk position-absolute white_bg d-flex justify-content-center align-items-center">
+            <img src="assets/images/Search.svg" alt="search" class="img-fluid">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5 empty"></div>
+      <div class="col-md-3 d-flex align-items-end">
+        <button class="create_order_btn w-100 d-flex align-items-center justify-content-center" (click)="preparedAll()">
+          All Prepared
+        </button>
+      </div>
+    </div>
+  </div> -->
+  <!-- <div class="row kitchen_row">
+    <div   class="col-md-3" *ngFor="let data of order; let i=index">
+      <div class="card w-100"  [ngClass]="{'cardWalk-in': data.orderType === 'Walk-in', 'cardDine-in': data.orderType === 'Dine-in', 'cardOnline': data.orderType === 'Online' }">
+        <div class="card-header">
+          <div class="d-flex justify-content-between align-items-start">
+            <div class="w-60">
+              <h3 class="font_14 text_black fw-bold  text-left mb_5">Order : {{data.orderNo}}</h3>
+              <div class="font_14 text_default fw-normal m-0 text-left d-flex align-items-center">{{data.orderType}}
+                <p class="m-0 pl_5" *ngIf="data.orderType == 'Dine-in'">Table No. : {{data.items[0].tableNo}}</p></div>
+            </div>
+            <div class="w-40 d-flex justify-content-end">
+              <span class="btn btn-orders d-flex align-items-center btn-prepare" (click)="prepare(i)">
+                <img alt="image" src="assets/images/kitchen_prepare.svg" class="mr_5">
+                Prepared</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-body overflow-auto" data-spy="scroll" data-offset="50">
+          <div class="kitchen_crs_div w-100" *ngFor="let course of data.allCategoryCourse;">
+
+            <div *ngIf="course != null &&course != '' " class="d-flex align-items-center justify-content-between mb_10 w-100">
+              <h3 class="font_14 m-0 text_black fw-bold w-60">{{course}}</h3>
+              <div class="w-40 d-flex align-items-center justify-content-end">
+                <span *ngIf="data.items[0].categoryCourse !=null" class="btn btn-orders course_prepare"
+                (click)="prepareCourse(i,data, course)"> <img alt="image" src="assets/images/kitchen_prepare.svg" class="mr_5">Prepared</span>
+              </div>
+            </div>
+            <div class="d-flex">
+              <h5 class="font_12 fw-med text_black m-0 items_wd">Items</h5>
+              <h5 class="font_12 fw-med text_black m-0 qty_wd text-center">Qty</h5>
+              <h5 class="font_12 fw-med text_black m-0 prepare_wd"></h5>
+            </div>
+            <div *ngFor="let item of data.items; let j=index" class="kit_it_row">
+              <div *ngIf="course == item.categoryCourse">
+                <div *ngIf="item.itemStatus === 'Order' && item.itemLocation === 'Warehouse'">
+                  <div class="d-flex align-items-center justify-content-between flex-wrap ">
+                    <div class="items_wd"><h5 class="font_12 text_black m-0 fw-normal">{{item.itemName}}</h5>
+                      <div *ngIf="item.notes != '' && item.notes != null "><h5 class="font_12 text_black m-0 fw-normal">Note : </h5>{{item.notes}}</div>
+                    </div>
+                    <div class="qty_wd"><h5 class="font_12 text_black m-0 fw-normal text-center">{{item.orderQuantity}}</h5></div>
+                    <div  class="prepare_wd btn btn-orders course_prepare justify-content-center align-items-center"
+                      (click)="prepareSingle(item.id,data.orderId,j,i)">
+                      <img alt="image" src="assets/images/kitchen_prepare.svg" class="mr_5"> Prepared
+                    </div>
+                    <div class="w-50" style="position: absolute; height: 75px; bottom: 0;"
+                      *ngIf="data.finalNotes != null && data.finalNotes != ''"><b>Order Note:
+                        &nbsp;{{data.finalNotes}}</b>
+                    </div>
+                  </div>
+
+                  <div class="row" *ngIf="item.modifiers != null && item.modifiers.length >0" style="border-top: 0px">
+                    <div>
+                      <div *ngFor="let modifier of item.modifiers">{{modifier.modifierItemName}} : +
+                        {{modifier.price}}</div>
+                    </div>
+                    <div class="col-sm"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer ">
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="w-60 d-flex align-items-center">
+              <img src="assets/images/kitchen_clock.svg" alt="clock" class="mr_5">
+              <h5 class="font_14 text-black fw-normal m-0">{{ data.diffTime }}</h5></div>
+            <div class="w-40 d-flex justify-content-end align-items-center" (click)="print(data.orderId)">
+              <img src="assets/images/kitchen_printer.svg" alt="printer" class="mr_5">
+              <h5 class="font_14 text-black fw-normal m-0">Print</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+</div>

@@ -1,0 +1,97 @@
+<div class="modal-header mb_14">
+  <h5  class="font_20 fw-semi text_pri" id="SKUModalLabel">Shift Table</h5>
+  <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer" (click)="closeModal()"/>
+</div>
+<div class="weekly_report view_order_blk white_bg">
+  <div class="d-flex align-items-start justify-content-between">
+    <h6 class="font_16 fw-semi text_pri">Current Table No : {{oldTableNo}}</h6>
+    <div class="d-flex flex-column align-items-center">
+      <img alt="image" src="/assets/images/right-shift-arrow.svg" class="mb_10 merge_right_arrow_align" />
+      <div class="form-group position-relative select_floor_blk">
+        <select class="select_floor_input select-control" id="sel1" [(ngModel)]="selectType" (change)="selectPlace()">
+          <option *ngFor="let type of tableType" value="{{type.tableTypeName}}">{{type.tableTypeName}}</option>
+        </select>
+        <img alt="image" src="/assets/images/dropdown-arrow.svg" class="select_input_arrow" />
+        <img alt="image" src="/assets/images/building-icon.svg" class="select_floor_icon" />
+    </div>
+    </div>
+    <h6 class="font_16 fw-semi text_pri">Shifted Table No : {{ shiftTableNo }}</h6>
+  </div>
+  <div class="row modal_input_row">
+    <div class="col-md-12">
+      <span class="font_14 fw-reg text-black mb_20 d-block">Select table to shift your orders</span>
+      <div class="tableCards p-0 w-100 position-relative d-flex align-items-center flex-wrap">
+          <div  *ngFor="let table of numbers; index as i;">
+            <div class="position-relative radio_table_selection_container">
+              <input type="radio" class="table_select_radio" (click)="selectTableToShift(table)">
+              <div class="cursor-pointer dines_table position-relative"
+                [ngClass]="{'table-Circle': table.tableDesign === 'Circle', 'table-Triangle': table.tableDesign === 'Triangle', 'table-Square': table.tableDesign === 'Square' }"> <!-- (click)="moveTable(table)"-->
+                <div *ngIf="table.tableDesign === 'Circle' && table.tableStatus === 'Empty'" class="circle-empty">
+                  <img alt="image" *ngIf="table.capacity === 1" src="/assets/images/Dine-in-table-design-updated/C1.svg"
+                    class="cursor-pointer">
+                  <img alt="image" *ngIf="table.capacity === 2" src="/assets/images/Dine-in-table-design-updated/C2.svg"
+                    class="cursor-pointer">
+                  <img alt="image" *ngIf="table.capacity === 3" src="/assets/images/Dine-in-table-design-updated/C3.svg"
+                    class="cursor-pointer">
+                  <img alt="image" *ngIf="table.capacity === 4" src="/assets/images/Dine-in-table-design-updated/C4.svg"
+                    class="cursor-pointer">
+                  <img alt="image" *ngIf="table.capacity === 5" src="/assets/images/Dine-in-table-design-updated/C5.svg"
+                    class="cursor-pointer">
+                  <img alt="image" *ngIf="table.capacity >= 6" src="/assets/images/Dine-in-table-design-updated/C6.svg"
+                    class="cursor-pointer">
+                </div>
+
+
+                <div *ngIf="table.tableDesign === 'Square' && table.tableStatus === 'Empty'" class="square-empty">
+                  <img alt="image" *ngIf="table.capacity === 1" src="/assets/images/Dine-in-table-design-updated/S1.svg"
+                    class="cursor-pointer">
+                  <img alt="image" *ngIf="table.capacity === 2" src="/assets/images/Dine-in-table-design-updated/S2.svg"
+                    class="cursor-pointer">
+                  <img alt="image" *ngIf="table.capacity === 3" src="/assets/images/Dine-in-table-design-updated/S3.svg"
+                    class="cursor-pointer">
+                  <img alt="image" *ngIf="table.capacity === 4" src="/assets/images/Dine-in-table-design-updated/S4.svg"
+                    class="cursor-pointer">
+                  <img alt="image" *ngIf="table.capacity === 5" src="/assets/images/Dine-in-table-design-updated/S5.svg"
+                    class="cursor-pointer">
+                  <img alt="image" *ngIf="table.capacity >= 6" src="/assets/images/Dine-in-table-design-updated/S6.svg"
+                    class="cursor-pointer">
+                </div>
+
+                <div *ngIf="table.tableDesign === 'Triangle' && table.tableStatus === 'Empty'" class="triangle-empty">
+                  <img alt="image" *ngIf="table.capacity === 1" src="/assets/images/Dine-in-table-design-updated/T1.svg"
+                    class="cursor-pointer">
+                  <img alt="image" *ngIf="table.capacity === 2" src="/assets/images/Dine-in-table-design-updated/T2.svg"
+                    class="cursor-pointer">
+                  <img alt="image" *ngIf="table.capacity === 3" src="/assets/images/Dine-in-table-design-updated/T3.svg"
+                    class="cursor-pointer">
+                  <img alt="image" *ngIf="table.capacity === 4" src="/assets/images/Dine-in-table-design-updated/T4.svg"
+                    class="cursor-pointer">
+                  <img alt="image" *ngIf="table.capacity === 5" src="/assets/images/Dine-in-table-design-updated/T5.svg"
+                    class="cursor-pointer">
+                  <img alt="image" *ngIf="table.capacity >= 6" src="/assets/images/Dine-in-table-design-updated/T6.svg"
+                    class="cursor-pointer">
+                </div>
+
+                <div class="dines_table_check" [ngClass]="{'table-Circle': table.tableDesign === 'Circle',
+                  'table-Triangle': table.tableDesign === 'Triangle', 'table-Square': table.tableDesign === 'Square' }">
+
+                  <h2  *ngIf="table.tableStatus =='Empty'" class="dines_table_no" style="text-align: center;">{{table.tableNo}}</h2>
+                  <span class="d-block font_14 time fw-semi"></span>
+                  <span *ngIf="table.tableStatus =='Empty'" class="d-block font_14 check_in fw-normal"
+                    style="text-align: center;">Available</span>
+                  <h5 *ngIf="table.tableStatus =='Empty'" style="text-align: center;">00:00</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 pb_0">
+        <button class="cancel_btn" type="reset" (click)="closeModal()">Cancel</button>
+      </div>
+      <div class="col-md-6 pb_0">
+        <button class="btn_primary" (click)="moveTable()">Shift Table</button>
+      </div>
+     
+  </div>
+</div>

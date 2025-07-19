@@ -1,0 +1,9 @@
+.field_1{
+    width: 49%;
+}
+.required-asterisk{
+    color: red;
+    font-weight: bold;
+    margin-left: 3px;
+    font-size: 1.2em;
+}

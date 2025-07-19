@@ -1,0 +1,54 @@
+<div class="page_container table_details_blk">
+  <h2 class="text_pri font_20 fw-semi mb_7">Settings</h2>
+  <div class="d-flex align-items-start settings_nav_main_blk">
+  <app-settings></app-settings>
+  <div class="settings_nav_info_container">
+    <div class="d-flex align-items-center justify-content-end mb_21" >
+      <!-- <div class="position-relative w-30"> -->
+        <!-- <input type="search" class="form-control search_icon_input" placeholder="search"> -->
+        <!-- <img alt="image" src="/assets/images/search-icon.svg" class="search_input_icon"/> -->
+      <!-- </div> -->
+      
+      <button class="add_btn mr_14" (click)="openForm()" *ngIf="commonService.checkRolePermissions('ADD_PRINT_DESIGNS')">
+        <img alt="image" src="/assets/images/add-icon.svg" class="mr_8"/>
+        <span class="font_14 fw-semi text-sec">Add Print Design</span>
+      </button>
+      <!-- <button class="add_btn" (click)="DownloadPrintingService()">
+        <span class="font_14 fw-semi text-sec">Download Printing Service</span>
+      </button> -->
+    </div>
+      <div class="table-responsive"  id="checkBoxes" [ngClass]="commonService.checkRolePermissions('ADD_PRINT_DESIGNS') ? '' : 'm-0'">
+        <table datatable [dtOptions]="dtOptions" *ngIf="isDataLoaded" id="example" class="buyer_table" id="table-request">
+          <thead>
+            <tr>
+              <th>Print Designs</th>
+              <th>Status</th>
+              <th class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of printData; let i=index">
+              <td>Design {{i+1}}</td>
+              <td>                
+                <mat-slide-toggle class="discount_slider_btn" color="accent" (click) = "changePrintStatus(item.id,item.activeStatus)" [(ngModel)]="item.activeStatus">
+                </mat-slide-toggle>
+              </td>
+              <td>
+                <div class="d-flex align-items-center justify-content-center">
+                  <img alt="image" src="/assets/images/edit-icon.svg" class="mr_14 cursor-pointer" *ngIf="commonService.checkRolePermissions('EDIT_PRINT_DESIGNS')" (click)="edit(item.id)"/>
+                  <!-- <img alt="image" src="/assets/images/view-icon.svg" class="mr_14 cursor-pointer" (click)="printDesignView(item.id)"/> -->
+                  <img alt="image" src="/assets/images/delete-icon.svg" class="cursor-pointer" *ngIf="commonService.checkRolePermissions('DELETE_PRINT_DESIGNS')" (click)="onDelete(item.id,item.activeStatus)"/>
+                </div>
+                <!-- <button class="btn btn-orders edit" (click)="edit(item.id)"><i class="fa fa-pencil"></i></button>
+                <button class="btn btn-orders edit" (click)="printDesignView(item.id)">View</button>
+                <button class="btn btn-orders edit" (click)="onDelete(item.id,item.activeStatus)"><i class="fa fa-trash"
+                    aria-hidden="true"></i></button> -->
+              </td>
+             
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

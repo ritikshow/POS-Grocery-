@@ -1,0 +1,47 @@
+.field_1{
+    width: 49%;
+}
+
+.btn-orders{
+    border-color: #d6d6e2;
+    color: white;
+    font-size: 13px;
+    height: 30px;
+    line-height: 14px;
+    width: auto;
+}
+.edit{
+    background-color: rgb(88, 88, 243);
+}
+.edit:hover {
+    background-color: rgb(86, 86, 247);
+}
+.OutletName {
+    width: 50%;
+    font-weight: 600;
+    padding-right: 10px;
+}
+.modal-title{
+    font-size: 16px !important;
+    color: rgb(30, 182, 202);
+}
+.titleHead{
+    text-align: center !important;
+    margin-bottom: 10px !important;
+}
+.title{
+    width: 80%;
+    background-color: #e0ded8;
+    padding: 5px;
+}
+.Property{
+    width: 70%;
+    background-color: #fbf9f9;
+    padding: 5px;
+}
+.addCourse{
+    font-size: 22px !important;
+    line-height: 35px !important;
+    font-weight: 500 !important;
+    margin-left: 4%;
+}

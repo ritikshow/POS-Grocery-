@@ -1,0 +1,148 @@
+<div class="page_container">
+  <h2 class="text_pri font_20 fw-semi mb_15">Sales</h2>
+  <ul class="p-0 mb_7 d-flex align-items-center order_nav_blk sales_nav_blk">
+    <li class="mr_6" *ngIf="commonService.checkRolePermissions('BY_CATEGORY')"><a routerLink="/pos-dashboard/sales-by-category">By category</a></li>
+    <li class="mr_6" *ngIf="commonService.checkRolePermissions('BY_ITEM')"><a routerLink="/pos-dashboard/sales-by-item">By Item</a></li>
+    <li class="mr_6" *ngIf="commonService.checkRolePermissions('BY_ORDER')"><a class="active" routerLink="/pos-dashboard/sales-by">By Order</a></li>
+  </ul>
+  <div class="order_info_blk floor_container">
+    <!-- <div class="OutletName">Outlet Name : {{outletName}}</div> -->
+    <!-- <button class="btn btn-primary"
+          style="margin: 2px; margin-right: 5px; padding-left: 12px; padding-right: 12px; float: right;"
+          (click)="exportPopUp(openExportPopUp)">
+          <i class="fa fa-print" aria-hidden="true"></i>
+          Export
+        </button> -->
+    <form class="ng-invalid ng-touched ng-dirty mb_15" [formGroup]="filterForm">
+      <div class="row create_order_blk this_mon_blk dash_row sales_filter_blk">
+        <!-- <div class="col-md-3">
+          <div class="form-group">
+            <label>From Date</label>
+            <input type="date" class="form-control" placeholder="Enter From Date" formControlName="fromDate"
+              style="{{errorHighlightFrom}}">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label>To Date</label>
+            <input type="date" class="form-control" placeholder="Enter To Date" formControlName="toDate"
+              style="{{errorHighlightTo}}">
+          </div>
+        </div>
+        <div class="col-md-3 d-flex align-items-end">
+          <div class="form-group">
+            <button class="btn btn-lg btn-primary active action-btn btn-block w-100" ngbAutofocus name="btn_login"
+              type="button" (click)="getAllOrdersByCount()">
+              Filter
+            </button>
+          </div>
+        </div> -->
+        <div class="col-md-4">
+          <div class="position-relative table_search_blk">
+            <!-- <input type="text" class="form-control" placeholder="09 Oct, 2024 - 09 Oct, 2024">
+            <img alt="image" src="/assets/images/input-calendar-icon.svg" class="input_calendar_right_align" /> -->
+
+            <mat-form-field class="mulit_select_calendar_blk">
+              <mat-date-range-input [rangePicker]="picker">
+                <input matStartDate placeholder="Start date" formControlName="fromDate" >
+                <input matEndDate placeholder="End date" formControlName="toDate">
+              </mat-date-range-input>
+              <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field>
+          </div>
+          
+        </div>
+        <div class="col-md-2 d-flex align-items-end">
+          <div class="form-group d-flex align-items-center">
+            <button class="filter_button mr_15" ngbAutofocus name="btn_login" type="button" (click)="getAllOrdersByCount()">
+              <img alt="image" src="/assets/images/filter-icon.svg"/>
+            </button>
+            <button class="table_reset_btn reset_btn">
+              <img alt="image" src="/assets/images/reset-icon.svg" (click)="resetPage()"/>
+            </button>
+          </div>
+        </div>
+        <div class="col-md-6 d-flex justify-content-end" *ngIf="commonService.checkRolePermissions('EXPORT_BY_ORDER')">
+          <div class="d-flex align-items-center cursor-pointer" (click)="exportPopUp(openExportPopUp)">
+            <img alt="image" src="/assets/images/export-icon.svg" class="mr_8">
+            <span class="font_16 fw-med text-underline text-sec">Export</span>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="table-responsive sales_table_blk" id="checkBoxes">
+      <table id="table-request" class="m-0">
+        <thead class="thead-dark">
+          <tr>
+            <th id="unique_name">Sl No.</th>
+            <th id="status_name">Created On</th>
+            <!-- <th id="order_unique_name">InvoiceNo</th> -->
+            <th id="order_unique_name">Order Type</th>
+            <th id="order_unique_name">Order No</th>
+            <th id="order_unique_name">PaymentMode</th>
+            <th id="buyer_company_name">TotalPayableAmount</th>
+            <th id="buyer_company_name">Amount Without VAT</th>
+            <th id="buyer_company_name">VAT Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of AllData; let i=index">
+            <td>{{i +1}}</td>
+            <td>{{data.createdOn | date : 'dd-MM-yyyy'}}</td>
+            <!-- <td>{{data.invoiceNo}}</td> -->
+            <td>{{data.orderType}}</td>
+            <td>{{data.orderNo}}</td>
+            <td *ngIf="data?.paymentBreakage != null">{{data?.paymentBreakage[0]?.paymentMode}}
+            </td>
+            <td *ngIf="data?.paymentBreakage == null"></td>
+            <td>{{data.total | number}}</td>
+            <td>{{data.subTotal | number}}</td>
+            <td>{{data.taxAmount | number}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- <div class="total_entries">
+          <select class="len_per_page" (change)="changedLength($event)">
+            <option value="5">5</option>
+            <option value="10">10&nbsp;</option>
+            <option value="20">20&nbsp;</option>
+            <option value="-1">All&nbsp;</option>
+          </select>
+          <label>Total :</label>
+          <label> {{tableListRecord.total}}</label>
+        </div> -->
+    </div>
+  </div>
+  <ng-template #openExportPopUp let-close="close">
+    <div class="modal-header edit_popup">
+      <h2 class="font_20 fw-semi text_pri mb_15">Select options to export</h2>
+      <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer" #closebutton
+        (click)="closeAction()" />
+    </div>
+    <div class="modal-body">
+      <div class="row modal_input_row ">
+        <div class="col-md-6" *ngFor="let data of SalesColumnArray">
+          <div class="form-group">
+            <div class="role_switch_container d-flex align-items-center justify-content-between">
+              <span for="flexSwitchCheckDefault" class="font_14 fe-reg text_pri m-0">{{data}}</span>
+              <label class="switch">
+                <input type="checkbox" id={{data}} [value]="data" (change)="onCheckboxChange($event)" />
+                <span class="slider round"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row modal_input_row">
+        <div class="col-md-6 pb_0">
+          <button class="cancel_btn" name="btn_login" (click)="closeAction()" type="reset">Cancel</button>
+        </div>
+        <div class="col-md-6 pb_0">
+          <button class="btn_primary" name="btn_login" type="submit" (click)="downloadFile()">Export</button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

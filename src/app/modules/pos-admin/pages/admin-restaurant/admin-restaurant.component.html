@@ -1,0 +1,107 @@
+<div class="page_container table_details_blk">
+  <h2 class="text_pri font_20 fw-semi mb_7">Settings</h2>
+  <div class="d-flex align-items-start settings_nav_main_blk">
+  <app-settings></app-settings>
+  <div class="settings_nav_info_container">
+    <div class="d-flex align-items-center justify-content-end mb_21"  *ngIf="isSuperAdmin == true">
+      <button class="add_btn mr_14" (click)="openForm()">
+        <img alt="image" src="/assets/images/add-icon.svg" class="mr_8"/>
+        <span class="font_14 fw-semi text-sec">  Add Restaurant</span>
+      </button>
+    </div>
+    <div class="table-responsive respons_inventory_table" [ngClass]="isSuperAdmin ? '' : 'm-0'">
+      <table datatable [dtOptions]="dtOptions" *ngIf="isDataLoaded" class="nowrap buyer_table w-100" id="table-request">
+        <thead>
+          <tr>
+            <th>Restaurant Name</th>
+            <th>Country</th>
+            <th>Status</th>
+            <th *ngIf="isSuperAdmin == true"></th>
+            <th class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of restaurantData; let i=index">
+            <td>{{item.restaurantName}}</td>
+            <td>{{item.country}}</td>
+            <td [attr.data-order]="item.activeStatus ? 1 : 0"> 
+              <mat-slide-toggle class="discount_slider_btn" color="accent" (click) = "changeCategoryStatus(item.restaurantId,item.activeStatus)" [(ngModel)]="item.activeStatus">
+              </mat-slide-toggle>
+            </td>
+
+            <td *ngIf="isSuperAdmin == true">
+              <div class="d-flex align-items-center cursor-pointer" (click)="addOutlet(item.restaurantId)">
+                <img alt="image" src="/assets/images/add-icon.svg" class="mr_5"/>
+                <span class="font_14 fw-med text_sec"> Add Outlet</span>
+              </div>
+               <div class="d-flex align-items-center cursor-pointer" (click)="openPermissionForm(item.restaurantId)">
+                <img alt="image" src="/assets/images/add-icon.svg" class="mr_5"/>
+                <span class="font_14 fw-med text_sec"> Edit Permissions</span>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center justify-content-center">
+                <img alt="image" src="/assets/images/edit-icon.svg" class="mr_14 cursor-pointer" *ngIf="commonService.checkRolePermissions('EDIT_RESTAURANT')" (click)="edit(item.restaurantId)"/>
+                <img alt="image" src="/assets/images/view-icon.svg" class="mr_14 cursor-pointer" *ngIf="commonService.checkRolePermissions('VIEW_RESTAURANT')"  (click)="view(item.restaurantId)"/>
+                <img alt="image" src="/assets/images/delete-icon.svg" class="cursor-pointer" *ngIf="commonService.checkRolePermissions('DELETE_RESTAURANT')" (click)="onDelete(item.restaurantId)"/>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</div>
+  <!-- <div class="weekly_report view_order_blk white_bg">
+    <div class="OutletName float-left">Outlet Name : {{outletName}}</div>
+    <div class="create_order_blk this_mon_blk">
+      <div class="row">
+        <div class="col-md-9 empty"></div>
+        <div class="col-md-3 d-flex align-items-end">
+          <button class="create_order_btn w-100 d-flex align-items-center justify-content-center" (click)="openForm()">
+            <img src="assets/images/add-circle.svg" alt="add-circle" class="img-fluid mr_16">
+            Add Restaurant
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="mt-2 mb-4 pb-1 w-100" id="checkBoxes">
+      <div class="table-responsive">
+        <table aria-describedby="desc" datatable [dtOptions]="dtOptions" *ngIf="isDataLoaded"
+          class="nowrap buyer_table w-100" style="width:100%" id="table-request">
+          <thead>
+            <tr>
+              <th scope="col">Restaurant Name</th>
+              <th scope="col">Country</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of restaurantData; let i=index">
+              <td>{{item.restaurantName}}</td>
+              <td>{{item.country}}</td>
+              <td>
+                <button class="btn btn-orders edit" (click)="edit(item.restaurantId)"><i
+                    class="fa fa-pencil"></i></button>
+                <button class="btn btn-orders edit" (click)="addOutlet(item.restaurantId)">+ Outlet</button>
+                <button class="btn btn-orders edit" (click)="view(item.restaurantId)">View</button>
+                <button class="btn btn-orders edit" (click)="onDelete(item.restaurantId)"><i class="fa fa-trash"
+                    aria-hidden="true"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="total_entries">
+          <select class="len_per_page" (change)="changedLength($event)">
+            <option value="5">5</option>
+            <option value="10">10&nbsp;</option>
+            <option value="20">20&nbsp;</option>
+            <option value="-1">All&nbsp;</option>
+          </select>
+          <label>Total :</label>
+          <label> {{tableListRecord.total}}</label>
+        </div>
+      </div>
+    </div>
+  </div> -->

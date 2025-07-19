@@ -1,0 +1,47 @@
+.btn_group{
+    padding: 5px;
+    width: 30%;
+    border-right: 1px solid rgb(151, 147, 147);
+}
+.btn1{
+    margin-bottom: 10px;
+}
+.mod_price{
+    position: relative;
+    right: 45px;
+    top: 7px;
+    color: red;
+}
+.modifier{
+ width: 70%;
+ display: flex;
+ flex-wrap: wrap;
+ padding-left: 5px;
+}
+.mod_check{
+    width: auto;
+    margin-right: 5px;
+}
+.btn-orders{
+    background-color: rgb(39 184 204);
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    height: auto;
+    line-height: 14px;
+    width: 90%;
+}
+.btn-orders:hover{
+    background-color: rgb(105, 224, 240);
+}
+.inActive{
+    border: 1px solid;
+    border-color: #d6d6e2;
+}
+.active{
+    border: 2px solid;
+    border-color: #1d6cb3;
+}
+.modifier>*:not(:last-child) {
+  margin-right: 15px;
+}

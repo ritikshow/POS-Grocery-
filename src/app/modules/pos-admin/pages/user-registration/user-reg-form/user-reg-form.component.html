@@ -1,0 +1,283 @@
+
+  <div class="modal-header">
+    <h3 *ngIf="!isUpdate" class="font_20 fw-semi text_pri mb_15" id="SKUModalLabel">Add User</h3>
+    <h3 *ngIf="isUpdate" class="font_20 fw-semi text_pri mb_15" id="SKUModalLabel">Edit User</h3>
+    <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer" (click)="closeModal()"/>
+  </div>
+  <div class="modal-body create_order_blk this_mon_blk form_popup">
+    <form class="ng-invalid ng-touched ng-dirty" [formGroup]="userForm">
+      <div class="row modal_input_row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="font_14 fe-reg text_pri mb_5">User Name<span class="required-asterisk">*</span></label>
+            <input type="text" class="form-control" id="email" placeholder="Enter User Name" formControlName="userName">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="font_14 fe-reg text_pri mb_5">Password<span class="required-asterisk">*</span></label>
+            <div class="password-input-wrapper" style="position: relative;">
+              <input
+                [type]="showPassword ? 'text' : 'password'"
+                class="form-control"
+                [ngClass]="{'is-valid': userForm.get('password')?.valid && userForm.get('password')?.touched, 'is-invalid': userForm.get('password')?.invalid && userForm.get('password')?.touched}"
+                placeholder="Enter Password"
+                formControlName="password"
+                (input)="onPasswordInput()"
+              />
+              <span
+                class="eye-icon"
+                (mouseenter)="showPassword = true"
+                (mouseleave)="showPassword = false"
+                style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); cursor: pointer;"
+              >
+                &#128065;
+              </span>
+            </div>
+            <ul class="password-checklist">
+              <li [ngClass]="{'valid': passwordLengthValid, 'invalid': !passwordLengthValid}">
+                <span class="checkmark">&#10003;</span>
+                At least minimum 6 characters and maximum 16 characters
+              </li>
+              <li [ngClass]="{'valid': passwordCaseValid, 'invalid': !passwordCaseValid}">
+                <span class="checkmark">&#10003;</span>
+                Includes upper and lower case letters
+              </li>
+              <li [ngClass]="{'valid': passwordNumberValid, 'invalid': !passwordNumberValid}">
+                <span class="checkmark">&#10003;</span>
+                At least one number
+              </li>
+              <li [ngClass]="{'valid': passwordSpecialValid, 'invalid': !passwordSpecialValid}">
+                <span class="checkmark">&#10003;</span>
+                At least one special character (&#64;, $, !, %, etc.)
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="font_14 fe-reg text_pri mb_5">Confirm Password<span class="required-asterisk">*</span></label>
+            <div class="password-input-wrapper" style="position: relative;">
+              <input
+                [type]="showConfirmPassword ? 'text' : 'password'"
+                class="form-control"
+                [ngClass]="{'is-valid': userForm.get('confirmPassword')?.valid && userForm.get('confirmPassword')?.touched && !passwordMismatch, 'is-invalid': (userForm.get('confirmPassword')?.invalid && userForm.get('confirmPassword')?.touched) || passwordMismatch}"
+                placeholder="Confirm Password"
+                formControlName="confirmPassword"
+                autocomplete="new-password"
+                (input)="onConfirmPasswordInput()"
+              />
+              <span
+                class="eye-icon"
+                (mouseenter)="showConfirmPassword = true"
+                (mouseleave)="showConfirmPassword = false"
+                style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); cursor: pointer;"
+              >
+                &#128065;
+              </span>
+            </div>
+            <div class="text-danger font_12" *ngIf="userForm.get('confirmPassword')?.touched && userForm.get('confirmPassword')?.invalid">
+              <div *ngIf="userForm.get('confirmPassword')?.hasError('required')">Confirm Password is required.</div>
+            </div>
+            <div class="text-danger font_12" *ngIf="passwordMismatch">
+              Password and Confirm Password do not match.
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 multi_phone_no_blk">
+          <div class="add_modifier_blk">
+            <h4 class="font_16 fw-med text_pri mb_10">Phone Numbers</h4>
+            <div formArrayName="phoneNo" *ngFor="let address of modItemsControls; let i = index;" class="w-100">
+              <div [formGroupName]="i">
+                <div class="row modal_input_row modifier_align_row d-flex justify-content-between align-items-start">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="font_14 fe-reg text_pri mb_5"> Phone Number<span class="required-asterisk">*</span></label>
+                      <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0 w_50px">
+                          <img *ngIf="selectedCountries[i]" [src]="selectedCountries[i].flag" width="24" height="16" alt="Flag" />
+                        </span>
+                        <!-- Country Code Input with Datalist -->
+                        <input
+                          type="text"
+                          class="w_50px form-control custom_select_input"
+                          placeholder="+Code"
+                          [(ngModel)]="countryCodeInput[i]"
+                          (ngModelChange)="onCountryCodeChange($event, i, address)"
+                          [attr.list]="'country-codes-list-' + i"
+                          required
+                          [ngModelOptions]="{standalone: true}"
+                        />
+                        <datalist [id]="'country-codes-list-' + i">
+                          <option *ngFor="let c of countryList" [value]="c.dialCode">{{c.name}}</option>
+                        </datalist>
+                        <!-- Flag -->
+                        
+                        <!-- Phone Input -->
+                        <input type="text" class="form-control calc_width_mbl border-start-0" placeholder="Enter Phone Number" formControlName="number" [attr.maxlength]="selectedCountries[i]?.phoneLength"/>
+                      </div>
+                      <!-- Remove the debug output line below -->
+                      <!-- <div style="color:blue;font-size:12px;">
+                        Value: {{ address.get('number').value }} | Length: {{ address.get('number').value?.length }} | Required: {{ getPhoneLengthForCountry(selectedCountries[i]) }}
+                      </div> -->
+                      <div class="text-danger font_12" *ngIf="address.get('number').value && address.get('number').value.length > 0 && address.get('number').value.length < getPhoneLengthForCountry(selectedCountries[i])">
+                        Minimum {{ getPhoneLengthForCountry(selectedCountries[i]) }} digits required for this country.
+                      </div>
+                      <div class="text-danger font_12" style="margin-top:2px;display:block;" *ngIf="address.get('number')?.touched && address.get('number')?.invalid">
+                        <div *ngIf="address.get('number')?.hasError('required')">Phone number is required.</div>
+                        <div *ngIf="address.get('number')?.hasError('invalidFormat')">Phone number must contain only digits.</div>
+                        <div *ngIf="address.get('number')?.hasError('invalidLength')">
+                          Phone number must be {{ address.get('country')?.value?.phoneLength || 'the correct' }} digits.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mt_38">
+                    <div class="d-flex align-items-center justify-content-between mb_10">
+                      <div class="mod_check form-group d-flex align-items-center">
+                        <input type="checkbox" class="mr_7" id="headerCheck{{ i + 1}}" (change)="onCheckboxChange($event, i)" />
+                        <label class="font_14 fe-reg text_pri m-0">Primary Number</label>
+                      </div>
+                      <img alt="image" src="/assets/images/red-delete-icon.svg" class="cursor-pointer" (click)="removeMod(i)"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-danger font_12" *ngIf="countryCodeError && countryCodeError[i]">
+                  Invalid country code.
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-end">
+              <div type="button" class="d-flex align-items-center w_maxcontent" (click)="addMod()">
+                <img alt="image" src="/assets/images/add-icon.svg" class="mr_8"/>
+                <span class="font_14 fw-semi text-sec">  Add Phone No</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="font_14 fe-reg text_pri mb_5"> Email (Login Username)<span class="required-asterisk">*</span></label>
+            <input type="email" class="form-control" placeholder="Enter Email" formControlName="emailId">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="font_14 fe-reg text_pri mb_5">Joining Date</label>
+            <div class="form-group position-relative" >
+              <input type="date"class="form-control"formControlName="joiningDate"/>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group">
+            <label class="font_14 fe-reg text_pri mb_5">Address<span class="required-asterisk">*</span> </label>
+            <textarea class="form-control" placeholder="Enter Address" formControlName="address"></textarea>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="font_14 fe-reg text_pri mb_5"> Select Country<span class="required-asterisk">*</span></label>
+            <div class="position-relative">
+              <select class="form-control select-control" formControlName="country" id="CountryName"
+                (change)="SelectCountry()">
+                <option *ngFor="let country of countryData" value="{{country.countryName}}">
+                  {{country.countryName}}</option>
+              </select>
+              <img alt="image" src="/assets/images/dropdown-arrow.svg" class="select_input_arrow">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="font_14 fe-reg text_pri mb_5"> Select City<span class="required-asterisk">*</span></label>
+            <div class="position-relative">
+              <select class="form-control select-control" formControlName="city">
+                  <option *ngFor="let city of cityData" value="{{city.cityName}}">
+                    {{city.cityName}}</option>
+                </select>
+                <img alt="image" src="/assets/images/dropdown-arrow.svg" class="select_input_arrow">
+              </div> 
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="font_14 fe-reg text_pri mb_5" for="sel1"> Select Role<span class="required-asterisk">*</span></label>
+            <div class="position-relative">
+              <select class="form-control select-control" id="sel1" formControlName="userRoleId">
+                <option *ngFor="let role of roleData" value="{{role.roleId}}">{{role.roleName}}</option>
+              </select>
+              <img alt="image" src="/assets/images/dropdown-arrow.svg" class="select_input_arrow">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="font_14 fe-reg text_pri mb_5">Void Password</label>
+            <input type="text" class="form-control" id="email" placeholder="Enter Void Password"
+              formControlName="voidPassword">
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="uploadOuter signup-drag">
+            <span class="dragBox d-flex flex-column">
+              <div class="icon mb_5" *ngIf="isUpdate == false || SelectedImage">
+                <img alt="image" [src]="profileImage || 'assets/images/upload_icon.png'"
+                  [ngClass]="{'image' : profileImage }" />
+              </div>
+              <div class="icon col-12" *ngIf="isUpdate == true && !SelectedImage">
+                <img alt="image" src="{{BaseUrl + profileImage}}" [ngClass]="{'image' : profileImage }" *ngIf="profileImage"/>
+                  <img alt="image" src="assets/images/upload_icon.png" [ngClass]="{'image' : profileImage }" *ngIf="!profileImage"/>
+              </div>
+              <div class="mb_5" *ngIf="!profileImage">Upload Photo</div>
+              <div *ngIf="profileImage">Change Photo</div>
+              <input type="file" (change)="dragNdrop($event)" formControlName="file" id="uploadFile" />
+            </span>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="font_14 fe-reg text_pri mb_5">Id Card No</label>
+            <input type="text" class="form-control" id="email" placeholder="Enter Id Card Number"
+              formControlName="idCardNo">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="font_14 fe-reg text_pri mb_5" for="sel1"><span class="required-asterisk">*</span> Shift Timing</label>
+            <div class="position-relative">
+              <select class="form-control select-control" formControlName="shiftTiming" name="filterSearchBox">
+                <option *ngFor="let shift of shiftList" value="{{shift.shiftName}}" selected>
+                  {{shift.shiftName}}</option>
+              </select>
+              <img alt="image" src="/assets/images/dropdown-arrow.svg" class="select_input_arrow">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="d-flex align-items-center justify-content-between mb_10">
+            <h4 class="font_16 fw-semi text_pri">Off Days</h4>
+            <div class="d-flex align-items-center">
+              <input type="checkbox" class="remember_input mr_5" id="selectAll" [value]="" (change)="onSelectAllWeekOffBoxChange($event)" />
+              <label class="font_14 fe-reg text_pri m-0">Select All</label>
+            </div>
+          </div>
+          <div class="add_modifier_blk d-flex align-items-center justify-content-between">
+            <div *ngFor="let day of weekOffDropdownList" class="border-none mod_check d-flex align-items-center mb_0">
+              <input type="checkbox" class="remember_input mr_5" id="{{day.WeekDay}}" [value]="day.WeekDay" (change)="onWeekOffCheckboxChange($event)" />
+              <label class="font_14 fe-reg text_pri m-0" for="{{day.WeekDay}}">{{day.WeekDay}}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row modal_input_row">
+        <div class="col-md-6 pb_0">
+            <button class="cancel_btn" type="reset" (click)="closeModal()">Cancel</button>
+          </div>
+        <div class="col-md-6 pb_0">
+            <button *ngIf="isUpdate" class="btn_primary" type="submit" (click)="UpdateUser()">Save</button>
+            <button *ngIf="!isUpdate" class="btn_primary" type="submit" (click)="SubmitForm()">Save</button>
+        </div>      
+      </div>
+    </form>
+  </div>

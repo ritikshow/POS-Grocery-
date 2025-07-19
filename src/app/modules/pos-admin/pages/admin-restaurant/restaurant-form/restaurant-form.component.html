@@ -1,0 +1,379 @@
+<div class="modal-header mb_14">
+    <h5 *ngIf="!isUpdate" class="font_20 fw-semi text_pri" id="SKUModalLabel">Add Restaurant</h5>
+    <h5 *ngIf="isUpdate" class="font_20 fw-semi text_pri" id="SKUModalLabel">Edit Restaurant</h5>
+    <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer" (click)="closeModal()"/>
+  </div>
+  <div class="modal-body create_order_blk this_mon_blk form_popup">
+    <form class="ng-invalid ng-touched ng-dirty" [formGroup]="resForm">
+      <div class="row modal_input_row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label  class="font_14 fe-reg text_pri mb_5">Restaurant Name<span class="required-asterisk">*</span></label>
+            <input type="text" class="form-control" id="email" placeholder="Enter Restaurant Name"
+              formControlName="restaurantName">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label  class="font_14 fe-reg text_pri mb_5"> Restaurant Registration No<span class="required-asterisk">*</span></label>
+            <input type="text" class="form-control" placeholder="Enter Restaurant Registration No"
+              formControlName="restaurantRegistrationNo">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label  class="font_14 fe-reg text_pri mb_5">Owner First Name<span class="required-asterisk">*</span></label>
+            <input type="text" class="form-control" id="email" placeholder="Enter First Name"
+              formControlName="firstName">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group ">
+            <label  class="font_14 fe-reg text_pri mb_5"> Middle Name</label>
+            <input type="text" class="form-control" placeholder="Enter Middle Name" formControlName="middleName">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group ">
+            <label  class="font_14 fe-reg text_pri mb_5"> Last Name</label>
+            <input type="text" class="form-control" placeholder="Enter Last Name" formControlName="lastName">
+          </div>
+        </div>
+        <div class="col-md-12 multi_phone_no_blk">
+          <div class="add_modifier_blk">
+            <h4 class="font_16 fw-med text_pri mb_10">Phone Numbers</h4>
+            <div formArrayName="phoneNo" *ngFor="let address of modItemsControls; let i = index;" class="w-100">
+              <div [formGroupName]="i">
+                <div class="row modal_input_row modifier_align_row d-flex justify-content-between align-items-start">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="font_14 fe-reg text_pri mb_5"> Phone Number<span class="required-asterisk">*</span></label>
+                      <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0 w_50px">
+                          <img *ngIf="selectedCountry[i]" [src]="selectedCountry[i].flag" width="24" height="16" alt="Flag" />
+                        </span>
+                        <!-- Country Code Input with Datalist -->
+                        <input
+                          type="text"
+                          class=" w_50px form-control custom_select_input"
+                          placeholder="+Code"
+                          [(ngModel)]="countryCodeInput[i]"
+                          (ngModelChange)="onCountryCodeChange($event, i, address)"
+                          [attr.list]="'country-codes-list-' + i"
+                          required
+                          [ngModelOptions]="{standalone: true}"
+                        />
+                        <datalist [id]="'country-codes-list-' + i">
+                          <option *ngFor="let c of countries" [value]="c.dialCode">{{c.name}}</option>
+                        </datalist>
+                        <!-- Flag -->
+                        
+                        <!-- Phone Input -->
+                        <input type="text" class="calc_width_mbl form-control border-start-0" placeholder="Enter Phone Number" formControlName="number" [attr.maxlength]="selectedCountry[i]?.phoneLength"/>
+                      </div>
+                      <div class="text-danger font_12" *ngIf="address.get('number').value && address.get('number').value.length > 0 && address.get('number').value.length < getPhoneLengthForCountry(selectedCountry[i])">
+                        Minimum {{ getPhoneLengthForCountry(selectedCountry[i]) }} digits required for this country.
+                      </div>
+                      <div class="text-danger font_12" style="margin-top:2px;display:block;" *ngIf="address.get('number')?.touched && address.get('number')?.invalid">
+                        <div *ngIf="address.get('number')?.hasError('required')">Phone number is required.</div>
+                        <div *ngIf="address.get('number')?.hasError('invalidFormat')">Phone number must contain only digits.</div>
+                        <div *ngIf="address.get('number')?.hasError('invalidLength')">
+                          Phone number must be {{ address.get('country')?.value?.phoneLength || 'the correct' }} digits.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mt_38">
+                    <div class="d-flex align-items-center justify-content-between mb_10">
+                      <div class="mod_check form-group d-flex align-items-center">
+                        <input type="checkbox" class="mr_7" id="headerCheck{{ i + 1}}" (change)="onCheckboxChange($event, i)" />
+                        <label class="font_14 fe-reg text_pri m-0">Primary Number</label>
+                      </div>
+                      <img alt="image" src="/assets/images/red-delete-icon.svg" class="cursor-pointer" (click)="removeMod(i)"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-danger font_12" *ngIf="countryCodeError[i]">
+                  Invalid country code.
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-end">
+              <div type="button" class="d-flex align-items-center w_maxcontent" (click)="addMod()">
+                <img alt="image" src="/assets/images/add-icon.svg" class="mr_8"/>
+                <span class="font_14 fw-semi text-sec">  Add Phone No</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="form-group">
+            <label> Address<span class="required-asterisk">*</span></label>
+            <textarea class="form-control" placeholder="Enter Address" formControlName="address"></textarea>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group ">
+            <label class="font_14 fe-reg text_pri mb_5"> Select Country<span class="required-asterisk">*</span></label>
+            <div class="position-relative">
+              <select class="form-control select-control" formControlName="country" id="CountryName"
+                (change)="SelectCountry()">
+                <option value="" [disabled]="true">Select Country</option>
+                <option *ngFor="let country of countryData" value="{{country.countryName}}">
+                  {{country.countryName}}</option>
+              </select>
+              <img alt="image" src="/assets/images/dropdown-arrow.svg" class="select_input_arrow"/>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group ">
+            <label class="font_14 fe-reg text_pri mb_5"> Select City<span class="required-asterisk">*</span></label>
+            <div class="position-relative">
+              <select class="form-control select-control" formControlName="city">
+                <option value="" [disabled]="true">Select City</option>
+                <option *ngFor="let city of cityData" value="{{city.cityName}}">
+                  {{city.cityName}}</option>
+              </select>
+              <img alt="image" src="/assets/images/dropdown-arrow.svg" class="select_input_arrow"/>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group ">
+            <label class="font_14 fe-reg text_pri mb_5"> Select Type of Business<span class="required-asterisk">*</span></label>
+            <div class="position-relative">
+              <select class="form-control select-control" formControlName="typeOfBussines">
+                <option value="" [disabled]="true">Select Type of Business</option>
+                <option value="Fast Food">Fast Food</option>
+                <option value="Take Out">Take Out</option>
+                <option value="Dine In">Dine In</option>
+                <option value="Gourmet">Gourmet</option>
+                <option value="Bistro">Bistro</option>
+                <option value="Buffet">Buffet</option>
+                <option value="Cafe">Cafe</option>
+                <option value="Buffet">Buffet</option>
+                <option value="Healthy Foods">Healthy Foods</option>
+                <option value="Artisan">Artisan</option>
+                <option value="Others">Others</option>
+              </select>
+              <img alt="image" src="/assets/images/dropdown-arrow.svg" class="select_input_arrow"/>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group ">
+            <label class="font_14 fe-reg text_pri mb_5"> Select Type of Cuisine<span class="required-asterisk">*</span></label>
+            <div class="position-relative">
+              <select class="form-control select-control" formControlName="typeOfCusine">
+                <option value="" [disabled]="true">Select Type of Cuisine</option>
+                <option value="Arabic">Arabic</option>
+                <option value="American">American</option>
+                <option value="Indian">Indian</option>
+                <option value="Mexican">Mexican</option>
+                <option value="Mediterranean">Mediterranean</option>
+                <option value="Chinese">Chinese</option>
+                <option value="Others">Others</option>
+              </select>
+              <img alt="image" src="/assets/images/dropdown-arrow.svg" class="select_input_arrow"/>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="font_14 fe-reg text_pri mb_5"> Select Special Feature<span class="required-asterisk">*</span></label>
+            <div class="position-relative">
+              <select class="form-control select-control" formControlName="specialFeatures">
+                <option value="" [disabled]="true">Select Special Feature</option>
+                <option value="Halal">Halal</option>
+                <option value="Pure Veg">Pure Veg.</option>
+                <option value="Farm Fresh">Farm Fresh</option>
+                <option value="Gluten Free">Gluten Free</option>
+                <option value="Others">Others</option>
+              </select>
+              <img alt="image" src="/assets/images/dropdown-arrow.svg" class="select_input_arrow"/>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="font_14 fe-reg text_pri mb_5"> PO Box</label>
+            <input type="text" class="form-control" id="email" placeholder="Enter PO Box" formControlName="poBox">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="font_14 fe-reg text_pri mb_5">Email<span class="required-asterisk">*</span></label>
+            <input type="email" class="form-control" placeholder="Enter Email" formControlName="email">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="font_14 fe-reg text_pri mb_5">Password<span class="required-asterisk">*</span></label>
+            <div class="password-input-wrapper" style="position: relative;">
+              <input
+                [type]="showPassword ? 'text' : 'password'"
+                class="form-control"
+                placeholder="Enter Password"
+                formControlName="password"
+                (input)="onPasswordInput()"
+              />
+              <span
+                class="eye-icon"
+                (mouseenter)="showPassword = true"
+                (mouseleave)="showPassword = false"
+                style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); cursor: pointer;"
+              >
+                &#128065;
+              </span>
+            </div>
+            <ul class="password-checklist">
+              <li [ngClass]="{'valid': passwordLengthValid, 'invalid': !passwordLengthValid}">
+                <span class="checkmark">&#10003;</span>
+                At least minimum 6 characters and maximum 16 characters
+              </li>
+              <li [ngClass]="{'valid': passwordCaseValid, 'invalid': !passwordCaseValid}">
+                <span class="checkmark">&#10003;</span>
+                Includes upper and lower case letters
+              </li>
+              <li [ngClass]="{'valid': passwordNumberValid, 'invalid': !passwordNumberValid}">
+                <span class="checkmark">&#10003;</span>
+                At least one number
+              </li>
+              <li [ngClass]="{'valid': passwordSpecialValid, 'invalid': !passwordSpecialValid}">
+                <span class="checkmark">&#10003;</span>
+                At least one special character (&#64;, $, !, %, etc.)
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="font_14 fe-reg text_pri mb_5">Confirm Password<span class="required-asterisk">*</span></label>
+            <div class="password-input-wrapper" style="position: relative;">
+              <input
+                [type]="showConfirmPassword ? 'text' : 'password'"
+                class="form-control"
+                id="confirmPassword"
+                placeholder="Confirm Password"
+                formControlName="confirmPassword"
+                autocomplete="new-password"
+                (input)="onConfirmPasswordInput()"
+              />
+              <span
+                class="eye-icon"
+                (mouseenter)="showConfirmPassword = true"
+                (mouseleave)="showConfirmPassword = false"
+                style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); cursor: pointer;"
+              >
+                &#128065;
+              </span>
+            </div>
+            <div class="text-danger font_12" *ngIf="resForm.get('confirmPassword')?.touched && resForm.get('confirmPassword')?.invalid">
+              <div *ngIf="resForm.get('confirmPassword')?.hasError('required')">Confirm Password is required.</div>
+            </div>
+            <div class="text-danger font_12" *ngIf="passwordMismatch">
+              Password and Confirm Password do not match.
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="font_14 fe-reg text_pri mb_5">Reset Time<span class="required-asterisk">*</span></label>
+            <input type="time" class="form-control" formControlName="reset">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="font_14 fe-reg text_pri mb_5">Restaurant Type <span class="required-asterisk">*</span> </label>
+            <div class="position-relative"> 
+             <select class="form-control" formControlName="RestaurantType">
+                <option value="" [disabled]="true">Select Restaurant Type</option>
+                <option value="Premium">Premium</option>
+                <option value="Gold">Gold</option>
+                <option value="Silver">Silver</option>
+              </select>
+              <img alt="image" src="/assets/images/dropdown-arrow.svg" class="select_input_arrow"/>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="font_14 fe-reg text_pri mb_5"> Select Warehouse Label<span class="required-asterisk">*</span> </label>
+            <div class="position-relative">
+              <select class="form-control select-control" formControlName="wareHouse_Lable">
+                <option value="" [disabled]="true">Select Warehouse Label</option>
+                <option value="Bar">Bar</option>
+                <option value="Warehouse">Warehouse</option>
+              </select>
+              <img alt="image" src="/assets/images/dropdown-arrow.svg" class="select_input_arrow"/>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="font_14 fe-reg text_pri mb_5">TRN Number<span class="required-asterisk">*</span>  </label>
+            <input type="text" class="form-control" placeholder="Enter TRN Number" formControlName="trnNo">
+          </div>
+        </div>
+        <div class="col-md-6">
+            <span class="dragBox d-flex align-items-center flex-column">
+              <div class="icon" *ngIf="isUpdate == false || trndata">
+                <img alt="image" [src]="trnImage || 'assets/images/upload_icon.png'" [ngClass]="{'image' : trnImage }" />
+              </div>
+              <div class="icon" *ngIf="isUpdate == true && !trndata">
+                <img alt="image" src = "{{BaseUrl + trnImage}}" [ngClass]="{'image' : trnImage }" *ngIf="trnImage"/>
+                <img alt="image" src = "assets/images/upload_icon.png" [ngClass]="{'image' : trnImage }" *ngIf="!trnImage"/>
+              </div>
+              <div class="mt-2" *ngIf="!trnImage">Upload TRN Certificate</div>
+              <div class="mt-2" *ngIf="trnImage">Change TRN Certificate</div>
+              <input type="file" (change)="dragNdropTrn($event)" formControlName="trnFile" id="uploadFile" />
+            </span>
+        </div>
+        <div class="col-md-6">
+            <span class="dragBox d-flex align-items-center flex-column">
+              <div class="icon" *ngIf="isUpdate == false || logo">
+                <img alt="image" [src] = "profileImage || 'assets/images/upload_icon.png'" [ngClass]="{'image' : profileImage }" />
+              </div>
+              <div class="icon" *ngIf="isUpdate == true && !logo">
+                <img alt="image" src = "{{BaseUrl + profileImage}}" [ngClass]="{'image' : profileImage }" *ngIf="profileImage"/>
+                <img alt="image" src = "assets/images/upload_icon.png" [ngClass]="{'image' : profileImage }" *ngIf="!profileImage"/>
+              </div>
+              <div class="mt-2" *ngIf="!profileImage">Upload Logo</div>
+              <div class="mt-2" *ngIf="profileImage">Change Logo</div>
+
+              <input type="file" (change)="dragNdrop($event)" formControlName="file" id="uploadFile" />
+            </span>
+        </div>
+        <div class="col-md-6">
+            <span class="dragBox d-flex align-items-center flex-column">
+              <div class="icon" *ngIf="isUpdate == false || tradedata">
+                <img alt="image" [src]="tradeImage || 'assets/images/upload_icon.png'" [ngClass]="{'image' : tradeImage }" />
+              </div>
+              <div class="icon" *ngIf="isUpdate == true && !tradedata">
+                <img alt="image" src = "{{BaseUrl + tradeImage}}" [ngClass]="{'image' : tradeImage }" *ngIf="tradeImage"/>
+                <img alt="image" src="assets/images/upload_icon.png" [ngClass]="{'image' : tradeImage }" *ngIf="!tradeImage"/>
+              </div>
+              <div class="mt-2" *ngIf="!tradeImage">Upload Trade license</div>
+              <div class="mt-2" *ngIf="tradeImage">Change Trade license</div>
+              <input type="file" (change)="dragNdropTrade($event)" formControlName="tradeFile" id="uploadFile" />
+            </span>
+        </div>
+        <div class="col-md-12">
+          <div class="d-flex align-items-center">
+            <input type="checkbox" id="termsCheck" class="mr_8" (change)="onTermsCheckboxChange($event)" />
+            <label class="font_14 fe-reg text_pri m-0">You Agree to Terms And Conditions</label>
+          </div>
+        </div>
+        <div class="col-md-6 pb_0">
+          <button class="cancel_btn" type="reset" (click)="closeModal()">Cancel</button>
+        </div>
+        <div class="col-md-6 pb_0">
+          <button *ngIf="isUpdate" class="btn_primary" name="btn_login" (click)="editRestaurant()"> Save
+        </button>
+        <button *ngIf="!isUpdate" class="btn_primary" name="btn_login" (click)="addRestaurant()">Save</button>
+        </div>
+      </div>
+    </form>
+  </div>

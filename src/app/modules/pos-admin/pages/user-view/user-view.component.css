@@ -1,0 +1,48 @@
+.field_1 {
+  width: 49%;
+}
+.btn-orders {
+  border-color: #d6d6e2;
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  height: 30px;
+  line-height: 14px;
+  width: auto;
+}
+.btn_add {
+  margin-bottom: 5px;
+  background-color: rgb(15, 107, 143);
+}
+.btn_add:hover {
+  background-color: rgb(21, 126, 168);
+}
+.required-asterisk {
+  color: red;
+  font-weight: bold;
+  margin-left: 3px;
+  font-size: 1.2em;
+}
+img {
+  height: auto !important;
+}
+
+.modifier {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 5px;
+  border: 1px solid #c9c7c7;
+  border-radius: 5px;
+}
+.mod_check {
+  width: auto;
+  margin-right: 15px;
+}
+
+.selCheck {
+  margin-top: 0px !important;
+}
+.select {
+  height: 100px;
+  overflow: scroll;
+}

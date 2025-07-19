@@ -1,0 +1,117 @@
+<div class="page_container">
+  <h2 class="text_pri font_20 fw-semi mb_15">Inventory</h2>
+  <div class="d-flex align-items-end justify-content-between">
+    <ul class="p-0 mb_7 d-flex align-items-center order_nav_blk">
+      <li class="mr_6" *ngIf="commonService.checkRolePermissions('LIST_STOCK')"><a routerLink="/pos-dashboard/Inventory">Stock</a></li>
+      <li class="mr_6" *ngIf="commonService.checkRolePermissions('LIST_PRODUCT')" ><a routerLink="/pos-dashboard/Inventory/product">Product</a></li>
+      <li class="mr_6" *ngIf="commonService.checkRolePermissions('LIST_SUPPLIER')"><a routerLink="/pos-dashboard/Inventory/supplier">Supplier</a></li>
+      <li class="mr_6" *ngIf="commonService.checkRolePermissions('LIST_SUPPLIER_ORDER')"><a routerLink="/pos-dashboard/Inventory/supplier-order" class="active">Supplier Orders</a></li>
+      <li class="mr_6" *ngIf="commonService.checkRolePermissions('LIST_BATCH_ITEM')"><a routerLink="/pos-dashboard/Inventory/batch-item">Batch Item</a></li>
+    </ul>
+    <div class="d-flex align-items-center mb_12" *ngIf="commonService.checkRolePermissions('ADD_ORDER')">
+      <img alt="image" src="/assets/images/add-icon.svg" class="mr_5">
+      <span class="font_16 fw-semi text-underline text-sec cursor-pointer respons_wmax_content" (click)="openForm('true',null)">Add Order</span>
+    </div>
+  </div>
+  
+  <div class="order_info_blk order_info_container floor_container">
+    <!-- <div class="table_header mb_20 create_order_blk this_mon_blk">
+      <div class="OutletName float-left">Outlet Name : {{outletName}}</div>
+          <div class="col-md-3 d-flex align-items-end">
+            <button class="create_order_btn w-100 d-flex align-items-center justify-content-center" (click)="openForm('true',null)">
+              <img src="assets/images/add-circle.svg" alt="add-circle" class="img-fluid mr_16">
+              Add Order
+            </button>
+          </div>
+    </div> -->
+    <!-- <ul class="nav nav-tabs d-flex flex-wrap align-items-center nav_tabs_ul p-0 mb_20" id="myTab" role="tablist">
+      <li role="presentation">
+        <a routerLink="/pos-dashboard/Inventory">
+          Stock
+        </a>
+      </li>
+      <li role="presentation">
+        <a routerLink="/pos-dashboard/Inventory/product">
+          Product
+        </a>
+      </li>
+      <li role="presentation">
+        <a  routerLink="/pos-dashboard/Inventory/supplier">
+          Supplier
+        </a>
+      </li>
+      <li role="presentation">
+        <a class="active" routerLink="/pos-dashboard/Inventory/supplier-order">
+          Supplier Orders
+        </a>
+      </li>
+      <li role="presentation">
+        <a routerLink="/pos-dashboard/Inventory/batch-item">
+          Batch Item
+        </a>
+      </li>
+    </ul> -->
+    <div class="table-responsive" id="checkBoxes">
+      <table *ngIf="dataLoaded" datatable [dtOptions]="dtOptions" id="table-request">
+        <thead class="thead-dark">
+          <tr>
+            <th id="unique_name">Sr No</th>
+            <th id="unique_name">OrderId</th>
+            <th id="status_name">Supplier Name</th>
+            <th id="status_name">Supplier Type</th>
+            <th id="unique_name">Created On</th>
+            <th id="unique_name">Status</th>
+            <th id="unique_name">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of allSupplierOrder; let i=index">
+            <td>{{i+1}}</td>
+            <td >
+              <div *ngIf="data.isInWatermelon">{{data.wmOrderNumber}}</div>
+              <div *ngIf="!data.isInWatermelon">Not Available</div>
+            </td>
+            <td>{{data.supplierName}}</td>
+            <td>
+              <div *ngIf="data.isInWatermelon">
+                Online
+              </div>
+              <div *ngIf="!data.isInWatermelon">
+                Offline
+              </div>
+            </td>
+            <td>{{data.createdOn | date: 'dd/MM/yyyy'}}</td>
+            <td>
+                <span *ngIf="data.status == 'Confirmed'" class="table_status_text active_status">{{data.status}}</span>
+                <span *ngIf="data.status == 'Planned'" class="table_status_text planned_status">{{data.status}}</span>
+              </td>
+            <td> 
+              <div class="d-flex align-items-center">
+                <img alt="image" src="/assets/images/view-icon.svg" class="mr_14 cursor-pointer" *ngIf="commonService.checkRolePermissions('VIEW_SUPPLIER_ORDER')" (click)="orderDetails(data._id)"/>
+                <button *ngIf="data.status == 'Planned' && commonService.checkRolePermissions('CONFIRM')" (click)="Confirm(data._id,'Confirmed')"  class="mr_14 btn btn-orders edit">Confirm</button>
+                <button *ngIf="data.status != 'Received' && data.isDispatched && commonService.checkRolePermissions('RECEIVE')" (click)="Received(data._id)" class="mr_14 btn btn-orders edit">Receive</button>
+                <button *ngIf="data.status == 'PartiallyReceived' || data.status == 'Received' && commonService.checkRolePermissions('GRN')" (click)="GRN(data._id)" class="mr_14 btn btn-orders edit">GRN</button>
+                <img alt="image" *ngIf="data.status == 'Planned' && commonService.checkRolePermissions('LIST_STOCK')" src="/assets/images/delete-icon.svg" class="cursor-pointer" (click)="Delete(data._id)"/>
+              </div>
+              <!-- <button class="btn btn-orders edit" (click)="orderDetails(data._id)">View</button>
+              <button *ngIf="data.status == 'Planned'" (click)="Confirm(data._id,'Confirmed')" class="btn btn-orders edit">Confirm</button>
+              <button *ngIf="data.status != 'Received' && data.isDispatched" (click)="Received(data._id)" class="btn btn-orders edit">Receive</button>
+              <button *ngIf="data.status == 'PartiallyReceived' || data.status == 'Received'" (click)="GRN(data._id)" class="btn btn-orders edit">GRN</button>
+              <button *ngIf="data.status == 'Planned'" class="btn btn-orders edit" (click)="Delete(data._id)">Delete</button> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- <div class="total_entries">
+        <select class="len_per_page" (change)="changedLength($event)">
+          <option value="5">5</option>
+          <option value="10">10&nbsp;</option>
+          <option value="20">20&nbsp;</option>
+          <option value="-1">All&nbsp;</option>
+        </select>
+        <label>Total :</label>
+        <label> {{tableListRecord.total}}</label>
+      </div> -->
+    </div>
+  </div>
+</div>

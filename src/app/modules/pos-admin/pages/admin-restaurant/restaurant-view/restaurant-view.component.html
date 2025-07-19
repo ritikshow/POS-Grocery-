@@ -1,0 +1,128 @@
+
+<div class="modal-header">
+        <!-- <h5 class="font_20 fw-semi text_pri mb_15" id="SKUModalLabel">Restaurant Id: {{resData?.restaurantId}}</h5> -->
+        <h5 class="font_20 fw-semi text_pri mb_15">Restaurant Details</h5>
+        <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer" (click)="closeModal()"/>   
+</div>
+<div class="modal-body">
+    <div class="view_details_blk mb_15">
+        <div class="row modal_input_row">
+            <div class="col-md-3">
+                <h6 class="font_14 fw-reg text_pri mb_5">Restaurant Name</h6>
+                <h4 class="font_14 fw-semi text-black m-0">{{resData?.restaurantName}}</h4>
+            </div>
+            <div class="col-md-3">
+                <h6 class="font_14 fw-reg text_pri mb_5">Restaurant Registration No</h6>
+                <h4 class="font_14 fw-semi text-black m-0">{{resData?.restaurantRegistrationNo}}</h4>
+            </div>
+            <div class="col-md-3">
+                <h6 class="font_14 fw-reg text_pri mb_5">Warehouse Label</h6>
+                <h4 class="font_14 fw-semi text-black m-0">{{resData?.wareHouse_Lable}}</h4>
+            </div>
+            <div class="col-md-3">
+                <h6 class="font_14 fw-reg text_pri mb_5">First Name</h6>
+                <h4 class="font_14 fw-semi text-black m-0">{{resData?.firstName}}</h4>
+            </div>
+            <div class="col-md-3">
+                <h6 class="font_14 fw-reg text_pri mb_5">Last Name</h6>
+                <h4 *ngIf="resData?.lastName!='null'" class="font_14 fw-semi text-black m-0">{{resData?.lastName}}</h4>
+            </div>
+            <div class="col-md-3">
+                <h6 class="font_14 fw-reg text_pri mb_5">Middle Name</h6>
+                <h4 *ngIf="resData?.middleName!='null'" class="font_14 fw-semi text-black m-0">{{resData?.middleName}}</h4>
+            </div>
+        </div>
+    </div>
+    <h5 class="font_20 fw-semi text_pri mb_10">Phone Numbers</h5>
+    <div class="view_details_blk mb_15">
+        <div class="row modal_input_row" *ngFor="let phone of resData?.phone">
+            <div class="col-md-6">
+                <h6 class="font_14 fw-reg text_pri mb_5">Number</h6>
+                <h4 class="font_14 fw-semi text-black m-0">{{phone.number}}</h4>
+            </div>
+            <div class="col-md-6">
+                <h6 class="font_14 fw-reg text_pri mb_5">Primary</h6>
+                <h4 class="font_14 fw-semi text-black m-0">{{phone?.isPrimary}}</h4>
+            </div>
+        </div>
+    </div>
+    <h5 class="font_20 fw-semi text_pri mb_10">Address Details</h5>
+    <div class="view_details_blk mb_15">
+        <div class="row modal_input_row" *ngFor="let phone of resData?.phone">
+            <div class="col-md-3">
+                <h6 class="font_14 fw-reg text_pri mb_5">Address</h6>
+                <h4 class="font_14 fw-semi text-black m-0">{{resData?.address}}</h4>
+            </div>
+            <div class="col-md-3">
+                <h6 class="font_14 fw-reg text_pri mb_5">City</h6>
+                <h4 class="font_14 fw-semi text-black m-0">{{resData?.city}}</h4>
+            </div>
+            <div class="col-md-3">
+                <h6 class="font_14 fw-reg text_pri mb_5">Country</h6>
+                <h4 class="font_14 fw-semi text-black m-0">{{resData?.country}}</h4>
+            </div>
+            <div class="col-md-3">
+                <h6 class="font_14 fw-reg text_pri mb_5">Email</h6>
+                <h4 class="font_14 fw-semi text-black m-0">{{resData?.email}}</h4>
+            </div>
+            <div class="col-md-3">
+                <h6 class="font_14 fw-reg text_pri mb_5">Reset Time</h6>
+                <h4 class="font_14 fw-semi text-black m-0">{{resData?.reset}}</h4>
+            </div>
+            <div class="col-md-3">
+                <h6 class="font_14 fw-reg text_pri mb_5">Type Of Bussines</h6>
+                <h4 class="font_14 fw-semi text-black m-0">{{resData?.typeOfBussines}}</h4>
+            </div>
+            <div class="col-md-3">
+                <h6 class="font_14 fw-reg text_pri mb_5">Type Of Cusine</h6>
+                <h4 class="font_14 fw-semi text-black m-0">{{resData?.typeOfCusine}}</h4>
+            </div>
+            <div class="col-md-3">
+                <h6 class="font_14 fw-reg text_pri mb_5">Special Features</h6>
+                <h4 class="font_14 fw-semi text-black m-0">{{resData?.specialFeatures}}</h4>
+            </div>
+            <div class="col-md-3">
+                <h6 class="font_14 fw-reg text_pri mb_5">PO Box</h6>
+                <h4 *ngIf="resData?.poBox !='null' && resData?.poBox !=null" class="font_14 fw-semi text-black m-0">{{resData?.poBox}}</h4>
+            </div>
+            <div class="col-md-3">
+                <h6 class="font_14 fw-reg text_pri mb_5">Password</h6>
+                <h4 class="font_14 fw-semi text-black m-0">{{resData?.password}}</h4>
+            </div>
+            <div class="col-md-3">
+                <h6 class="font_14 fw-reg text_pri mb_5">TRN No</h6>
+                <h4  *ngIf="resData?.trnNo!='null'"class="font_14 fw-semi text-black m-0">{{resData?.trnNo}}</h4>
+            </div>
+            <div class="col-md-3">
+                <h6 class="font_14 fw-reg text_pri mb_5">Special Features</h6>
+                <h4 class="font_14 fw-semi text-black m-0">{{resData?.specialFeatures}}</h4>
+            </div>
+        </div>
+    </div>
+    <h5 class="font_20 fw-semi text_pri mb_10">Outlets</h5>
+    <div class="view_details_blk mb_15">
+        <div class="row modal_input_row" *ngFor="let oulet of resData?.outlets; let i=index">
+            <div class="col-md-12 pb_0">
+                <div class="d-flex align-items-center justify-content-between mb_15">
+                    <h5 class="font_16 fw-semi text_pri m-0">Outlet {{i+1}}</h5>
+                    <div class="d-flex align-items-center justify-content-center">
+                        <img alt="image" src="/assets/images/edit-icon.svg" class="mr_14 cursor-pointer" (click)="editOutlet(resData.restaurantId,oulet.outletId)"/>
+                        <img alt="image" src="/assets/images/delete-icon.svg" class="cursor-pointer" (click)="onDelete(resData.restaurantId,oulet.outletId)"/>
+                    </div>
+                </div> 
+            </div>
+            <div class="col-md-4">  
+                <h6 class="font_14 fw-reg text_pri mb_5">Outlet Name</h6>
+                <h4 class="font_14 fw-semi text-black m-0">{{oulet.outletName}}</h4>
+            </div>
+            <div class="col-md-4">  
+                <h6 class="font_14 fw-reg text_pri mb_5">Outlet Address</h6>
+                <h4 class="font_14 fw-semi text-black m-0">{{oulet.outletAddress}}</h4>
+            </div>
+            <div class="col-md-4">  
+                <h6 class="font_14 fw-reg text_pri mb_5">Outlet Manager</h6>
+                <h4 class="font_14 fw-semi text-black m-0">{{oulet.outletManager}}</h4>
+            </div>
+        </div>
+    </div>
+</div>

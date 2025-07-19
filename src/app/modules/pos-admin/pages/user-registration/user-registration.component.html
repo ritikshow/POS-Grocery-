@@ -1,0 +1,80 @@
+<div class="page_container table_details_blk"> 
+  <h2 class="text_pri font_20 fw-semi mb_7">Settings</h2>
+  <div class="d-flex align-items-start settings_nav_main_blk">
+  <app-settings></app-settings>
+  <div class="settings_nav_info_container">
+    <div class="d-flex align-items-center justify-content-end mb_21">
+      <!-- <div class="position-relative w-30">
+        <input type="search" class="form-control search_icon_input" placeholder="search">
+        <img alt="image" src="/assets/images/search-icon.svg" class="search_input_icon"/>
+      </div> -->
+      <button class="add_btn" *ngIf="commonService.checkRolePermissions('ADD_USER_REGISTRATION')" (click)="openForm()">
+        <img alt="image" src="/assets/images/add-icon.svg" class="mr_8"/>
+        <span class="font_14 fw-semi text-sec">Add User</span>
+      </button>
+    </div>
+    <!-- <div class="OutletName">Outlet Names: {{outletName}}</div>
+
+    <div class="create_order_blk this_mon_blk">
+      <div class="row">
+        <div class="col-md-9 empty"></div>
+        <div class="col-md-3 d-flex align-items-end">
+          <button class="create_order_btn w-100 d-flex align-items-center justify-content-center" (click)="openForm()">
+            <img src="assets/images/add-circle.svg" alt="add-circle" class="img-fluid mr_16">
+            Add User
+          </button>
+        </div>
+      </div>
+    </div> -->
+    <div class="table-responsive respons_inventory_table" id="checkBoxes">
+      <table aria-describedby="desc" datatable [dtOptions]="dtOptions" *ngIf="isDataLoaded" class="nowrap buyer_table w-100" id="table-request">
+        <thead>
+          <tr>
+            <th>User Name</th>
+            <th>Email</th>
+            <th>Restaurant</th>
+            <th>Country</th>
+            <th>Status</th>
+            <th class="text-center"></th>
+            <th class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of userRegData; let i=index">
+            <td>{{data.userName}}</td>
+            <td>{{data.emailId}}</td>
+            <td>{{data.restaurantName}}</td>
+            <td>{{data.country}}</td>
+            <td [attr.data-order]="data.activeStatus ? 1 : 0"> 
+              <mat-slide-toggle class="discount_slider_btn" color="accent" (click) = "changeUserStatus(data.userId,data.activeStatus)" [(ngModel)]="data.activeStatus">
+              </mat-slide-toggle>
+            </td>
+            <td>
+              <div class="d-flex align-items-center justify-content-center">
+                <span class="font_14 fw-semi text-underline text_sec cursor-pointer mr_14 d-block" *ngIf="commonService.checkRolePermissions('LINK_USER')" (click)="addRes(data)">Link Restaurant</span>
+                <!-- <span class="font_14 fw-semi text-underline text_sec cursor-pointer d-block" *ngIf="commonService.checkRolePermissions('RESET_PASSWORD')" (click)="resetPassword(data.userId)">Reset Password</span> -->
+              </div>  
+            </td>
+            <td>
+              <div class="d-flex align-items-center justify-content-center">
+                <img alt="image" src="/assets/images/edit-icon.svg" class="mr_14 cursor-pointer" *ngIf="commonService.checkRolePermissions('EDIT_USER_REGISTRATION')" (click)="edit(data.userId)"/>
+                <img alt="image" src="/assets/images/view-icon.svg" class="mr_14 cursor-pointer" *ngIf="commonService.checkRolePermissions('VIEW_USER_REGISTRATION')" (click)="view(data)"/>
+                <img alt="image" src="/assets/images/delete-icon.svg" class="cursor-pointer" *ngIf="commonService.checkRolePermissions('DELETE_USER_REGISTRATION')" (click)="onDelete(data.userId)"/>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- <div class="total_entries">
+        <select class="len_per_page" (change)="changedLength($event)">
+          <option value="5">5</option>
+          <option value="10">10&nbsp;</option>
+          <option value="20">20&nbsp;</option>
+          <option value="-1">All&nbsp;</option>
+        </select>
+        <label>Total :</label>
+        <label> {{tableListRecord.total}}</label>
+      </div> -->
+    </div>
+  </div>
+</div>

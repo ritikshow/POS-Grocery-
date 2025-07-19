@@ -1,0 +1,45 @@
+<div class="page_container table_details_blk">
+  <h2 class="text_pri font_20 fw-semi mb_7">Settings</h2>
+  <div class="d-flex align-items-start settings_nav_main_blk">
+  <app-settings></app-settings>
+  <div class="settings_nav_info_container">
+    <!-- <div class="position-relative w-30">
+      <input type="search" class="form-control search_icon_input" placeholder="search">
+      <img alt="image" src="/assets/images/search-icon.svg" class="search_input_icon"/>
+    </div> -->
+    <div class="table-responsive m-0" id="checkBoxes">
+      <table aria-describedby="desc" datatable [dtOptions]="dtOptions" *ngIf="isDataLoaded" id="table-request">
+        <thead>
+          <tr>
+            <th scope="col">Names</th>
+            <th scope="col">Monday</th>
+            <th scope="col">Tuesday</th>
+            <th scope="col"> Wednesday</th>
+            <th scope="col"> Thursday</th>
+            <th scope="col">Friday </th>
+            <th scope="col">Saturday</th>
+            <th scope="col">Sunday</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of userRegData; let i=index">
+            <td>{{data.userName}}</td>
+            <td *ngIf="IsOffDay(data,'Monday')" style="color : green;">{{data.shiftTiming}}</td>
+            <td *ngIf="!IsOffDay(data,'Monday')" style="color : red;">Off Day</td>
+            <td *ngIf="IsOffDay(data,'Tuesday')" style="color : green;">{{data.shiftTiming}}</td>
+            <td *ngIf="!IsOffDay(data,'Tuesday')" style="color : red;">Off Day</td>
+            <td *ngIf="IsOffDay(data,'Wednesday')" style="color : green;">{{data.shiftTiming}}</td>
+            <td *ngIf="!IsOffDay(data,'Wednesday')" style="color : red;">Off Day</td>
+            <td *ngIf="IsOffDay(data,'Thursday')" style="color : green;">{{data.shiftTiming}}</td>
+            <td *ngIf="!IsOffDay(data,'Thursday')" style="color : red;">Off Day</td>
+            <td *ngIf="IsOffDay(data,'Friday')" style="color : green;">{{data.shiftTiming}}</td>
+            <td *ngIf="!IsOffDay(data,'Friday')" style="color : red;">Off Day</td>
+            <td *ngIf="IsOffDay(data,'Saturday')" style="color : green;">{{data.shiftTiming}}</td>
+            <td *ngIf="!IsOffDay(data,'Saturday')" style="color : red;">Off Day</td>
+            <td *ngIf="IsOffDay(data,'Sunday')" style="color : green;">{{data.shiftTiming}}</td>
+            <td *ngIf="!IsOffDay(data,'Sunday')" style="color : red;">Off Day</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

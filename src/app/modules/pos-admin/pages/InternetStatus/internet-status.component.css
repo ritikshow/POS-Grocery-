@@ -1,0 +1,43 @@
+.online {
+    background-color: green;
+    color: #ffffff;
+    padding: 10px;
+    text-align: center;
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 20px;
+    border-radius: 4px;
+    animation:online-response 0.5s 1;
+      -webkit-animation:online-response 0.5s 1;
+      animation-fill-mode: forwards;
+  
+      animation-delay:2s;
+      -webkit-animation-delay:1s;
+      -webkit-animation-fill-mode: forwards;
+  }
+  
+  .offline {
+    background-color: red;
+    color: #ffffff;
+    padding: 10px;
+    text-align: center;
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 20px;
+    border-radius: 4px;
+}
+  
+  
+  @keyframes online-response{
+      from {opacity :1;}
+      to {opacity :0;}
+  }
+  
+  @-webkit-keyframes online-response{
+      from {opacity :1;}
+      to {opacity :0;}
+  }

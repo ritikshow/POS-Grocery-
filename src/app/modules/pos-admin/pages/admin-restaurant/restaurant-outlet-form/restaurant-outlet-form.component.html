@@ -1,0 +1,59 @@
+<div class="modal-header mb_14">
+    <h3 class="font_20 fw-semi text_pri m-0" id="SKUModalLabel">Add Outlets</h3>
+    <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer" (click)="closeModal()"/>
+</div>
+<form class="ng-invalid ng-touched ng-dirty" [formGroup]="outletForm" (ngSubmit)="addResOutlets()">
+    <div formArrayName="outlets" *ngFor="let address of modItemsControls; let i = index;">
+        <div class="row modal_input_row" [formGroupName]="i">
+            <div class="col-md-12 d-flex align-items-center justify-content-between">
+                <h4 class="font_16 fw-semi text_pri m-0" >Outlet {{i + 1}}</h4>
+                <button type="button" class="btn btn-danger btn-sm" (click)="removeMod(i)">Remove</button>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Outlet Name <span class="required-asterisk">*</span></label>
+                    <input type="text" class="form-control" placeholder="Enter Outlet Name"
+                        formControlName="outletName">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Outlet Manager <span class="required-asterisk">*</span> </label>
+                    <input type="text" class="form-control" placeholder="Enter Outlet Manager"
+                        formControlName="outletManager">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Outlet Address <span class="required-asterisk">*</span></label>
+                    <textarea class="form-control" placeholder="Outlet Address"
+                        formControlName="outletAddress"></textarea>
+                </div>
+            </div>
+            <div class="col-md-6"  *ngIf="resData?.outlets?.length > 0">
+                <div class="form-group">
+                    <br>
+                    <label>Clone master data from </label>
+                    <select class="form-control" id="sel1" formControlName="outletId">
+                        <option *ngFor="let outlet of resData.outlets" value="{{outlet.outletId}}" selected>
+                            {{outlet.outletName}}</option>
+                    </select>
+                </div>
+            </div>
+            
+        </div>
+    </div> 
+    <div class="row modal_input_row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-orders btn_add" (click)="addMod()">Add Outlet</button>
+        </div>
+        <div class="col-md-6 pb_0">
+            <button class="cancel_btn" type="reset"
+            (click)="closeModal()">Cancel</button>
+        </div>
+        <div class="col-md-6 pb_0">
+            <button class="btn_primary" ngbAutofocus name="btn_login"
+    type="submit">Save</button>
+        </div>
+    </div>
+</form>

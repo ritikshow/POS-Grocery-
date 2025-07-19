@@ -1,0 +1,53 @@
+<div class="modal-header">
+  <h5 class="font_20 fw-semi text_pri mb_15" id="SKUModalLabel">Edit Order</h5>
+  <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer" (click)="closeModal()"/>
+</div>
+  <form class="ng-invalid ng-touched ng-dirty" [formGroup]="editOrderForm" (ngSubmit)="addCategoryFormData()">
+    <div class="row modal_input_row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label class="font_14 fe-reg text_pri mb_5">Product Name</label>
+          <input type="text" class="form-control" formControlName="productName" value="{{rangeData?.productName}}" readonly>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group field_1">
+          <label class="font_14 fe-reg text_pri mb_5">Supplier Name</label>
+          <input type="text" class="form-control" formControlName="supplierName" value="{{orderData?.supplierName}}" readonly>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group ">
+          <label class="font_14 fe-reg text_pri mb_5">Amount</label>
+          <input type="text" class="form-control" placeholder="Price" formControlName="price" value="{{rangeData?.price}}" readonly>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label class="font_14 fe-reg text_pri mb_5">Unit</label>
+          <input type="text" class="form-control" placeholder="Unit" formControlName="unit" value="{{rangeData?.unit}}" readonly>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label class="font_14 fe-reg text_pri mb_5">Quantity</label>
+          <input id="quantity" type="text" class="form-control" placeholder="Enter Quantity" formControlName="quantity">
+        </div>
+      </div>
+    </div>
+    <div class="row modal_input_row">
+      <div class="col-md-6 pb_0">
+        <button class="cancel_btn" name="btn_login" (click)="closeModal()" type="reset"> Cancel</button>
+      </div>
+      <div class="col-md-6 pb_0">
+        <button class="btn_primary" name="btn_login" type="submit">Save</button>
+      </div>
+   </div>
+    <!-- <div class="pl-0 mt-4">
+      <button class="btn btn-lg btn-primary active btn-block mb-1 mt-2 mr-2" type="reset" (click)="closeModal()">
+        Cancel
+      </button>
+      <button class="btn btn-lg btn-primary active action-btn btn-block mb-1" ngbAutofocus
+        name="btn_login" type="submit">Save</button>
+    </div> -->
+  </form>

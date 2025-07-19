@@ -1,0 +1,39 @@
+<div class="main_div">
+  <div class="modal-header">
+    <h3 class="modal-title" style="color: rgb(26, 243, 26);" id="SKUModalLabel">{{itemDetails.ItemName}}</h3>
+    <a href="javascript:void(0)" class="close" (click)="closeModal()"> <span aria-hidden="true">×</span> </a>
+  </div>
+  <div class="d-flex">
+    <div class="btn_group">
+      <div *ngFor="let data of allModifier" class="btn1">
+        <button
+          [ngClass]="{'active': modifierId == data?.modifierGroupId,'inActive': modifierId !== data?.modifierGroupId}"
+          class="btn btn-orders" (click)="getModifiers(data.modifierGroupId)">
+          {{data.modifierGroupName}}
+        </button>
+      </div>
+    </div>
+    <div class="modifier">
+      <div *ngIf="modifierById == null || modifierById.length==0">
+        <h2>No Modifier</h2>
+      </div>
+      <div *ngFor="let mod of modifierById" class="mod_check d-flex align-items-center">
+        <input type="checkbox" id="{{mod.itemId}}" [value]="mod.itemName"
+          (change)="onCheckboxChange($event, mod.price)" />
+        <div class="pl_10">
+          <label class="m-0  remeber_label">{{mod.itemName}}</label>
+          <span class="mod_price position-static d-block">{{mod.price}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="text-right">
+
+    <button class="btn btn-lg btn-primary active btn-block mb-1 mt-2 mr-2" type="reset"
+      (click)="closeModal()">Cancel</button>
+
+    <button class="btn btn-lg btn-primary active action-btn btn-block mb-1" ngbAutofocus name="btn_login"
+      (click)="addModifier()">Save</button>
+
+  </div>
+</div>

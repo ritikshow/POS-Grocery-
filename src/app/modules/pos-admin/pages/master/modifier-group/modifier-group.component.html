@@ -1,0 +1,76 @@
+<div class="page_container table_details_blk">
+  <h2 class="text_pri font_20 fw-semi mb_7">Settings</h2>
+  <div class="d-flex align-items-start settings_nav_main_blk">
+  <app-settings></app-settings>
+  <div class="settings_nav_info_container">
+    <div class="d-flex align-items-center justify-content-end mb_21">
+      <!-- <div class="position-relative w-30">
+        <input type="search" class="form-control search_icon_input" placeholder="search">
+        <img alt="image" src="/assets/images/search-icon.svg" class="search_input_icon"/>
+      </div> -->
+      <button class="add_btn" *ngIf="commonService.checkRolePermissions('ADD_MODIFIERS')" (click)="openForm()">
+        <img alt="image" src="/assets/images/add-icon.svg" class="mr_8"/>
+        <span class="font_14 fw-semi text-sec">Add Modifier</span>
+      </button>
+    </div>
+
+    <!-- <div class="create_order_blk this_mon_blk">
+      <div class="row">
+        <div class="col-md-9 empty"></div>
+        <div class="col-md-3 d-flex align-items-end">
+          <button class="create_order_btn w-100 d-flex align-items-center justify-content-center" (click)="openForm()">
+            <img src="assets/images/add-circle.svg" alt="add-circle" class="img-fluid mr_16">
+            Add Modifier Group
+          </button>
+        </div>
+      </div>
+    </div> -->
+    <div class="table-responsive respons_inventory_table"  id="checkBoxes"  [ngClass]="commonService.checkRolePermissions('ADD_MODIFIERS') ? '' : 'm-0'">
+      <table datatable [dtOptions]="dtOptions" *ngIf="isDataLoaded" class="nowrap buyer_table w-100"
+        id="table-request">
+        <thead>
+          <tr>
+            <th>Modifier Group Name</th>
+            <th>Modifier Name</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of modifierData; let i=index">
+            <td>{{item.groupName}}</td>
+            <td>{{item.modifierName}}</td>
+            <td><span class="desc_text_width" title="{{item.description}}">{{item.description}}</span></td>
+            <td [attr.data-order]="item.activeStatus ? 1 : 0"
+            > 
+              <mat-slide-toggle class="discount_slider_btn" color="accent" (click) = "changeModiFierStatus(item.id,item.activeStatus)" [(ngModel)]="item.activeStatus">
+              </mat-slide-toggle>
+            </td>
+            <td>
+              <div class="d-flex align-items-center justify-content-center">
+                <img alt="image" src="/assets/images/edit-icon.svg" class="mr_14 cursor-pointer" *ngIf="commonService.checkRolePermissions('EDIT_MODIFIERS')" (click)="edit(item.id)"/>
+                <img alt="image" src="/assets/images/view-icon.svg" class="mr_14 cursor-pointer" *ngIf="commonService.checkRolePermissions('VIEW_MODIFIERS')" (click)="view(item.id)"/>
+                <img alt="image" src="/assets/images/delete-icon.svg" class="cursor-pointer" *ngIf="commonService.checkRolePermissions('DELETE_MODIFIERS')" (click)="onDelete(item.id)"/>
+              </div>
+              <!-- <button class="btn btn-orders edit" (click)="edit(item.id)"><i class="fa fa-pencil"></i></button>
+              <button class="btn btn-orders edit" (click)="view(item.id)">View</button>
+              <button class="btn btn-orders edit" (click)="onDelete(item.id)"><i class="fa fa-trash"
+                  aria-hidden="true"></i></button> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- <div class="total_entries">
+        <select class="len_per_page" (change)="changedLength($event)">
+          <option value="5">5</option>
+          <option value="10">10&nbsp;</option>
+          <option value="20">20&nbsp;</option>
+          <option value="-1">All&nbsp;</option>
+        </select>
+        <label>Total :</label>
+        <label> {{tableListRecord.total}}</label>
+      </div> -->
+    </div>
+  </div>
+</div>

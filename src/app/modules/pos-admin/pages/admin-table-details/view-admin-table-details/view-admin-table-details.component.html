@@ -1,0 +1,37 @@
+<div class="main_div">
+    <div class="modal-header">
+            <h5 class="modal-title" id="SKUModalLabel">Table Details Id: {{tableData?.tableId}}</h5>
+            <a href="javascript:void(0)" class="close" (click)="closeModal()"> <span aria-hidden="true">×</span> </a>       
+    </div>
+    <div class="container mb-2">
+        <h3 class="titleHead">Table Details</h3>
+        <div class="d-flex">
+            <div class="title"><b>Table No :</b></div>
+            <div class="Property">{{tableData?.tableNo}}</div>
+        </div>
+        <div class="d-flex">
+            <div class="title"><b>Pilot :</b></div>
+            <div class="Property">{{tableData?.pilot}}</div>
+        </div>
+        <div class="d-flex">
+            <div class="title"><b>Capacity :</b></div>
+            <div class="Property">{{tableData?.capacity}}</div>
+        </div>
+        <div class="d-flex">
+            <div class="title"><b>Table Design :</b></div>
+            <div class="Property">{{tableData?.tableDesign}}</div>
+        </div>
+        <div class="d-flex">
+            <div class="title"><b>Restaurant Section :</b></div>
+            <div class="Property">{{tableData?.tableType}}</div>
+        </div>
+        <div class="d-flex">
+            <div class="title"><b>Restaurant :</b></div>
+            <div class="Property">{{tableData?.restaurantName}}</div>
+        </div>
+        <div class="d-flex">
+            <div class="title"><b>Outlet :</b></div>
+            <div class="Property">{{tableData?.outletName}}</div>
+        </div>
+    </div>
+</div>

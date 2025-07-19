@@ -1,0 +1,105 @@
+<div class="page_container">
+  <div class="weekly_report view_order_blk white_bg">
+    <div class="table_header create_order_blk this_mon_blk">
+      <div class="w-100">
+        <div class="OutletName">Outlet Name : {{outletName}}</div>
+      </div>
+    </div>
+    <div class="create_order_blk this_mon_blk pt_25 ">
+      <form action="">
+        <div class="row">
+          <div class="col-md-9 empty">
+          </div>
+          <div class="col-md-3 d-flex align-items-end">
+            <button class="create_order_btn w-100 d-flex align-items-center justify-content-center"
+              (click)="addEvent(deliverectView)">
+              <img src="assets/images/add-circle.svg" alt="add-circle" class="img-fluid mr_16">
+              Connect
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div clas="mt-2 mb-4 pb-1 w-100">
+      <div class="table-responsive">
+        <table aria-describedby="desc" datatable [dtOptions]="dtOptions" *ngIf="isDataLoaded" class="buyer_table w-100">
+          <thead>
+            <tr>
+              <th id="unique_name" scope="col">Sl No</th>
+              <th scope="col">Category Name</th>
+              <th scope="col">Item Name</th>
+              <th scope="col">Item Amount</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of allItems; let i=index">
+              <td>{{i+1}}</td>
+              <td>{{item.categoryName}}</td>
+              <td>{{item.itemName}}</td>
+              <td>{{item.itemAmount}}</td>
+              <td *ngIf="item.isActive ==true">Active</td>
+              <td *ngIf="item.isActive ==false">Inactive</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="total_entries">
+          <select class="len_per_page" (change)="changedLength($event)">
+            <option value="5">5</option>
+            <option value="10">10&nbsp;</option>
+            <option value="20">20&nbsp;</option>
+            <option value="-1">All&nbsp;</option>
+          </select>
+          <label>Total :</label>
+          <label> {{tableListRecord.total}}</label>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <ng-template #deliverectView let-close="close">
+    <div class="modal-header">
+      <h5 class="modal-title" id="SKUModalLabel">Connect Deliverect</h5>
+      <a href="javascript:void(0)" class="close" (click)="closeAction()"> <span aria-hidden="true">×</span> </a>
+    </div>
+    <div class="create_order_blk this_mon_blk modal-body form_popup">
+      <form #tableDetailsForm="ngForm" class="ng-invalid ng-touched ng-dirty" [formGroup]="addDeliverect">
+        <div class="row">
+          <div class="col-md-6 d-flex justify-content-between">
+            <div class="form-group">
+              <label>Client Id<span class="required-asterisk">*</span></label>
+              <input type="text" [readonly]="credentialData?.isVerified" class="form-control"
+                placeholder="Enter Client Id" formControlName="client_id">
+            </div>
+          </div>
+          <div class="col-md-6 d-flex justify-content-between">
+            <div class="form-group ">
+              <label>Secrect Id<span class="required-asterisk">*</span></label>
+              <input type="text" [readonly]="credentialData?.isVerified" class="form-control"
+                placeholder="Enter Secrect Id" formControlName="client_secret">
+            </div>
+          </div>
+          <div class="col-md-6 d-flex justify-content-between">
+            <div class="form-group ">
+              <label>Location Id<span class="required-asterisk">*</span></label>
+              <input type="text" class="form-control" placeholder="Enter Location Id" formControlName="locationId">
+            </div>
+          </div>
+        </div>
+        <button *ngIf="!credentialData?.isVerified" class="btn btn-orders edit"
+          (click)="verifyCredential()">Verify</button>
+        <label *ngIf="credentialData?.isVerified"> <img alt="image" src="/assets/images/check.png" />Verified</label>
+        <label *ngIf="!credentialData?.isVerified"> <img alt="image" src="/assets/images/wrong.png" />Not Verified</label>
+        <button *ngIf="credentialData?.isVerified" class="btn btn-orders edit" style="float: right;">Register</button>
+        <div class="pl-0 mt-4 text-right">
+          <button class="btn btn-lg btn-primary active btn-block mb-1 mt-2 mr-2" type="reset"
+            (click)="closeAction()">Cancel</button>
+          <button *ngIf="!isUpdate" class="btn btn-lg btn-primary active action-btn btn-block mb-1" ngbAutofocus
+            name="btn_login" (click)="addCredentials()">Save</button>
+          <button *ngIf="isUpdate" class="btn btn-lg btn-primary active action-btn btn-block mb-1" ngbAutofocus
+            name="btn_login" (click)="updateCredentials()">Save</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+</div>

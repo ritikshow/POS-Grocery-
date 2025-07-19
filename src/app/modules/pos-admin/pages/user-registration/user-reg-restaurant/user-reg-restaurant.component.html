@@ -1,0 +1,71 @@
+
+  <div class="modal-header">
+    <h4 class="font_20 fw-semi text_pri mb_15" id="SKUModalLabel">Link Restaurant to User</h4>
+    <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer" (click)="closeModal()"/>
+  </div>
+  <div class="modal-body create_order_blk this_mon_blk form_popup">
+    <form #tableTypeForm="ngForm" class="ng-invalid ng-touched ng-dirty" [formGroup]="resForm">
+      <div class="table-responsive mb_20" id="checkBoxes">
+        <table id="example" class="buyer_table w-100 nowrap m-0" id="table-request">
+          <thead>
+            <tr>
+              <th>User Name</th>
+              <th>Restaurant Name</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of userrestData; let i=index">
+              <td>{{data.userName}}</td>
+              <td>{{data.restaurantName}}</td>
+              <td>
+                <div class="d-flex align-items-center justify-content-center">
+                  <img alt="image" src="/assets/images/edit-icon.svg" class="mr_14 cursor-pointer" (click)="forFilter(data.restaurantId)"/>
+                  <img alt="image" src="/assets/images/delete-icon.svg" class="cursor-pointer" (click)="onDelete(data.userId,data.restaurantId,i)"/>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="row modal_input_row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="font_14 fe-reg text_pri mb_5" id="addBtn" for="sel1"><span class="required-asterisk">*</span> Select Restaurant:</label>
+            <div class="position-relative">
+              <select id="addBtn" class="form-control" formControlName="restaurantId" (change)="onSelect($event)">
+                <option value="" [disabled]="true">Select Restaurant</option>
+                <option *ngFor="let res of AllRestaurant" value="{{res.restaurantId}}">{{res.restaurantName}}</option>
+              </select>
+              <img alt="image" src="/assets/images/dropdown-arrow.svg" class="select_input_arrow">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div *ngIf="resDatabyId?.outlets.length != 0">
+            <div class="d-flex align-items-center mb_10">
+              <input class="remember_input mr_5" type="checkbox" id="selectAll" [value]="" (change)="onSelectAllboxChange($event)" />
+              <label class="font_14 fe-reg text_pri m-0">Select All</label>
+            </div>
+            <div class="add_modifier_blk d-flex align-items-center justify-content-between">
+              <!-- <span class="font_14 fw-reg text_pri text-center w-100">Select the restaurent to enable Outlets</span> -->
+              <div *ngFor="let outlet of resDatabyId?.outlets" class="border-none mod_check d-flex align-items-center">
+                <input type="checkbox" class="remember_input mr_5" id="{{outlet.outletId}}" [value]="outlet.outletId"
+                  (change)="onCheckboxChange($event)" />
+                <label class="font_14 fe-reg text_pri m-0">{{outlet.outletName}}</label>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="resDatabyId?.outlets.length == 0">No outlets in this restaurants</div>
+        </div>
+      </div>
+      <div class="row modal_input_row">
+        <div class="col-md-6 pb_0">
+            <button class="cancel_btn" type="reset" (click)="closeModal()">Cancel</button>
+          </div>
+        <div class="col-md-6 pb_0">
+            <button name="btn_login" class="btn_primary" type="submit" (click)="addRes()">Save</button>
+        </div>      
+      </div>
+    </form>
+  </div>

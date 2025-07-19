@@ -1,0 +1,37 @@
+.modal-title{
+    font-size: 16px !important;
+    color: rgb(30, 182, 202);
+}
+.titleHead{
+    text-align: center ;
+    margin-bottom: 0px !important;
+}
+.title{
+    width: 36%;
+    background-color: #e0ded8;
+    padding: 5px;
+}
+.Property{
+    width: 25%;
+    background-color: #fbf9f9;
+    padding: 5px;
+}
+.tab_titles{
+    display: flex;
+    border: 1px solid grey;
+    /* margin-bottom: 10px; */
+}
+.table_title{
+    width: 25%;
+    text-align: center;
+}
+.tab_values{
+    display: flex;
+    border-left: 1px solid grey;
+    border-right: 1px solid grey;
+    border-bottom: 1px solid grey;
+}
+.table_value{
+    width: 25%;
+    text-align: center;
+}
