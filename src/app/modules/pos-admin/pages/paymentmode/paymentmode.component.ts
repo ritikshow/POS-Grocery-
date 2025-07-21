@@ -9,7 +9,6 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import { CommonService } from '@core/services/common/common.service';
-import { ViewAdminTableDetailsComponent } from '../admin-table-details/view-admin-table-details/view-admin-table-details.component';
 import { AddPaymentModeComponent } from './add-paymentmode/add-paymentmode.component';
 
 @Component({
@@ -118,14 +117,6 @@ export class PaymentModeComponent implements OnInit {
     }
   }
 
-  view(id) {
-    this.addItems.setIdForTableDetailsView(id);
-    this.modalService.open(ViewAdminTableDetailsComponent, { backdrop: 'static', windowClass: 'main_add_popup', keyboard: true, centered: true }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
 
   edit(data) {
     sessionStorage.setItem("editPaymentMode", JSON.stringify(data));

@@ -10,11 +10,8 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { PrintVeiwComponent } from '../print-design-veiw/print-veiw/print-veiw.component';
 import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ItemDiscountComponent } from './item-discount/item-discount.component';
-import { ModifierPopUpComponent } from './modifier-pop-up/modifier-pop-up.component';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { ShiftTableComponent } from './shift-table/shift-table.component';
 
-import { DineInCustomerComponent } from './add-customer-to-dinein/dinein-customer.component';
 import Scrollbar from 'smooth-scrollbar';
 import { environment } from 'src/environments/environment';
 import * as CryptoJS from 'crypto-js';
@@ -4166,22 +4163,7 @@ export class OrderComponent implements OnInit {
   saveLiveOrderNote(event) {
     this.PrimaryOrder.orderNotes = event.target.value;
   }
-  // ItemDiscountPromocode() {
-  //   this.closeModal();
-  //   this.modalService.open(ItemDiscountComponent, { backdrop: 'static', size: 'lg', keyboard: true, centered: true }).result.then((result) => {
-  //     this.closeResult = `Closed with: ${result}`;
-  //   }, (reason) => {
-  //     this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-  //   });
-  // }
-  // modifier() {
-  //   this.closeModal();
-  //   this.modalService.open(ModifierPopUpComponent, { backdrop: 'static', size: 'lg', keyboard: true, centered: true }).result.then((result) => {
-  //     this.closeResult = `Closed with: ${result}`;
-  //   }, (reason) => {
-  //     this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-  //   });
-  // }
+  
   savenote() {
     this.closeModal(true);
     this.alertService.showSuccess('Your Note is saved Successfully!');
@@ -4223,16 +4205,7 @@ export class OrderComponent implements OnInit {
   //   }
   // }
 
-  shifttable() {
-    sessionStorage.setItem('TableNum', this.currentTableDetails.tableNo);
-    sessionStorage.setItem('tableId', this.currentTableDetails.tableId);
-    this.modalService.open(ShiftTableComponent, { backdrop: 'static', keyboard: true, centered: true, windowClass: 'main_add_popup' }).result.then((result) => {
-      this.alertService.showSuccess("Sucessfully moved");
-      this.router.navigate(['/pos-dashboard/dine-in']);
-    }, (reason) => {
-      this.router.navigate(['/pos-dashboard/dine-in']);
-    });
-  }
+
 
 
   mergeTable() {

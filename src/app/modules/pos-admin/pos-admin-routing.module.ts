@@ -4,9 +4,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 //import { AddAdminCategoryComponent } from './pages/admin-category/add-admin-category/add-admin-category.component';
 //import { AdminCategoryComponent } from './pages/admin-category/admin-category.component';
-import { AdminTableDetailsComponent } from './pages/admin-table-details/admin-table-details.component';
 import { MenuComponent } from './pages/menu/menu.component';
-import { CompleteOrderComponent } from './pages/complete-order/complete-order.component';
 
 import { OrderComponent } from './pages/order/order.component';
 //import { ModifierGroupComponent } from './pages/master/modifier-group/modifier-group.component';
@@ -25,7 +23,6 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 import { PrintDesignViewViewComponent } from './pages/print-design-veiw/print-design-view-view/print-design-view-view.component';
 import { FormGroupComponent } from './pages/master/form-group/form-group.component';
-import { OrderHistoryComponent } from './pages/order-history/order-history.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 import { UserViewComponent } from './pages/user-view/user-view.component';
 import { SalesByCategoryComponent } from './pages/sales-by-category/sales-by-category.component';
@@ -40,9 +37,6 @@ import { AddSupplierComponent } from './pages/Inventory/supplier/add-supplier/ad
 import { AddProductComponent } from './pages/Inventory/product/add-product/add-product.component';
 import { AddInventoryComponent } from './pages/Inventory/add-inventory/add-inventory.component';
 import { ShiftTimingComponent } from './pages/shifttiming/shifttiming.component';
-import { VoidedOrderComponent } from './pages/dines-in/voided-order/voided-order.component';
-import { DeliverectComponent } from './pages/deliverect/deliverect.component';
-import { ShiftTableComponent } from './pages/order/shift-table/shift-table.component';
 
 import { DetailedReportComponent } from './pages/dashboard/detailed-report/detailed-report.component';
 import { RestaurantPermissionComponent } from './pages/admin-restaurant/restaurant-permission/restaurant-permission.component';
@@ -106,10 +100,7 @@ const routes: Routes = [
     path: 'shifttiming',
     component: ShiftTimingComponent
   },
-  {
-    path: 'dine-in/completed-order',
-    component: CompleteOrderComponent
-  },
+ 
   {
     path: 'Inventory/product',
     component: ProductComponent
@@ -127,10 +118,7 @@ const routes: Routes = [
     path: 'Inventory/supplier-order',
     component: SupplierOrderComponent
   },
-  {
-    path: 'dine-in/order-history',
-    component: OrderHistoryComponent
-  },
+  
   {
     path: 'settings',
     component: SettingsComponent
@@ -142,19 +130,8 @@ const routes: Routes = [
  
  
   
-  {
-    path: 'dine-in/voided-order',
-    component: VoidedOrderComponent
-  },
-  // {
-  //   path: 'admin-category',
-  //   component: AdminCategoryComponent
-  // },
-  {
-    path: 'admin-table-details',
-    component: AdminTableDetailsComponent,
-    canActivate: [POSAuthGuard]
-  },
+
+           
   
 
   {
@@ -221,15 +198,8 @@ const routes: Routes = [
  
 
 
-  {
-    path: 'deliverect',
-    component: DeliverectComponent,
-    canActivate: [POSAuthGuard]
-  },
-  {
-    path: 'order/shift-table',
-    component: ShiftTableComponent
-  },
+  
+ 
 
   {
     path: 'dashboard/detailed-report',

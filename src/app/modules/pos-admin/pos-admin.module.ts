@@ -8,22 +8,13 @@ import { MenuComponent } from './pages/menu/menu.component';
 import { CategoryComponent } from './pages/category/category.component';
 
 
-import { ModifierPopUpComponent } from './pages/order/modifier-pop-up/modifier-pop-up.component';
-import { CompleteOrderComponent } from './pages/complete-order/complete-order.component';
-import { OrderHistoryComponent } from './pages/order-history/order-history.component';
 import { ItemDiscountComponent } from './pages/order/item-discount/item-discount.component';
 import { MakePaymentComponent } from './pages/make-payment/make-payment.component';
-import { AdminTableDetailsComponent } from './pages/admin-table-details/admin-table-details.component';
-//import { AdminCategoryComponent } from './pages/admin-category/admin-category.component';
-//import { AddAdminCategoryComponent } from './pages/admin-category/add-admin-category/add-admin-category.component';
-import { AddAdminTabledetailsComponent } from './pages/admin-table-details/add-admin-tabledetails/add-admin-tabledetails.component';
-import { PrintTableQrComponent } from './pages/admin-table-details/print-table-qr/print-table-qr.component';
 import { MastersPromoCodeComponent } from './pages/masters-promo-code/masters-promo-code.component';
 import { AddMasterPromoCodeComponent } from './pages/masters-promo-code/add-master-promo-code/add-master-promo-code.component';
 //import { AddModifierComponent } from './pages/item-master/add-modifier/add-modifier.component';
 import { AddDiscountComponent } from './pages/item-master/add-discount/add-discount.component';
 import { ViewModComponent } from './pages/item-master/add-modifier/view-mod/view-mod.component';
-import { DineInCustomerComponent } from './pages/order/add-customer-to-dinein/dinein-customer.component';
 
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -61,10 +52,8 @@ import { UserRegViewComponent } from './pages/user-registration/user-reg-view/us
 import { AdminRoleComponent } from './pages/admin-role/admin-role.component';
 import { AddAdminRoleComponent } from './pages/admin-role/add-admin-role/add-admin-role.component';
 import { ViewAdminRoleComponent } from './pages/admin-role/view-admin-role/view-admin-role.component';
-import { CompleteOrderViewComponent } from './pages/complete-order/complete-order-view/complete-order-view.component';
 import { OutletSelectionComponent } from './pages/dines-in/outlet-selection/outlet-selection.component';
 import { UserRegRestaurantComponent } from './pages/user-registration/user-reg-restaurant/user-reg-restaurant.component';
-import { ViewAdminTableDetailsComponent } from './pages/admin-table-details/view-admin-table-details/view-admin-table-details.component';
 import { ViewMastersPromoCodeComponent } from './pages/masters-promo-code/view-masters-promo-code/view-masters-promo-code.component';
 
 import { OutletEditComponent } from './pages/master/outlet/outlet-edit/outlet-edit.component';
@@ -105,10 +94,7 @@ import { OrderViewComponent } from './pages/Inventory/supplier-orders/order-view
 import { EditOrderComponent } from './pages/Inventory/supplier-orders/order-view/editorder/edit-order.component';
 import { GRNComponent } from './pages/Inventory/grn/grn.component';
 import { ShiftTimingComponent } from './pages/shifttiming/shifttiming.component';
-import { VoidedOrderComponent } from './pages/dines-in/voided-order/voided-order.component';
 import { AngularDraggableModule } from 'angular2-draggable';
-import { DeliverectComponent } from './pages/deliverect/deliverect.component';
-import { ShiftTableComponent } from './pages/order/shift-table/shift-table.component';
 
 import { DetailedReportComponent } from './pages/dashboard/detailed-report/detailed-report.component';
 import { RestaurantPermissionComponent } from './pages/admin-restaurant/restaurant-permission/restaurant-permission.component';
@@ -132,15 +118,9 @@ import { LoyalitySettingsComponent } from './pages/loyality-settings/loyality-se
     CategoryComponent,
    
 
-    ModifierPopUpComponent,
-    CompleteOrderComponent,
-    OrderHistoryComponent,
     ItemDiscountComponent,
     MakePaymentComponent,
-    AdminTableDetailsComponent,
 
-    AddAdminTabledetailsComponent,
-    PrintTableQrComponent,
     MastersPromoCodeComponent,
     AddMasterPromoCodeComponent,
 
@@ -174,10 +154,8 @@ import { LoyalitySettingsComponent } from './pages/loyality-settings/loyality-se
     AdminRoleComponent,
     AddAdminRoleComponent,
     ViewAdminRoleComponent,
-    CompleteOrderViewComponent,
     OutletSelectionComponent,
     UserRegRestaurantComponent,
-    ViewAdminTableDetailsComponent,
     ViewMastersPromoCodeComponent,
 
     OutletEditComponent,
@@ -217,14 +195,10 @@ import { LoyalitySettingsComponent } from './pages/loyality-settings/loyality-se
     EditOrderComponent,
     GRNComponent,
     ShiftTimingComponent,
-    VoidedOrderComponent,
-    DeliverectComponent,
-    ShiftTableComponent,
     DetailedReportComponent,
     RestaurantPermissionComponent,
     ReconcileStockComponent,
     LoyalityPointsComponent,
-    DineInCustomerComponent,
     GeneralSettingsComponent,
     PettyCashComponent,
     PaymentModeComponent,

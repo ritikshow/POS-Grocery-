@@ -17,10 +17,7 @@
         <img src="/assets/images/merge-icon.svg" alt="icon" class="mr_4" />
         <span class="font_14 fw-semi text_pri">Merge Table</span>
       </div>
-      <div *ngIf="PrimaryOrder.orderId != null" class="d-flex align-items-center cursor-pointer" (click)="shifttable()">
-        <img src="/assets/images/shift-icon.svg" alt="icon" class="mr_4" />
-        <span class="font_14 fw-semi text_pri">Shift Table</span>
-      </div>
+    
       <div *ngIf="PrimaryOrder.orderId != null" class="d-flex align-items-center cursor-pointer"
         (click)="RemoveORClearItems(editEventModel,false,0)">
         <img src="/assets/images/clear-table-icon.svg" alt="icon" class="mr_4" />

@@ -268,7 +268,7 @@ export class PosLoginComponent implements OnInit {
       this.getGeneralSettingsByOutlet();
       //If login user has Super Admin role, then bypass the roles&permissions check
       if (userData.roleName == 'Super Admin') {
-        this.router.navigate(['/pos-dashboard/admin-table-details']);
+        this.router.navigate(['/pos-dashboard/masters-tax']);
       } else {
         let path = this.commonService.NavigateUserBasedOnPermissions(true, []);
         this.router.navigate([path]);
