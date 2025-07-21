@@ -8,10 +8,7 @@
   <div class="order_info_blk">
     <div class="order_sub_nav_blk">
       <ul class="d-flex align-items-center nav_tabs_ul p-0 m-0" id="myTab" role="tablist">
-        <li>
-          <a routerLink="/pos-dashboard/dine-in" *ngIf="commonService.checkRolePermissions('ALL_TABLES')"
-           >All Tables</a>
-        </li>
+    
         <li role="presentation" *ngIf="commonService.checkRolePermissions('DINEIN_RUNNING_ORDERS')">
           <a class="active" routerLink="/pos-dashboard/dine-in/running-order">
             Running Orders
@@ -22,11 +19,7 @@
             Completed Orders
           </a>
         </li>
-        <!-- <li role="presentation">
-          <a routerLink="/pos-dashboard/dine-in/order-history">
-            Order History
-          </a>
-        </li> -->
+       
         <li role="presentation" *ngIf="commonService.checkRolePermissions('DINEIN_VOIDED_ORDERS')">
           <a routerLink="/pos-dashboard/dine-in/voided-order">
             Voided Orders
@@ -36,36 +29,7 @@
     </div>
     
   <div class="order_info_container">
-    <!-- <div class="table_header  create_order_blk this_mon_blk">
-      <div class="w-100">
-        <div class="OutletName">Outlet Name : {{outletName}}</div>
-      </div>
-    </div> -->
-    <!-- <ul class="nav nav-tabs d-flex flex-wrap align-items-center nav_tabs_ul p-0 mb_20" id="myTab" role="tablist">
-      <li>
-        <a routerLink="/pos-dashboard/dine-in">All Tables</a>
-      </li>
-      <li role="presentation">
-        <a class="active" routerLink="/pos-dashboard/dine-in/running-order">
-          Running Orders
-        </a>
-      </li>
-      <li role="presentation">
-        <a routerLink="/pos-dashboard/dine-in/completed-order">
-          Completed Orders
-        </a>
-      </li>
-      <li role="presentation">
-        <a routerLink="/pos-dashboard/dine-in/order-history">
-          Order History
-        </a>
-      </li>
-      <li role="presentation">
-        <a routerLink="/pos-dashboard/dine-in/voided-order">
-          Voided Orders
-        </a>
-      </li>
-    </ul>  -->
+    
       <div class="table-responsive order_table_blk" id="checkBoxes">
         <table *ngIf="isDataLoaded" datatable [dtOptions]="dtOptions" class="w-100" id="table-request">
           <thead>

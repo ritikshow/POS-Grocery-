@@ -13,7 +13,7 @@ import { ItemDiscountComponent } from './item-discount/item-discount.component';
 import { ModifierPopUpComponent } from './modifier-pop-up/modifier-pop-up.component';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ShiftTableComponent } from './shift-table/shift-table.component';
-import { MergeTableComponent } from './merge-table/merge-table.component';
+
 import { DineInCustomerComponent } from './add-customer-to-dinein/dinein-customer.component';
 import Scrollbar from 'smooth-scrollbar';
 import { environment } from 'src/environments/environment';
@@ -4238,7 +4238,7 @@ export class OrderComponent implements OnInit {
   mergeTable() {
     sessionStorage.setItem('TableNum', this.currentTableDetails.tableNo);
     sessionStorage.setItem('tableId', this.currentTableDetails.tableId);
-    this.modalService.open(MergeTableComponent, { backdrop: 'static', keyboard: true, centered: true, windowClass: 'main_add_popup' }).result.then((result) => {
+    this.modalService.open( { backdrop: 'static', keyboard: true, centered: true, windowClass: 'main_add_popup' }).result.then((result) => {
       this.alertService.showSuccess("Sucessfully moved");
       this.router.navigate(['/pos-dashboard/dine-in']);
     }, (reason) => {

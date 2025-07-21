@@ -3,7 +3,7 @@ import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-
 import { AlertService } from '@core/services/common/alert.service';
 import { CategoryComponent } from '../category/category.component';
 import { PosDataService } from '@core/services/pos-system/pos-data.service';
-import { AddModifierComponent } from '../item-master/add-modifier/add-modifier.component';
+//import { AddModifierComponent } from '../item-master/add-modifier/add-modifier.component';
 import { AddDiscountComponent } from '../item-master/add-discount/add-discount.component';
 import { PosDataShareService } from '@core/services/pos-system/posDataShare.service';
 import { ItemViewComponent } from '../item-master/item-view/item-view.component';
@@ -116,16 +116,6 @@ export class MenuComponent implements OnInit {
    
   }
 
-  // openFormCat() {
-  //   this.modalService.open(AddAdminCategoryComponent, { backdrop: 'static', windowClass: 'main_add_popup', keyboard: true, centered: true }).result.then((result) => {
-  //     this.closeResult = `Closed with: ${result}`;
-  //     if (result) {
-  //       this.getAllCategory();
-  //     }
-  //   }, (reason) => {
-  //     this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-  //   });
-  // }
   getAllModifierGroupData() {
     this.ngxLoader.startLoader('loader-01');
     let obj = {
@@ -143,17 +133,6 @@ export class MenuComponent implements OnInit {
     });
   }
 
-  // openModifierForm() {
-  //   this.modalService.open(ModifierGroupFormComponent, { backdrop: 'static', windowClass: 'main_add_popup', keyboard: true, centered: true }).result.then((result) => {
-  //     this.closeResult = `Closed with: ${result}`;
-  //     if (result) {
-  //       this.getAllModifierGroupData();
-  //     }
-  //   }, (reason) => {
-
-  //     this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-  //   });
-  // }
   async getAllitems() {
     this.isDataLoaded = false;
     this.ngxLoader.startLoader('loader-01');
@@ -219,18 +198,6 @@ export class MenuComponent implements OnInit {
 
     }, (reason) => {
 
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
-
-  addModify(id) {
-    this.posDataSharedService.setIdForItemModifier(id);
-    this.modalService.open(AddModifierComponent, { backdrop: 'static', windowClass: 'main_add_popup', keyboard: true, centered: true }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-      if (result) {
-        this.getAllitems();
-      }
-    }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
@@ -388,24 +355,6 @@ export class MenuComponent implements OnInit {
       this.modalService.dismissAll();
     }
   }
-  openRecipePopUp(content, item) {
-    this.recipeData = [];
-    this.itemForRecipe = item;
-    // this.itemForRecipe.CategoryId = item?.ItemCategoryId;
-    this.showSupplier = false;
-    this.SelectedReceipeItem = undefined;
-    this.totalCostOfItem = 0;
-    if (this.itemForRecipe.recipe != null) {
-      for (let i = 0; i < this.itemForRecipe.recipe.length; i++) {
-        this.CalculateTotalCostOfItem(this.itemForRecipe.recipe[i]);
-      }
-      this.recipeData = this.itemForRecipe.recipe;
-    }
-    this.modalService.open(content, { backdrop: 'static', windowClass: 'main_add_popup', keyboard: true, centered: true }).result.then((result) => {
-    }, (reason) => {
-      console.log(reason);
-    });
-  }
   GetAllReceipe() {
 
     this.ngxLoader.startLoader('loader-01');
@@ -516,7 +465,6 @@ export class MenuComponent implements OnInit {
   }
   closeModal() {
     this.activeModal.close(0);
-    this.allIndiaForm.reset();
     this.modal.dismissAll();
   }
   addRecipes() {
@@ -595,55 +543,14 @@ export class MenuComponent implements OnInit {
     });
   }
 
-  OpenCloneForm(content) {
-    this.modalService.open(content, { backdrop: 'static', windowClass: 'main_add_popup', keyboard: true, centered: true }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
 
 
 
 
-  get isAnyTypeSelected(): boolean {
-    const { veg, nonVeg, eggetarian, harddrinks, softdrinks } = this.allIndiaForm.value;
-    return !!(veg || nonVeg || eggetarian || harddrinks || softdrinks);
-  }
-  allIndiaForm = this.formBuilder.group({
-    veg: [''],
-    nonVeg: [''],
-    eggetarian: [''],
-    harddrinks: [''],
-    softdrinks: [''],
-  });
 
 
-  nextAllIndia() {
-    const formValue = this.allIndiaForm.value;
-    const itemTypes: string[] = [];
-    if (formValue.veg) itemTypes.push('Veg');
-    if (formValue.nonVeg) itemTypes.push('NonVeg');
-    if (formValue.eggetarian) itemTypes.push('Eggetarian');
-    if (formValue.harddrinks) itemTypes.push('Harddrinks');
-    if (formValue.softdrinks) itemTypes.push('Softdrinks');
 
-    const params = {
-      OutletId: this.outletId,
-      restaurantName: this.outletName,
-      itemTypes: itemTypes // <-- property name matches .NET List<string>
-    };
-
-    // Send params to your API or next logic
-    this.posDataService.CloneItem(params).subscribe(res => {
-      this.ngxLoader.stopLoader('loader-01')
-      this.alertService.showSuccess(res.message || "Items and categories cloned successfully."  );
-      this.allIndiaForm.reset();
-      this.modalService.dismissAll();
-      this.getAllitems();
-
-    });
-  }
+ 
   OnSelectFilter() {
     debugger;
     if (this.SelectedFilter = "Pending items"){

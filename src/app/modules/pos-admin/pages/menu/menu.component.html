@@ -20,22 +20,7 @@
         </button>
       </div>
       <div class="col-md-8 d-flex align-items-center justify-content-end respons_btns_alignment">
-        <button class="export_btn mr_15 d-flex align-items-center" (click)="OpenCloneForm(allIndiaRestaurant)"
-          *ngIf="Role==='Super Admin'">
-          <img alt="image" src="/assets/images/add-icon.svg" class="mr_8">
-          <span class="font_14 fw-semi text-sec">Clone Item</span>
-        </button>
-
-        <!-- <button class="export_btn mr_15 d-flex align-items-center"
-          *ngIf="commonService.checkRolePermissions('ADD_CATEGORY')" (click)="openFormCat()">
-          <img alt="image" src="/assets/images/add-icon.svg" class="mr_8">
-          <span class="font_14 fw-semi text-sec">Add Category</span>
-        </button> -->
-        <!-- <button class="export_btn mr_15 d-flex align-items-center"
-          *ngIf="commonService.checkRolePermissions('ADD_MODIFIER_GROUP')" (click)="openModifierForm()">
-          <img alt="image" src="/assets/images/add-icon.svg" class="mr_8">
-          <span class="font_14 fw-semi text-sec">Add Modifier</span>
-        </button> -->
+       
         <button class="export_btn d-flex align-items-center" *ngIf="commonService.checkRolePermissions('ADD_ITEM')"
           (click)="openForm()">
           <img alt="image" src="/assets/images/add-icon.svg" class="mr_8">
@@ -45,40 +30,6 @@
     </div>
   </div>
   <div class="order_info_blk order_info_container floor_container">
-    <!-- <div class="table_header create_order_blk this_mon_blk">
-      <div class="w-100">
-        <div class="OutletName">Outlet Name : {{outletName}}</div>
-      </div>
-    </div> -->
-    <!-- <div class="create_order_blk this_mon_blk pt_25">
-      <div class="row">
-        <div class="col-md-4">
-          <form class="ng-invalid ng-touched ng-dirty" [formGroup]="categoryForm">
-            <div class="form-group ">
-              <label for="sel1"><span class="required-asterisk">*</span> Select Category:</label>
-              <div class="d-flex align-items-end">
-                <select class="form-control select-control" formControlName="CategoryIdList"
-                  (change)="selectCategory($event)" name="filterSearchBox">
-                  <option value="">None</option>
-                  <option *ngFor="let cat of categoryList" value="{{cat.categoryName}}" selected>{{cat.categoryName}}
-                  </option>
-                </select>
-                <button class="btn btn-orders edit ml-2" type="submit" (click)="clearCategory()">Clear</button>
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="col-md-3 empty"></div>
-        <div class="col-md-5 text-right" style="margin: auto;">
-          <button class="btn btn-lg btn-primary active action-btn btn-block text-right" (click)="openFormCat()">Add
-            Category</button>&nbsp;
-          <button class="btn btn-lg btn-primary active action-btn btn-block text-right" (click)="openModifierForm()">Add
-            Modifier Group</button>&nbsp;
-          <button class="btn btn-lg btn-primary active action-btn btn-block text-right" (click)="openForm()">Add
-            Item</button>
-        </div>
-      </div>
-    </div> -->
     <div class="position-relative">
       <div class="position-relative menu_filter_input">
         <select class="form-control" (change)="OnSelectFilter()" [(ngModel)]="SelectedFilter">
@@ -113,30 +64,11 @@
           </td>
             <td>{{item.itemAmount}}</td>
             <td>{{item.preparingTime}}</td>
-            <!-- <td><span class="desc_text_width w_322px" *ngIf="item.description !='null' && item.description !=null " title="{{item.description}}">{{item.description}}</span></td> -->
-            <!-- <td *ngIf="item.isActive ==true">Active</td>
-              <td *ngIf="item.isActive ==false">Inactive</td> -->
+           
 
             <td>
               <div class="d-flex align-items-center justify-content-center">
-                <!-- <button class="d-flex align-items-center mr_14 accept_btn">
-                  <img alt="image" src="/assets/images/green_tick.svg" class="mr_5">
-                  <span class="font_14 fw-med respons_wmax_content">Accept</span>
-                </button> -->
-                <!-- <button class="d-flex align-items-center mr_14 accept_btn reject_btn">
-                  <img alt="image" src="/assets/images/red_cross.svg" class="mr_5">
-                  <span class="font_14 fw-med respons_wmax_content">Reject</span>
-                </button> -->
-                  <div class="w_maxcontent d-flex align-items-center cursor-pointer mr_14"
-                    *ngIf="commonService.checkRolePermissions('ADD_RECIPE')" (click)="openRecipePopUp(addRecipe,item)">
-                    <img alt="image" src="/assets/images/add-icon.svg" class="mr_5">
-                    <span class="font_14 fw-med text_sec respons_wmax_content"> Add Recipe</span>
-                  </div>
-                  <div class="w_maxcontent d-flex align-items-center cursor-pointer mr_14"
-                    *ngIf="commonService.checkRolePermissions('ADD_MODIFIER')" (click)="addModify(item.id)">
-                    <img alt="image" src="/assets/images/add-icon.svg" class="mr_5">
-                    <span class="font_14 fw-med text_sec respons_wmax_content"> Add Modifiers</span>
-                  </div>
+                
                   <div class="w_maxcontent d-flex align-items-center cursor-pointer"
                     *ngIf="commonService.checkRolePermissions('ADD_DISCOUNT')" (click)="addDiscount(item.id)">
                     <img alt="image" src="/assets/images/add-icon.svg" class="mr_5">
@@ -158,17 +90,7 @@
                   <img alt="image" src="/assets/images/delete-icon.svg" class="cursor-pointer"
                     *ngIf="commonService.checkRolePermissions('DELETE_MENU')" (click)="onDelete(item.id)" />
                 </div>
-                <!-- <button class="btn btn-orders edit" (click)="edit(item.id)">
-                  <i class="fa fa-pencil"></i>
-                </button>
-                <button *ngIf="showReceipe == true" class="btn btn-orders edit"
-                  (click)="openRecipePopUp(addRecipe,item)">+ Recipe</button>
-                <button class="btn btn-orders edit" (click)="addModify(item.id)">+ Modifiers</button>
-                <button class="btn btn-orders edit" (click)="addDiscount(item.id)">+ Discount</button>
-                <button class="btn btn-orders edit" (click)="view(item.id)">View</button>
-                <button class="btn btn-orders edit" (click)="onDelete(item.id)">
-                  <i class="fa fa-trash" aria-hidden="true"></i>
-                </button> -->
+                
               </td>
             </tr>
           </tbody>
@@ -201,10 +123,7 @@
               <td *ngIf="item.isActive ==false">Inactive</td>
               <td>
                 <div class="d-flex align-items-center justify-content-center">
-                  <div class="d-flex align-items-center cursor-pointer mr_14" (click)="addModify(item.id)">
-                    <img alt="image" src="/assets/images/add-icon.svg" class="mr_5">
-                    <span class="font_14 fw-med text_sec"> Add Modifiers</span>
-                  </div>
+
                   <div class="d-flex align-items-center cursor-pointer mr_14" (click)="addDiscount(item.id)">
                     <img alt="image" src="/assets/images/add-icon.svg" class="mr_5">
                     <span class="font_14 fw-med text_sec"> Add Discount</span>
@@ -224,243 +143,11 @@
             </tr>
           </tbody>
         </table>
-        <!-- <div class="total_entries">
-          <select class="len_per_page" (change)="changedLength($event)">
-            <option value="5">5</option>
-            <option value="10">10&nbsp;</option>
-            <option value="20">20&nbsp;</option>
-            <option value="-1">All&nbsp;</option>
-          </select>
-          <label>Total :</label>
-          <label> {{tableListRecord.total}}</label>
-        </div> -->
+        
       </div>
     </div>
   </div>
-  <ng-template #addRecipe let-itemnote="itemnote" class="newmodel-popup">
-    <div class="modal-header">
-      <h3 class="font_20 fw-semi text_pri" id="SKUModalLabel">Add Recipe</h3>
-      <img alt="image" src="/assets/images/modal-close-icon.svg" #closebutton class="modal_close_icon cursor-pointer"
-        (click)="closeAction()" />
-    </div>
-    <div class="modal-body">
-      <div class="btn_group">
-        <div *ngIf="recipeData?.length !==0" class="w-100" id="checkBoxes">
-          <!-- add this *ngIf="recipeData?.length !==0" here-->
-          <div class="view_details_blk mb_15">
-            <div class="row modal_input_row">
-              <div class="col-md-3">
-                <h6 class="font_14 fw-reg text_pri mb_5">Item Amount</h6>
-                <h4 class="font_14 fw-semi text-black m-0">{{ itemForRecipe.itemAmount}}</h4>
-              </div>
-              <div class="col-md-3">
-                <h6 class="font_14 fw-reg text_pri mb_5">Total cost of item</h6>
-                <h4 class="font_14 fw-semi text-black m-0">{{totalCostOfItem}}</h4>
-              </div>
-              <div class="col-md-3">
-                <h6 class="font_14 fw-reg text_pri mb_5">Gross Margin Amount</h6>
-                <h4 class="font_14 fw-semi text-black m-0">{{grossMargin}}</h4>
-              </div>
-            </div>
-          </div>
-          <!-- <div class="grossMargin">
-              <label>Item Amount : </label>
-              <b>{{ itemForRecipe.itemAmount}}</b>
-              <label style="margin-left: 15%;">Total cost of item : </label>
-              <b>{{totalCostOfItem}}</b>
-              <label style="margin-left: 16%;">Gross Margin Amount : </label>
-            <b>{{grossMargin}}</b>
-            </div> -->
-
-          <div class="table-responsive">
-            <table id="example table-request" class="m-0">
-              <thead>
-                <tr>
-                  <th>No</th>
-                  <th>Product Name</th>
-                  <th>Supplier Name</th>
-                  <th>Price</th>
-                  <th>Unit</th>
-                  <th>Quantity</th>
-                  <th>Priority</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let data of recipeData; let i=index">
-                  <td>{{i+1}}</td>
-                  <td>{{data?.productName}}</td>
-                  <td>{{data?.supplierName}}</td>
-                  <td>{{data?.price}}</td>
-                  <td>{{data?.unit}}</td>
-                  <td>{{data?.quantity}}</td>
-                  <td>
-                    <span *ngIf='data?.priority== 0'></span>
-                    <span *ngIf='data?.priority == 1'>First</span>
-                    <span *ngIf='data?.priority == 2'>Second</span>
-                    <span *ngIf='data?.priority == 3'>Third</span>
-                    <span *ngIf='data?.priority == 4'>Fourth</span>
-                    <span *ngIf='data?.priority == 5'>Fifth</span>
-                  </td>
-                  <td><button class="add_btn font_14 text_sec fw-med" (click)="removeMod(data)">Remove</button></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <form class="ng-invalid ng-touched ng-dirty" [formGroup]="receipeForm">
-          <div class="row modal_input_row">
-            <div class="col-md-4">
-              <label class="font_14 fe-reg text_pri mb_5">Select stock item for recipe<span
-                  class="required-asterisk">*</span></label>
-              <div class="position-relative">
-                <select class="form-control" id="prodId" formControlName="productId" (change)="selectReceipeItem()">
-                  <option>Select Item</option>
-                  <option *ngFor="let master of PsMasterReceipe" value="{{master.productID}}">
-                    {{master.productName}}</option>
-                </select>
-                <img alt="image" src="/assets/images/dropdown-arrow.svg" class="select_input_arrow" />
-              </div>
-            </div>
-            <div class="col-md-4">
-              <label class="font_14 fe-reg text_pri mb_5">Supplier<span class="required-asterisk">*</span></label>
-              <input type="text" class="form-control" formControlName="supplierId" readonly>
-            </div>
-            <div class="col-md-4">
-              <label class="font_14 fe-reg text_pri mb_5">Priority :</label>
-              <div class="position-relative">
-                <select class="form-control" formControlName="priority">
-                  <option value=1>First</option>
-                  <option value=2>Second</option>
-                  <option value=3>Third</option>
-                  <option value=4>Forth</option>
-                  <option value=5>Fifth</option>
-                </select>
-                <img alt="image" src="/assets/images/dropdown-arrow.svg" class="select_input_arrow" />
-              </div>
-            </div>
-            <div class="col-md-4">
-              <label class="font_14 fe-reg text_pri mb_5">Amount</label>
-              <input type="number" class="form-control" formControlName="price" readonly>
-            </div>
-            <div class="col-md-4">
-              <label class="font_14 fe-reg text_pri mb_5">Unit</label>
-              <input type="text" class="form-control" formControlName="unit" readonly>
-            </div>
-            <div class="col-md-4">
-              <label class="font_14 fe-reg text_pri mb_5">Quantity<span class="required-asterisk">*</span></label>
-              <input id="quantity" type="number" class="form-control" placeholder="Enter Quantity"
-                formControlName="quantity" (keyup)="GetVal($event)">
-            </div>
-          </div>
-          <div class="d-flex justify-content-end">
-            <button class="add_btn font_14 fw-semi text_sec" (click)="addNewRecipe(false)">Add</button>
-          </div>
-          <hr>
-          <div class="row modal_input_row">
-            <div class="col-md-4">
-              <label class="font_14 fe-reg text_pri mb_5">Select Batch Item (If any)</label>
-              <div class="position-relative">
-                <select class="form-control" id="itemId" (change)="selectBatchItem($event)">
-                  <option>Select Item</option>
-                  <option *ngFor="let item of allBatchItems" value="{{item.id}}">{{item.itemName}}</option>
-                </select>
-                <img alt="image" src="/assets/images/dropdown-arrow.svg" class="select_input_arrow" />
-              </div>
-            </div>
-            <div class="col-md-4">
-              <label class="font_14 fe-reg text_pri mb_5">Unit</label>
-              <input type="text" class="form-control" formControlName="itemUnit" readonly>
-            </div>
-            <div class="col-md-4">
-              <label class="font_14 fe-reg text_pri mb_5">Quantity<span class="required-asterisk">*</span></label>
-              <input id="quantity" type="number" class="form-control" formControlName="itemQuantity"
-                placeholder="Enter Quantity" (keyup)="GetVal($event)">
-            </div>
-          </div>
-          <div class="d-flex justify-content-end mb_20">
-            <button class="add_btn font_14 fw-semi text_sec" (click)="addNewRecipe(true)">Add</button>
-          </div>
-          <div class="row modal_input_row">
-            <div class="col-md-6 pb_0">
-              <button class="cancel_btn" type="reset" (click)="closeModal()">Cancel</button>
-            </div>
-            <div class="col-md-6 pb_0">
-              <button class="btn_primary" name="btn_login" type="submit" (click)="addRecipes()">Save</button>
-            </div>
-          </div>
-          <!-- <div class="pl-0 mt-4 text-right">
-              <button class="btn btn-lg btn-primary active btn-block mb-1 mt-2 mr-2" type="reset"
-                (click)="closeModal()">Cancel</button>
-              <button class="btn btn-lg btn-primary active action-btn btn-block mb-1" name="btn_login"
-                type="submit" (click)="addRecipes()">Save</button>
-            </div> -->
-        </form>
-      </div>
-    </div>
-  </ng-template>
-  <ng-template #allIndiaRestaurant>
-    <div class="modal-header mb_15">
-      <h3 class="font_20 fw-semi text_pri m-0" id="allIndiaRestaurantLabel">ALL India Restaurant</h3>
-      <img alt="image" src="/assets/images/modal-close-icon.svg" class="modal_close_icon cursor-pointer"
-        (click)="closeModal()" />
-    </div>
-    <form [formGroup]="allIndiaForm">
-      <div class="modal-body mb_20">
-        <label class="font_14 fe-reg text_pri mb_5">Select Type:</label>
-        <div class="row dashboard_row_blk clone_item_row">
-          <div class="col-md-4">
-            <div class="clone_item_blk position-relative">
-              <input type="checkbox" formControlName="veg" class="clone_item_input" value="Veg" />
-              <span class="clone_custom_input_blk"></span>
-              <img alt="image" src="/assets/images/clone_veg_image.svg" class="item_images"/>
-              <span class="font_14 fw-semi clone_item_text text_white">Veg</span>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="clone_item_blk position-relative">
-              <input type="checkbox" formControlName="nonVeg" class="clone_item_input" value="NonVeg" />
-              <span class="clone_custom_input_blk"></span>
-              <img alt="image" src="/assets/images/clone_non_veg_image.svg" class="item_images"/>
-              <span class="font_14 fw-semi clone_item_text text_white">Non Veg</span>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="clone_item_blk position-relative">
-              <input type="checkbox" formControlName="eggetarian" class="clone_item_input" value="Eggetarian" />
-              <span class="clone_custom_input_blk"></span>
-              <img alt="image" src="/assets/images/clone_eggetarian.svg" class="item_images"/>
-              <span class="font_14 fw-semi clone_item_text text_white">Eggetarian</span>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="clone_item_blk position-relative">
-              <input type="checkbox" formControlName="softdrinks" class="clone_item_input" value="Softdrinks" />
-              <span class="clone_custom_input_blk"></span>
-              <img alt="image" src="/assets/images/clone_soft_drinks.svg" class="item_images"/>
-              <span class="font_14 fw-semi clone_item_text text_white">Soft Drinks</span>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="clone_item_blk position-relative">
-             <input type="checkbox" formControlName="harddrinks" class="clone_item_input" value="Harddrinks" />
-              <span class="clone_custom_input_blk"></span>
-              <img alt="image" src="/assets/images/clone_hot_drinks.svg" class="item_images"/>
-              <span class="font_14 fw-semi clone_item_text text_white">Hard Drinks</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row modal_input_row">
-        <div class="col-md-6 pb_0">
-          <button class="cancel_btn mr_10" type="button" (click)="closeModal()">Cancel</button>
-        </div>
-        <div class="col-md-6 pb_0">
-          <button class="btn_primary" type="button" (click)="nextAllIndia()"
-            [disabled]="!isAnyTypeSelected">Next</button>
-        </div>
-      </div>
-    </form>
-  </ng-template>
+  
+  
 
 </div>
