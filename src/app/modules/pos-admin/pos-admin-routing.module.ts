@@ -8,11 +8,11 @@ import { AdminTableDetailsComponent } from './pages/admin-table-details/admin-ta
 import { MenuComponent } from './pages/menu/menu.component';
 import { CompleteOrderComponent } from './pages/complete-order/complete-order.component';
 import { DinesInComponent } from './pages/dines-in/dines-in.component';
-import { KitchenItemComponent } from './pages/kitchen/kitchen-item/kitchen-item.component';
-import { KitchenComponent } from './pages/kitchen/kitchen.component';
+//import { KitchenItemComponent } from './pages/kitchen/kitchen-item/kitchen-item.component';
+//import { KitchenComponent } from './pages/kitchen/kitchen.component';
 import { OrderComponent } from './pages/order/order.component';
 import { RunningOrderComponent } from './pages/running-order/running-order.component';
-import { ModifierGroupComponent } from './pages/master/modifier-group/modifier-group.component';
+//import { ModifierGroupComponent } from './pages/master/modifier-group/modifier-group.component';
 import { DiscountComponent } from './pages/master/discount/discount.component';
 import { TableTypeComponent } from './pages/master/table-type/table-type.component';
 import { OutletComponent } from './pages/master/outlet/outlet.component';
@@ -27,7 +27,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { WalkInComponent } from './pages/walk-in/walk-in.component';
 import { WalkInOrderComponent } from './pages/walk-in/walk-in-order/walk-in-order.component';
 import { WalkInCompleteOrderComponent } from './pages/walk-in/walk-in-complete-order/walk-in-complete-order.component';
-import { WarehouseComponent } from './pages/warehouse/warehouse.component';
+//import { WarehouseComponent } from './pages/warehouse/warehouse.component';
 import { PrintDesignViewViewComponent } from './pages/print-design-veiw/print-design-view-view/print-design-view-view.component';
 import { OnlineComponent } from './pages/online/online.component';
 import { OnlineOrderComponent } from './pages/online/online-order/online-order.component';
@@ -59,8 +59,8 @@ import { MergeTableComponent } from './pages/order/merge-table/merge-table.compo
 import { DetailedReportComponent } from './pages/dashboard/detailed-report/detailed-report.component';
 import { RestaurantPermissionComponent } from './pages/admin-restaurant/restaurant-permission/restaurant-permission.component';
 import { ReconcileStockComponent } from './pages/Inventory/reconcile-stock/reconcile-stock.component';
-import { BatchItemComponent } from './pages/Inventory/batch-item/batch-item.component';
-import { AddBatchItemComponent } from './pages/Inventory/batch-item/add-batch-item/add-batch-item.component';
+//import { BatchItemComponent } from './pages/Inventory/batch-item/batch-item.component';
+//import { AddBatchItemComponent } from './pages/Inventory/batch-item/add-batch-item/add-batch-item.component';
 import { LoyalityPointsComponent } from './pages/loyality-points/loyality-points.component';
 import { POSAuthGuard } from '@module/auth-guard/posauth.guard';
 import { GeneralSettingsComponent } from './pages/general-settings/general-settings.component';
@@ -157,15 +157,15 @@ const routes: Routes = [
     path: 'user-view',
     component: UserViewComponent
   },
-  {
-    path: 'kitchen',
-    component: KitchenComponent,
-    canActivate: [POSAuthGuard]
-  },
-  {
-    path: 'kitchen/items',
-    component: KitchenItemComponent
-  },
+  // {
+  //   path: 'kitchen',
+  //   component: KitchenComponent,
+  //   canActivate: [POSAuthGuard]
+  // },
+  // {
+  //   path: 'kitchen/items',
+  //   component: KitchenItemComponent
+  // },
   {
     path: 'walk-in/walk-in-voided-order',
     component: WalkInVoidedOrderComponent
@@ -192,10 +192,10 @@ const routes: Routes = [
   //   component: AddAdminCategoryComponent,
   //   canActivate: [POSAuthGuard]
   // },
-  {
-    path: 'masters-modifiers',
-    component: ModifierGroupComponent
-  },
+  // {
+  //   path: 'masters-modifiers',
+  //   component: ModifierGroupComponent
+  // },
   {
     path: 'masters-discount',
     component: DiscountComponent
@@ -289,11 +289,11 @@ const routes: Routes = [
     path: 'online/completed-order',
     component: OnlineCompleteOrderComponent
   },
-  {
-    path: 'warehouse',
-    component: WarehouseComponent,
-    canActivate: [POSAuthGuard]
-  },
+  // {
+  //   path: 'warehouse',
+  //   component: WarehouseComponent,
+  //   canActivate: [POSAuthGuard]
+  // },
   {
     path: 'deliverect',
     component: DeliverectComponent,
@@ -320,14 +320,14 @@ const routes: Routes = [
     path: 'Inventory/reconcile-stock',
     component: ReconcileStockComponent
   },
-  {
-    path: 'Inventory/batch-item',
-    component: BatchItemComponent
-  },
-  {
-    path: 'batch-item/add-batch-item',
-    component: AddBatchItemComponent
-  },
+  // {
+  //   path: 'Inventory/batch-item',
+  //   component: BatchItemComponent
+  // },
+  // {
+  //   path: 'batch-item/add-batch-item',
+  //   component: AddBatchItemComponent
+  // },
   {
     path: 'loyality-points',
     component: LoyalityPointsComponent,

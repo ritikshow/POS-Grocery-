@@ -8,8 +8,8 @@ import { MenuComponent } from './pages/menu/menu.component';
 import { CategoryComponent } from './pages/category/category.component';
 import { DinesInComponent } from './pages/dines-in/dines-in.component';
 import { RunningOrderComponent } from './pages/running-order/running-order.component';
-import { KitchenComponent } from './pages/kitchen/kitchen.component';
-import { KitchenItemComponent } from './pages/kitchen/kitchen-item/kitchen-item.component';
+//import { KitchenComponent } from './pages/kitchen/kitchen.component';
+//import { KitchenItemComponent } from './pages/kitchen/kitchen-item/kitchen-item.component';
 import { ModifierPopUpComponent } from './pages/order/modifier-pop-up/modifier-pop-up.component';
 import { CompleteOrderComponent } from './pages/complete-order/complete-order.component';
 import { OrderHistoryComponent } from './pages/order-history/order-history.component';
@@ -33,8 +33,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { ItemViewComponent } from './pages/item-master/item-view/item-view.component';
-import { ModifierGroupComponent } from './pages/master/modifier-group/modifier-group.component';
-import { ModifierGroupFormComponent } from './pages/master/modifier-group/modifier-group-form/modifier-group-form.component';
+//import { ModifierGroupComponent } from './pages/master/modifier-group/modifier-group.component';
+//import { ModifierGroupFormComponent } from './pages/master/modifier-group/modifier-group-form/modifier-group-form.component';
 import { DiscountComponent } from './pages/master/discount/discount.component';
 import { DiscountFormComponent } from './pages/master/discount/discount-form/discount-form.component';
 import { TableTypeComponent } from './pages/master/table-type/table-type.component';
@@ -42,7 +42,7 @@ import { TableTypeFormComponent } from './pages/master/table-type/table-type-for
 import { OutletComponent } from './pages/master/outlet/outlet.component';
 import { OutletFormComponent } from './pages/master/outlet/outlet-form/outlet-form.component';
 import { DiscountViewComponent } from './pages/master/discount/discount-view/discount-view.component';
-import { ModifierGroupViewComponent } from './pages/master/modifier-group/modifier-group-view/modifier-group-view.component';
+//import { ModifierGroupViewComponent } from './pages/master/modifier-group/modifier-group-view/modifier-group-view.component';
 import { TableTypeViewComponent } from './pages/master/table-type/table-type-view/table-type-view.component';
 import { OutletViewComponent } from './pages/master/outlet/outlet-view/outlet-view.component';
 import { TaxComponent } from './pages/master/tax/tax.component';
@@ -69,7 +69,7 @@ import { OutletSelectionComponent } from './pages/dines-in/outlet-selection/outl
 import { UserRegRestaurantComponent } from './pages/user-registration/user-reg-restaurant/user-reg-restaurant.component';
 import { ViewAdminTableDetailsComponent } from './pages/admin-table-details/view-admin-table-details/view-admin-table-details.component';
 import { ViewMastersPromoCodeComponent } from './pages/masters-promo-code/view-masters-promo-code/view-masters-promo-code.component';
-import { ModifierGroupEditComponent } from './pages/master/modifier-group/modifier-group-edit/modifier-group-edit.component';
+//import { ModifierGroupEditComponent } from './pages/master/modifier-group/modifier-group-edit/modifier-group-edit.component';
 import { OutletEditComponent } from './pages/master/outlet/outlet-edit/outlet-edit.component';
 import { FormAccessComponent } from './pages/master/form-access/form-access.component';
 import { FormAccessFormComponent } from './pages/master/form-access/form-access-form/form-access-form.component';
@@ -83,8 +83,8 @@ import { PrintDesignTableComponent } from './pages/print-design-veiw/print-desig
 import { PrintDesignVeiwEditComponent } from './pages/print-design-veiw/print-design-veiw-edit/print-design-veiw-edit.component';
 import { WalkInOrderComponent } from './pages/walk-in/walk-in-order/walk-in-order.component';
 import { WalkInCompleteOrderComponent } from './pages/walk-in/walk-in-complete-order/walk-in-complete-order.component';
-import { WarehouseComponent } from './pages/warehouse/warehouse.component';
-import { WarehousePrintComponent } from './pages/warehouse/warehouse-print/warehouse-print.component';
+//import { WarehouseComponent } from './pages/warehouse/warehouse.component';
+//import { WarehousePrintComponent } from './pages/warehouse/warehouse-print/warehouse-print.component';
 import { PrintDesignViewViewComponent } from './pages/print-design-veiw/print-design-view-view/print-design-view-view.component';
 import { OnlineComponent } from './pages/online/online.component';
 import { OnlineOrderComponent } from './pages/online/online-order/online-order.component';
@@ -129,8 +129,8 @@ import { MergeTableComponent } from './pages/order/merge-table/merge-table.compo
 import { DetailedReportComponent } from './pages/dashboard/detailed-report/detailed-report.component';
 import { RestaurantPermissionComponent } from './pages/admin-restaurant/restaurant-permission/restaurant-permission.component';
 import { ReconcileStockComponent } from './pages/Inventory/reconcile-stock/reconcile-stock.component';
-import { BatchItemComponent } from './pages/Inventory/batch-item/batch-item.component';
-import { AddBatchItemComponent } from './pages/Inventory/batch-item/add-batch-item/add-batch-item.component';
+//import { BatchItemComponent } from './pages/Inventory/batch-item/batch-item.component';
+//import { AddBatchItemComponent } from './pages/Inventory/batch-item/add-batch-item/add-batch-item.component';
 import { LoyalityPointsComponent } from './pages/loyality-points/loyality-points.component';
 import { GeneralSettingsComponent } from './pages/general-settings/general-settings.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -149,8 +149,8 @@ import { LoyalitySettingsComponent } from './pages/loyality-settings/loyality-se
     CategoryComponent,
     DinesInComponent,
     RunningOrderComponent,
-    KitchenComponent,
-    KitchenItemComponent,
+    //KitchenComponent,
+   // KitchenItemComponent,
     ModifierPopUpComponent,
     CompleteOrderComponent,
     OrderHistoryComponent,
@@ -167,8 +167,8 @@ import { LoyalitySettingsComponent } from './pages/loyality-settings/loyality-se
     AddDiscountComponent,
     ViewModComponent,
     ItemViewComponent,
-    ModifierGroupComponent,
-    ModifierGroupFormComponent,
+    //ModifierGroupComponent,
+    //ModifierGroupFormComponent,
     DiscountComponent,
     DiscountFormComponent,
     TableTypeComponent,
@@ -176,7 +176,7 @@ import { LoyalitySettingsComponent } from './pages/loyality-settings/loyality-se
     OutletComponent,
     OutletFormComponent,
     DiscountViewComponent,
-    ModifierGroupViewComponent,
+    //ModifierGroupViewComponent,
     TableTypeViewComponent,
     OutletViewComponent,
     TaxComponent,
@@ -200,7 +200,7 @@ import { LoyalitySettingsComponent } from './pages/loyality-settings/loyality-se
     UserRegRestaurantComponent,
     ViewAdminTableDetailsComponent,
     ViewMastersPromoCodeComponent,
-    ModifierGroupEditComponent,
+    //ModifierGroupEditComponent,
     OutletEditComponent,
     FormAccessComponent,
     FormAccessFormComponent,
@@ -213,8 +213,8 @@ import { LoyalitySettingsComponent } from './pages/loyality-settings/loyality-se
     PrintDesignVeiwEditComponent,
     WalkInOrderComponent,
     WalkInCompleteOrderComponent,
-    WarehouseComponent,
-    WarehousePrintComponent,
+    //WarehouseComponent,
+   // WarehousePrintComponent,
     PrintDesignViewViewComponent,
     OnlineComponent,
     OnlineOrderComponent,
@@ -256,8 +256,8 @@ import { LoyalitySettingsComponent } from './pages/loyality-settings/loyality-se
     DetailedReportComponent,
     RestaurantPermissionComponent,
     ReconcileStockComponent,
-    BatchItemComponent,
-    AddBatchItemComponent,
+    //BatchItemComponent,
+   // AddBatchItemComponent,
     LoyalityPointsComponent,
     DineInCustomerComponent,
     GeneralSettingsComponent,

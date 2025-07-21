@@ -11,7 +11,7 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { DataTableDirective } from 'angular-datatables';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 //import { AddAdminCategoryComponent } from '../admin-category/add-admin-category/add-admin-category.component';
-import { ModifierGroupFormComponent } from '../master/modifier-group/modifier-group-form/modifier-group-form.component';
+//import { ModifierGroupFormComponent } from '../master/modifier-group/modifier-group-form/modifier-group-form.component';
 import { Router } from '@angular/router';
 import { CommonService } from '@core/services/common/common.service';
 
@@ -143,17 +143,17 @@ export class MenuComponent implements OnInit {
     });
   }
 
-  openModifierForm() {
-    this.modalService.open(ModifierGroupFormComponent, { backdrop: 'static', windowClass: 'main_add_popup', keyboard: true, centered: true }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-      if (result) {
-        this.getAllModifierGroupData();
-      }
-    }, (reason) => {
+  // openModifierForm() {
+  //   this.modalService.open(ModifierGroupFormComponent, { backdrop: 'static', windowClass: 'main_add_popup', keyboard: true, centered: true }).result.then((result) => {
+  //     this.closeResult = `Closed with: ${result}`;
+  //     if (result) {
+  //       this.getAllModifierGroupData();
+  //     }
+  //   }, (reason) => {
 
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
+  //     this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+  //   });
+  // }
   async getAllitems() {
     this.isDataLoaded = false;
     this.ngxLoader.startLoader('loader-01');

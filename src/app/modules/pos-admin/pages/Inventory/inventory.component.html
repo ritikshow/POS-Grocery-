@@ -6,7 +6,7 @@
       <li class="mr_6" *ngIf="commonService.checkRolePermissions('LIST_PRODUCT')" ><a routerLink="/pos-dashboard/Inventory/product">Product</a></li>
       <li class="mr_6" *ngIf="commonService.checkRolePermissions('LIST_SUPPLIER')"><a routerLink="/pos-dashboard/Inventory/supplier">Supplier</a></li>
       <li class="mr_6" *ngIf="commonService.checkRolePermissions('LIST_SUPPLIER_ORDER')"><a routerLink="/pos-dashboard/Inventory/supplier-order">Supplier Orders</a></li>
-      <li class="mr_6" *ngIf="commonService.checkRolePermissions('LIST_BATCH_ITEM')"><a routerLink="/pos-dashboard/Inventory/batch-item">Batch Item</a></li>
+      <!-- <li class="mr_6" *ngIf="commonService.checkRolePermissions('LIST_BATCH_ITEM')"><a routerLink="/pos-dashboard/Inventory/batch-item">Batch Item</a></li> -->
     </ul> 
     <div class="d-flex align-items-center mb_12" *ngIf="commonService.checkRolePermissions('ADD_STOCK')">
       <img alt="image" src="/assets/images/add-icon.svg" class="mr_5">

@@ -5,11 +5,11 @@ import { PosDataShareService } from '@core/services/pos-system/posDataShare.serv
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { OutletSelectionComponent } from '../dines-in/outlet-selection/outlet-selection.component';
 import { RestaurantSelectionComponent } from '../dines-in/restaurant-selection/restaurant-selection.component';
-import { KitchenItemComponent } from './kitchen-item/kitchen-item.component';
+//import { KitchenItemComponent } from './kitchen-item/kitchen-item.component';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import Scrollbar from 'smooth-scrollbar';
 import { ActivatedRoute } from '@angular/router';
-import { WarehousePrintComponent } from '../warehouse/warehouse-print/warehouse-print.component';
+//import { WarehousePrintComponent } from '../warehouse/warehouse-print/warehouse-print.component';
 import { CommonService } from '@core/services/common/common.service';
 
 @Component({
@@ -398,13 +398,13 @@ export class KitchenComponent implements OnInit, OnDestroy {
     //   this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     // });
     if (this.viewType == 'kitchen') {
-      this.modalService.open(KitchenItemComponent, { backdrop: 'static', windowClass: 'main_add_popup order_bill_pint_popup', keyboard: true, centered: true }).result.then((result) => {
+      this.modalService.open( { backdrop: 'static', windowClass: 'main_add_popup order_bill_pint_popup', keyboard: true, centered: true }).result.then((result) => {
         this.closeResult = `Closed with: ${result}`;
       }, (reason) => {
         this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
       });
     } else {
-      this.modalService.open(WarehousePrintComponent, { backdrop: 'static',  windowClass: 'main_add_popup order_bill_pint_popup', keyboard: true, centered: true }).result.then((result) => {
+      this.modalService.open( { backdrop: 'static',  windowClass: 'main_add_popup order_bill_pint_popup', keyboard: true, centered: true }).result.then((result) => {
         this.closeResult = `Closed with: ${result}`;
       }, (reason) => {
         this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
