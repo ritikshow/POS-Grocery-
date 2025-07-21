@@ -9,8 +9,6 @@ import { CategoryComponent } from './pages/category/category.component';
 
 import { MakePaymentComponent } from './pages/make-payment/make-payment.component';
 
-import { AddDiscountComponent } from './pages/item-master/add-discount/add-discount.component';
-import { ViewModComponent } from './pages/item-master/add-modifier/view-mod/view-mod.component';
 
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -21,13 +19,10 @@ import { ItemViewComponent } from './pages/item-master/item-view/item-view.compo
 
 import { DiscountComponent } from './pages/master/discount/discount.component';
 import { DiscountFormComponent } from './pages/master/discount/discount-form/discount-form.component';
-import { TableTypeComponent } from './pages/master/table-type/table-type.component';
-import { TableTypeFormComponent } from './pages/master/table-type/table-type-form/table-type-form.component';
 import { OutletComponent } from './pages/master/outlet/outlet.component';
 import { OutletFormComponent } from './pages/master/outlet/outlet-form/outlet-form.component';
 import { DiscountViewComponent } from './pages/master/discount/discount-view/discount-view.component';
 
-import { TableTypeViewComponent } from './pages/master/table-type/table-type-view/table-type-view.component';
 import { OutletViewComponent } from './pages/master/outlet/outlet-view/outlet-view.component';
 import { TaxComponent } from './pages/master/tax/tax.component';
 import { TaxFormComponent } from './pages/master/tax/tax-form/tax-form.component';
@@ -47,15 +42,12 @@ import { UserRegFormComponent } from './pages/user-registration/user-reg-form/us
 import { UserRegViewComponent } from './pages/user-registration/user-reg-view/user-reg-view.component';
 import { AdminRoleComponent } from './pages/admin-role/admin-role.component';
 import { AddAdminRoleComponent } from './pages/admin-role/add-admin-role/add-admin-role.component';
-import { ViewAdminRoleComponent } from './pages/admin-role/view-admin-role/view-admin-role.component';
 import { OutletSelectionComponent } from './pages/dines-in/outlet-selection/outlet-selection.component';
 import { UserRegRestaurantComponent } from './pages/user-registration/user-reg-restaurant/user-reg-restaurant.component';
 
 import { OutletEditComponent } from './pages/master/outlet/outlet-edit/outlet-edit.component';
-import { FormAccessComponent } from './pages/master/form-access/form-access.component';
 import { FormAccessFormComponent } from './pages/master/form-access/form-access-form/form-access-form.component';
 import { FormAccessEditComponent } from './pages/master/form-access/form-access-edit/form-access-edit.component';
-import { FormAccessViewComponent } from './pages/master/form-access/form-access-view/form-access-view.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RestaurantSelectionComponent } from './pages/dines-in/restaurant-selection/restaurant-selection.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
@@ -110,19 +102,14 @@ import { PettyCashComponent } from './pages/pettycash/pettycash.component';
     MakePaymentComponent,
 
 
-    AddDiscountComponent,
-    ViewModComponent,
     ItemViewComponent,
 
     DiscountComponent,
     DiscountFormComponent,
-    TableTypeComponent,
-    TableTypeFormComponent,
     OutletComponent,
     OutletFormComponent,
     DiscountViewComponent,
 
-    TableTypeViewComponent,
     OutletViewComponent,
     TaxComponent,
     TaxFormComponent,
@@ -139,15 +126,12 @@ import { PettyCashComponent } from './pages/pettycash/pettycash.component';
     UserRegViewComponent,
     AdminRoleComponent,
     AddAdminRoleComponent,
-    ViewAdminRoleComponent,
     OutletSelectionComponent,
     UserRegRestaurantComponent,
 
     OutletEditComponent,
-    FormAccessComponent,
     FormAccessFormComponent,
     FormAccessEditComponent,
-    FormAccessViewComponent,
     RestaurantSelectionComponent,
     DashboardComponent,
     PrintDesignTableComponent,

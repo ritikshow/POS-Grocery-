@@ -2,26 +2,20 @@ import { TaxSetupComponent } from './pages/master/tax-setup/tax-setup.component'
 import { PrintDesignTableComponent } from './pages/print-design-veiw/print-design-table/print-design-table.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-//import { AddAdminCategoryComponent } from './pages/admin-category/add-admin-category/add-admin-category.component';
-//import { AdminCategoryComponent } from './pages/admin-category/admin-category.component';
 import { MenuComponent } from './pages/menu/menu.component';
 
 import { OrderComponent } from './pages/order/order.component';
-//import { ModifierGroupComponent } from './pages/master/modifier-group/modifier-group.component';
 import { DiscountComponent } from './pages/master/discount/discount.component';
-import { TableTypeComponent } from './pages/master/table-type/table-type.component';
 import { OutletComponent } from './pages/master/outlet/outlet.component';
 import { TaxComponent } from './pages/master/tax/tax.component';
 import { PrintVeiwComponent } from './pages/print-design-veiw/print-veiw/print-veiw.component';
 import { AdminRestaurantComponent } from './pages/admin-restaurant/admin-restaurant.component';
 import { UserRegistrationComponent } from './pages/user-registration/user-registration.component';
 import { AdminRoleComponent } from './pages/admin-role/admin-role.component';
-import { FormAccessComponent } from './pages/master/form-access/form-access.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 
 import { PrintDesignViewViewComponent } from './pages/print-design-veiw/print-design-view-view/print-design-view-view.component';
-import { FormGroupComponent } from './pages/master/form-group/form-group.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 import { UserViewComponent } from './pages/user-view/user-view.component';
 import { SalesByCategoryComponent } from './pages/sales-by-category/sales-by-category.component';
@@ -131,11 +125,7 @@ const routes: Routes = [
     path: 'masters-discount',
     component: DiscountComponent
   },
-  {
-    path: 'masters-table-type',
-    component: TableTypeComponent,
-    canActivate: [POSAuthGuard]
-  },
+  
   {
     path: 'masters-outlet',
     component: OutletComponent
@@ -175,14 +165,7 @@ const routes: Routes = [
     component: AdminRoleComponent
   },
   
-  {
-    path: 'form-access',
-    component: FormAccessComponent
-  },
-  {
-    path: 'form-group',
-    component: FormGroupComponent
-  },
+ 
  
 
  

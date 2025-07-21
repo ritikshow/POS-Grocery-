@@ -3,15 +3,11 @@ import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-
 import { AlertService } from '@core/services/common/alert.service';
 import { CategoryComponent } from '../category/category.component';
 import { PosDataService } from '@core/services/pos-system/pos-data.service';
-//import { AddModifierComponent } from '../item-master/add-modifier/add-modifier.component';
-import { AddDiscountComponent } from '../item-master/add-discount/add-discount.component';
 import { PosDataShareService } from '@core/services/pos-system/posDataShare.service';
 import { ItemViewComponent } from '../item-master/item-view/item-view.component';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { DataTableDirective } from 'angular-datatables';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-//import { AddAdminCategoryComponent } from '../admin-category/add-admin-category/add-admin-category.component';
-//import { ModifierGroupFormComponent } from '../master/modifier-group/modifier-group-form/modifier-group-form.component';
 import { Router } from '@angular/router';
 import { CommonService } from '@core/services/common/common.service';
 
@@ -202,20 +198,7 @@ export class MenuComponent implements OnInit {
     });
   }
 
-  addDiscount(id) {
-    sessionStorage.setItem('orderLevelDisc', 'false');
-    this.posDataSharedService.setIdForItemDiscount(id);
-    this.modalService.open(AddDiscountComponent, { backdrop: 'static', windowClass: 'main_add_popup', keyboard: true, centered: true }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-      if (result) {
-        this.getAllitems();
-      }
-
-    }, (reason) => {
-
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
+ 
 
   view(id) {
     this.posDataSharedService.setIdForItemView(id);

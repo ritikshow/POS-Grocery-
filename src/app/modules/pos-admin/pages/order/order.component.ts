@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { PosDataService } from '@core/services/pos-system/pos-data.service';
 import { PosDataShareService } from '@core/services/pos-system/posDataShare.service';
 import { MakePaymentComponent } from '../make-payment/make-payment.component';
-import { AddDiscountComponent } from '../item-master/add-discount/add-discount.component';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { PrintVeiwComponent } from '../print-design-veiw/print-veiw/print-veiw.component';
 import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -3920,17 +3919,7 @@ export class OrderComponent implements OnInit {
   remarks(event) {
     this.remark = event.target.value;
   }
-  openDiscount() {
-    this.UpdateOrder(false);
-    sessionStorage.setItem('orderLevelDisc', 'true');
-    sessionStorage.setItem('DiscountIn', 'DineIn');
-    this.modalService.open(AddDiscountComponent, { backdrop: 'static', size: 'lg', keyboard: true, centered: true }).result.then((result) => {
-      if (result) {
-        this.CommonCalculation();
-      }
-    }, (reason) => {
-    });
-  }
+
   RemoveOrderDiscount() {
     // sessionStorage.removeItem('orderDiscount' + this.orderId);
     // this.DisableAfterDiscount = false;

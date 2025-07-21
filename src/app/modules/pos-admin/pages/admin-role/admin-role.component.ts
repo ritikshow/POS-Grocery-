@@ -4,7 +4,6 @@ import { AlertService } from '@core/services/common/alert.service';
 import { AddItemService } from '../../../../core/services/common/add-item.service';
 import { PosEditService } from '@core/services/pos-system/pos-edit.service';
 import { AddAdminRoleComponent } from './add-admin-role/add-admin-role.component';
-import { ViewAdminRoleComponent } from './view-admin-role/view-admin-role.component';
 import { PosDataService } from '@core/services/pos-system/pos-data.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { FormAccessEditComponent } from '../master/form-access/form-access-edit/form-access-edit.component';
@@ -103,14 +102,7 @@ export class AdminRoleComponent implements OnInit {
     }
   }
 
-  view(id) {
-    this.addItems.setIdForRoleView(id);
-    this.modalService.open(ViewAdminRoleComponent, { backdrop: 'static', windowClass: 'main_add_popup', keyboard: true, centered: true }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
+  
 
   edit(id) {
     sessionStorage.setItem('isNewUserType', 'false');

@@ -51,26 +51,7 @@
         <h4 class="font_14 fw-semi text-black m-0">{{itemData?.itemTypes}}</h4>
       </div>
     </div>
-  <!-- start modifier -->
-  <!-- <div class="mb_20" *ngIf="itemData?.modifierGroupNameId != null && itemData?.modifierGroupNameId != '' ">
-    <h5 class="font_16 fw-semi text_pri mb_10">Modifiers</h5>
-    <table class="m-0">
-      <thead>
-        <tr>
-          <th>Modifiers Groups</th>
-          <th>Modifier Price</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let idata of itemData?.modifierGroupNameId">
-          <td>{{idata?.modifierGroupName}}</td>
-          <td>{{idata?.price}}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div> -->
-  <!-- end modifier -->
-  <!-- start Tax details -->
+ 
   <div class="mb_20" *ngIf="taxData != null && taxData != '' ">
     <h5 class="font_16 fw-semi text_pri mb_10">Tax Details</h5>
     <table class="m-0">
