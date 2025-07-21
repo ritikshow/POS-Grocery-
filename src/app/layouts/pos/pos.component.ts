@@ -144,7 +144,7 @@ export class PosComponent implements OnInit {
       }
     }
     if (userCredential.permissions.some((data) => data.featureCode == "DINEIN_RUNNING_ORDERS") || userCredential.roleName.toLowerCase() == "super admin")
-      this.router.navigateByUrl('/pos-dashboard/dine-in');
+      this.router.navigateByUrl('/pos-dashboard/masters-tax');
     else {
       let path = this.commonService.NavigateUserBasedOnPermissions(true, []);
       this.router.navigate([path]);
@@ -169,7 +169,7 @@ export class PosComponent implements OnInit {
       this.getGeneralSettingsByOutlet(selectedOutletId);
       this.posSharedService.onSelectNotify(selectedOutletId);
       if (userCredential.permissions.some((data) => data.featureCode == "DINEIN_RUNNING_ORDERS") || userCredential.roleName.toLowerCase() == "Super Admin")
-        this.router.navigateByUrl('/pos-dashboard/dine-in');
+        this.router.navigateByUrl('/pos-dashboard/masters-tax');
       else {
         let path = this.commonService.NavigateUserBasedOnPermissions(true, []);
         this.router.navigate([path]);

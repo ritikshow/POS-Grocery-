@@ -1,4 +1,3 @@
-import { TaxSetupComponent } from './pages/master/tax-setup/tax-setup.component';
 import { PrintDesignTableComponent } from './pages/print-design-veiw/print-design-table/print-design-table.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -6,10 +5,8 @@ import { MenuComponent } from './pages/menu/menu.component';
 
 import { OrderComponent } from './pages/order/order.component';
 import { DiscountComponent } from './pages/master/discount/discount.component';
-import { OutletComponent } from './pages/master/outlet/outlet.component';
 import { TaxComponent } from './pages/master/tax/tax.component';
 import { PrintVeiwComponent } from './pages/print-design-veiw/print-veiw/print-veiw.component';
-import { AdminRestaurantComponent } from './pages/admin-restaurant/admin-restaurant.component';
 import { UserRegistrationComponent } from './pages/user-registration/user-registration.component';
 import { AdminRoleComponent } from './pages/admin-role/admin-role.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
@@ -32,7 +29,6 @@ import { AddInventoryComponent } from './pages/Inventory/add-inventory/add-inven
 import { ShiftTimingComponent } from './pages/shifttiming/shifttiming.component';
 
 import { DetailedReportComponent } from './pages/dashboard/detailed-report/detailed-report.component';
-import { RestaurantPermissionComponent } from './pages/admin-restaurant/restaurant-permission/restaurant-permission.component';
 import { ReconcileStockComponent } from './pages/Inventory/reconcile-stock/reconcile-stock.component';
 import { POSAuthGuard } from '@module/auth-guard/posauth.guard';
 import { GeneralSettingsComponent } from './pages/general-settings/general-settings.component';
@@ -126,19 +122,13 @@ const routes: Routes = [
     component: DiscountComponent
   },
   
-  {
-    path: 'masters-outlet',
-    component: OutletComponent
-  },
+
   {
     path: 'masters-tax',
     component: TaxComponent,
     canActivate: [POSAuthGuard]
   },
-  {
-    path: 'tax-setup',
-    component: TaxSetupComponent
-  },
+ 
   {
     path: 'print',
     component: PrintDesignTableComponent
@@ -151,10 +141,7 @@ const routes: Routes = [
     path: 'print-design',
     component: PrintDesignViewViewComponent
   },
-  {
-    path: 'admin-restaurant',
-    component: AdminRestaurantComponent
-  },
+  
   {
     path: 'master-user-registration',
     component: UserRegistrationComponent,
@@ -179,10 +166,7 @@ const routes: Routes = [
     component: DetailedReportComponent,
     canActivate: [POSAuthGuard]
   },
-  {
-    path: 'admin-restaurant/restaurant-permission',
-    component: RestaurantPermissionComponent
-  },
+  
   {
     path: 'Inventory/reconcile-stock',
     component: ReconcileStockComponent
