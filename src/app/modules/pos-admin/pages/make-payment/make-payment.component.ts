@@ -3,7 +3,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertService } from '@core/services/common/alert.service';
 import { PosDataService } from '@core/services/pos-system/pos-data.service';
-import { PrintVeiwComponent } from '../print-design-veiw/print-veiw/print-veiw.component';
 import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 
@@ -643,7 +642,7 @@ export class MakePaymentComponent implements OnInit {
         //Print preview only for Dine in, For online and takeaway -> Print preview is in thier respective components.
         let page = sessionStorage.getItem('page');
         if (Number(this.totalReceived.toFixed(2)) <= Number(this.PrimaryOrder.total.toFixed(2))) {//Add based on remaining amount also only for dinein
-          this.openPrintView();
+          // this.openPrintView();
         }
         else if (page == 'dine') { //Is user pays half amount.
           this.router.navigate(['/pos-dashboard/dine-in']);
@@ -825,29 +824,29 @@ export class MakePaymentComponent implements OnInit {
       amount: parseFloat(this.remainingAmount.toFixed(2))
     });
   }
-  openPrintView() {
-    let totalPointAmount = this.breakageData.reduce((sum, current) => sum + current.pointAmount, 0);
+  // openPrintView() {
+  //   let totalPointAmount = this.breakageData.reduce((sum, current) => sum + current.pointAmount, 0);
 
-    if (Number(this.totalReceived.toFixed(2)) <= Number(this.PrimaryOrder.total.toFixed(2))) {
-      this.OpenPrintViewAndCheckConditions(totalPointAmount);
-    } else {
-      this.ShowPrintMessage = true;
-      this.alertService.showError('Added Amount is Not Equal to Total Amount');
-    }
-  }
+  //   if (Number(this.totalReceived.toFixed(2)) <= Number(this.PrimaryOrder.total.toFixed(2))) {
+  //     this.OpenPrintViewAndCheckConditions(totalPointAmount);
+  //   } else {
+  //     this.ShowPrintMessage = true;
+  //     this.alertService.showError('Added Amount is Not Equal to Total Amount');
+  //   }
+  // }
 
-  private OpenPrintViewAndCheckConditions(totalPointAmount: any) {
-    if (this.isPointApplied)
-      this.PrimaryOrder.total = this.PrimaryOrder.total + totalPointAmount;
-    sessionStorage.removeItem('orderDiscount' + this.PrimaryOrder.orderId);
-    //this.activeModal.close();
-    this.ShowPrintMessage = false;
-    this.modalService.open(PrintVeiwComponent, { backdrop: 'static', size: 'md', keyboard: true, centered: true }).result.then((result) => {
-      this.CheckResultAndRedirectToPage(result);
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
+  // private OpenPrintViewAndCheckConditions(totalPointAmount: any) {
+  //   if (this.isPointApplied)
+  //     this.PrimaryOrder.total = this.PrimaryOrder.total + totalPointAmount;
+  //   sessionStorage.removeItem('orderDiscount' + this.PrimaryOrder.orderId);
+  //   //this.activeModal.close();
+  //   this.ShowPrintMessage = false;
+  //   this.modalService.open(PrintVeiwComponent, { backdrop: 'static', size: 'md', keyboard: true, centered: true }).result.then((result) => {
+  //     this.CheckResultAndRedirectToPage(result);
+  //   }, (reason) => {
+  //     this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+  //   });
+  // }
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';

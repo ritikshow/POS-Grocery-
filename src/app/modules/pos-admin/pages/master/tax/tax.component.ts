@@ -1,4 +1,3 @@
-import { TaxViewSetupComponent } from './tax-view-setup/tax-view-setup.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AlertService } from '@core/services/common/alert.service';
 import { PosDataService } from '@core/services/pos-system/pos-data.service';
@@ -7,9 +6,6 @@ import { PosViewService } from '@core/services/pos-system/pos-view.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { TaxFormComponent } from './tax-form/tax-form.component';
-import { TaxSetupFormComponent } from './tax-setup-form/tax-setup-form.component';
-import { TaxViewComponent } from './tax-view/tax-view.component';
-import { TaxViewSetupEditComponent } from './tax-view-setup/tax-view-setup-edit/tax-view-setup-edit.component';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import { CommonService } from '@core/services/common/common.service';
@@ -101,27 +97,18 @@ export class TaxComponent implements OnInit {
     });
   }
 
-  openSetupForm() {
-    this.modalService.open(TaxSetupFormComponent, { backdrop: 'static', windowClass: 'main_add_popup', keyboard: true, centered: true }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-      if (result) {
-        this.getAllTaxData();
-      }
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
+ 
 
-  viewSetupForm() {
-    this.modalService.open(TaxViewSetupComponent, { backdrop: 'static', windowClass: 'main_add_popup', keyboard: true, centered: true }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-      if (result) {
-        this.getAllTaxData();
-      }
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
+  // viewSetupForm() {
+  //   this.modalService.open(TaxViewSetupComponent, { backdrop: 'static', windowClass: 'main_add_popup', keyboard: true, centered: true }).result.then((result) => {
+  //     this.closeResult = `Closed with: ${result}`;
+  //     if (result) {
+  //       this.getAllTaxData();
+  //     }
+  //   }, (reason) => {
+  //     this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+  //   });
+  // }
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
@@ -132,14 +119,6 @@ export class TaxComponent implements OnInit {
     }
   }
 
-  view(id) {
-    this.posViewService.setTaxViewId(id);
-    this.modalService.open(TaxViewComponent, { backdrop: 'static', windowClass: 'main_add_popup', keyboard: true, centered: true }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
 
   edit(id) {
     sessionStorage.setItem('isNewTax', 'false');
@@ -173,19 +152,19 @@ export class TaxComponent implements OnInit {
     });
   }
 
-  updateTaxSetup(data){
+  // updateTaxSetup(data){
 
-    sessionStorage.setItem('editTaxSetupData', JSON.stringify(data));
-    this.modalService.open(TaxViewSetupEditComponent, { backdrop: 'static', windowClass: 'main_add_popup', keyboard: true, centered: true }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-      if (result) {
-        this.getAllTaxData();
-      }
-    }, (reason) => {
+  //   sessionStorage.setItem('editTaxSetupData', JSON.stringify(data));
+  //   this.modalService.open(TaxViewSetupEditComponent, { backdrop: 'static', windowClass: 'main_add_popup', keyboard: true, centered: true }).result.then((result) => {
+  //     this.closeResult = `Closed with: ${result}`;
+  //     if (result) {
+  //       this.getAllTaxData();
+  //     }
+  //   }, (reason) => {
 
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
+  //     this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+  //   });
+  // }
   changeTaxStatus(id,status){
         this.posDataService.changeTaxStatus(id,!status).subscribe((res: any) => {
           this.ngxLoader.stopLoader('loader-01');

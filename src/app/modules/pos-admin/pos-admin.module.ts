@@ -16,13 +16,9 @@ import { DiscountFormComponent } from './pages/master/discount/discount-form/dis
 import { DiscountViewComponent } from './pages/master/discount/discount-view/discount-view.component';
 import { TaxComponent } from './pages/master/tax/tax.component';
 import { TaxFormComponent } from './pages/master/tax/tax-form/tax-form.component';
-import { TaxViewComponent } from './pages/master/tax/tax-view/tax-view.component';
-import { PrintDesignVeiwComponent } from './pages/print-design-veiw/print-design-veiw.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
-import { PrintVeiwComponent } from './pages/print-design-veiw/print-veiw/print-veiw.component';
 import { MainPipe } from '../../core/services/pos-system/pipes/main-pipe.module';
 import { NgxPrintModule } from 'ngx-print';
-import { TaxSetupFormComponent } from './pages/master/tax/tax-setup-form/tax-setup-form.component';
 import { UserRegistrationComponent } from './pages/user-registration/user-registration.component';
 import { UserRegFormComponent } from './pages/user-registration/user-reg-form/user-reg-form.component';
 import { UserRegViewComponent } from './pages/user-registration/user-reg-view/user-reg-view.component';
@@ -35,12 +31,6 @@ import { FormAccessEditComponent } from './pages/master/form-access/form-access-
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RestaurantSelectionComponent } from './pages/dines-in/restaurant-selection/restaurant-selection.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { PrintDesignTableComponent } from './pages/print-design-veiw/print-design-table/print-design-table.component';
-import { PrintDesignVeiwEditComponent } from './pages/print-design-veiw/print-design-veiw-edit/print-design-veiw-edit.component';
-import { PrintDesignViewViewComponent } from './pages/print-design-veiw/print-design-view-view/print-design-view-view.component';
-import { TaxViewSetupComponent } from './pages/master/tax/tax-view-setup/tax-view-setup.component';
-import { TaxViewSetupEditComponent } from './pages/master/tax/tax-view-setup/tax-view-setup-edit/tax-view-setup-edit.component';
-import { TaxViewSetupViewComponent } from './pages/master/tax/tax-view-setup/tax-view-setup-view/tax-view-setup-view.component';
 import { SalesReceiptComponent } from './pages/dashboard/sales-receipt/sales-receipt.component';
 import { DataTablesModule } from 'angular-datatables';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -84,10 +74,6 @@ import { PettyCashComponent } from './pages/pettycash/pettycash.component';
     DiscountViewComponent,
     TaxComponent,
     TaxFormComponent,
-    TaxViewComponent,
-    PrintDesignVeiwComponent,
-    PrintVeiwComponent,
-    TaxSetupFormComponent,
     UserRegistrationComponent,
     UserRegFormComponent,
     UserRegViewComponent,
@@ -99,12 +85,6 @@ import { PettyCashComponent } from './pages/pettycash/pettycash.component';
     FormAccessEditComponent,
     RestaurantSelectionComponent,
     DashboardComponent,
-    PrintDesignTableComponent,
-    PrintDesignVeiwEditComponent,
-    PrintDesignViewViewComponent,
-    TaxViewSetupComponent,
-    TaxViewSetupEditComponent,
-    TaxViewSetupViewComponent,
     SalesReceiptComponent,
     SettingsComponent,
     UserViewComponent,

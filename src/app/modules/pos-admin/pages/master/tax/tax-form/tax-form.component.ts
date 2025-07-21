@@ -4,7 +4,6 @@ import { AlertService } from '@core/services/common/alert.service';
 import { PosDataService } from '@core/services/pos-system/pos-data.service';
 import { ModalDismissReasons, NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { TaxSetupFormComponent } from '../tax-setup-form/tax-setup-form.component';
 
 @Component({
   selector: 'app-tax-form',

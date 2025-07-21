@@ -6,7 +6,6 @@ import { PosDataService } from '@core/services/pos-system/pos-data.service';
 import { PosDataShareService } from '@core/services/pos-system/posDataShare.service';
 import { MakePaymentComponent } from '../make-payment/make-payment.component';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { PrintVeiwComponent } from '../print-design-veiw/print-veiw/print-veiw.component';
 import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
@@ -163,10 +162,10 @@ export class OrderComponent implements OnInit {
     });
   }
 
-  PrintInvoice() {
-    const modalRef = this.modalService.open(PrintVeiwComponent, { backdrop: 'static', keyboard: false, windowClass: 'invoice_download bookedsucees_modal_open' });
-    modalRef.componentInstance.invoiceData = this.PrimaryOrder;
-  }
+  // PrintInvoice() {
+  //   const modalRef = this.modalService.open(PrintVeiwComponent, { backdrop: 'static', keyboard: false, windowClass: 'invoice_download bookedsucees_modal_open' });
+  //   modalRef.componentInstance.invoiceData = this.PrimaryOrder;
+  // }
 
   // Start Get all masters from DB
   getAllItems() {

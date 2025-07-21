@@ -1,4 +1,3 @@
-import { PrintDesignTableComponent } from './pages/print-design-veiw/print-design-table/print-design-table.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MenuComponent } from './pages/menu/menu.component';
@@ -6,13 +5,11 @@ import { MenuComponent } from './pages/menu/menu.component';
 import { OrderComponent } from './pages/order/order.component';
 import { DiscountComponent } from './pages/master/discount/discount.component';
 import { TaxComponent } from './pages/master/tax/tax.component';
-import { PrintVeiwComponent } from './pages/print-design-veiw/print-veiw/print-veiw.component';
 import { UserRegistrationComponent } from './pages/user-registration/user-registration.component';
 import { AdminRoleComponent } from './pages/admin-role/admin-role.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 
-import { PrintDesignViewViewComponent } from './pages/print-design-veiw/print-design-view-view/print-design-view-view.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 import { UserViewComponent } from './pages/user-view/user-view.component';
 import { SalesByCategoryComponent } from './pages/sales-by-category/sales-by-category.component';
@@ -129,18 +126,6 @@ const routes: Routes = [
     canActivate: [POSAuthGuard]
   },
  
-  {
-    path: 'print',
-    component: PrintDesignTableComponent
-  },
-  {
-    path: 'print-preveiw',
-    component: PrintVeiwComponent
-  },
-  {
-    path: 'print-design',
-    component: PrintDesignViewViewComponent
-  },
   
   {
     path: 'master-user-registration',
