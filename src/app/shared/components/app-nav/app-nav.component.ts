@@ -6,7 +6,6 @@ import { PosDataService } from '@core/services/pos-system/pos-data.service';
 import { PosViewService } from '@core/services/pos-system/pos-view.service';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { PreparedItemComponent } from './../../../modules/pos-admin/pages/prepared-item/prepared-item.component';
 import Scrollbar from 'smooth-scrollbar';
 import { CommonService } from '@core/services/common/common.service';
 
@@ -286,14 +285,7 @@ export class AppNavComponent implements OnInit, OnDestroy {
       return `with: ${reason}`;
     }
   }
-  notifyView(id) {
-    this.posViewService.setPreparedViewId(id);
-    this.modalService.open(PreparedItemComponent, { backdrop: 'static', size: 'lg', keyboard: true, centered: true }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
+ 
   //Abhijith
   //For more than 1 submenu for side menu. Add here
   makeSubMenuarray() {

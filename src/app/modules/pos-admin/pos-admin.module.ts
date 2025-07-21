@@ -3,16 +3,12 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OrderComponent } from './pages/order/order.component';
 import { PosAdminRoutingModule } from './pos-admin-routing.module';
-import { SingleItemComponent } from './pages/single-item/single-item.component';
 import { MenuComponent } from './pages/menu/menu.component';
 import { CategoryComponent } from './pages/category/category.component';
 
 
-import { ItemDiscountComponent } from './pages/order/item-discount/item-discount.component';
 import { MakePaymentComponent } from './pages/make-payment/make-payment.component';
-import { MastersPromoCodeComponent } from './pages/masters-promo-code/masters-promo-code.component';
-import { AddMasterPromoCodeComponent } from './pages/masters-promo-code/add-master-promo-code/add-master-promo-code.component';
-//import { AddModifierComponent } from './pages/item-master/add-modifier/add-modifier.component';
+
 import { AddDiscountComponent } from './pages/item-master/add-discount/add-discount.component';
 import { ViewModComponent } from './pages/item-master/add-modifier/view-mod/view-mod.component';
 
@@ -54,7 +50,6 @@ import { AddAdminRoleComponent } from './pages/admin-role/add-admin-role/add-adm
 import { ViewAdminRoleComponent } from './pages/admin-role/view-admin-role/view-admin-role.component';
 import { OutletSelectionComponent } from './pages/dines-in/outlet-selection/outlet-selection.component';
 import { UserRegRestaurantComponent } from './pages/user-registration/user-reg-restaurant/user-reg-restaurant.component';
-import { ViewMastersPromoCodeComponent } from './pages/masters-promo-code/view-masters-promo-code/view-masters-promo-code.component';
 
 import { OutletEditComponent } from './pages/master/outlet/outlet-edit/outlet-edit.component';
 import { FormAccessComponent } from './pages/master/form-access/form-access.component';
@@ -68,7 +63,6 @@ import { PrintDesignTableComponent } from './pages/print-design-veiw/print-desig
 import { PrintDesignVeiwEditComponent } from './pages/print-design-veiw/print-design-veiw-edit/print-design-veiw-edit.component';
 
 import { PrintDesignViewViewComponent } from './pages/print-design-veiw/print-design-view-view/print-design-view-view.component';
-import { PreparedItemComponent } from './pages/prepared-item/prepared-item.component';
 import { RestaurantOutletEditFormComponent } from './pages/admin-restaurant/restaurant-outlet-edit-form/restaurant-outlet-edit-form.component';
 import { TaxViewSetupComponent } from './pages/master/tax/tax-view-setup/tax-view-setup.component';
 import { TaxViewSetupEditComponent } from './pages/master/tax/tax-view-setup/tax-view-setup-edit/tax-view-setup-edit.component';
@@ -100,29 +94,21 @@ import { DetailedReportComponent } from './pages/dashboard/detailed-report/detai
 import { RestaurantPermissionComponent } from './pages/admin-restaurant/restaurant-permission/restaurant-permission.component';
 import { ReconcileStockComponent } from './pages/Inventory/reconcile-stock/reconcile-stock.component';
 
-import { LoyalityPointsComponent } from './pages/loyality-points/loyality-points.component';
 import { GeneralSettingsComponent } from './pages/general-settings/general-settings.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from "@angular/material/core";
 import { PettyCashComponent } from './pages/pettycash/pettycash.component';
-import { PaymentModeComponent } from './pages/paymentmode/paymentmode.component';
-import { AddPaymentModeComponent } from './pages/paymentmode/add-paymentmode/add-paymentmode.component';
-import { LoyalitySettingsComponent } from './pages/loyality-settings/loyality-settings.component';
 
 @NgModule({
   declarations: [
     OrderComponent,
-    SingleItemComponent,
     MenuComponent,
     CategoryComponent,
    
 
-    ItemDiscountComponent,
     MakePaymentComponent,
 
-    MastersPromoCodeComponent,
-    AddMasterPromoCodeComponent,
 
     AddDiscountComponent,
     ViewModComponent,
@@ -156,7 +142,6 @@ import { LoyalitySettingsComponent } from './pages/loyality-settings/loyality-se
     ViewAdminRoleComponent,
     OutletSelectionComponent,
     UserRegRestaurantComponent,
-    ViewMastersPromoCodeComponent,
 
     OutletEditComponent,
     FormAccessComponent,
@@ -171,7 +156,6 @@ import { LoyalitySettingsComponent } from './pages/loyality-settings/loyality-se
     
 
     PrintDesignViewViewComponent,
-    PreparedItemComponent,
     RestaurantOutletEditFormComponent,
     TaxViewSetupComponent,
     TaxViewSetupEditComponent,
@@ -198,12 +182,8 @@ import { LoyalitySettingsComponent } from './pages/loyality-settings/loyality-se
     DetailedReportComponent,
     RestaurantPermissionComponent,
     ReconcileStockComponent,
-    LoyalityPointsComponent,
     GeneralSettingsComponent,
     PettyCashComponent,
-    PaymentModeComponent,
-    AddPaymentModeComponent,
-    LoyalitySettingsComponent
    
   ],
 

@@ -16,7 +16,6 @@ import { PrintVeiwComponent } from './pages/print-design-veiw/print-veiw/print-v
 import { AdminRestaurantComponent } from './pages/admin-restaurant/admin-restaurant.component';
 import { UserRegistrationComponent } from './pages/user-registration/user-registration.component';
 import { AdminRoleComponent } from './pages/admin-role/admin-role.component';
-import { MastersPromoCodeComponent } from './pages/masters-promo-code/masters-promo-code.component';
 import { FormAccessComponent } from './pages/master/form-access/form-access.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
@@ -41,15 +40,9 @@ import { ShiftTimingComponent } from './pages/shifttiming/shifttiming.component'
 import { DetailedReportComponent } from './pages/dashboard/detailed-report/detailed-report.component';
 import { RestaurantPermissionComponent } from './pages/admin-restaurant/restaurant-permission/restaurant-permission.component';
 import { ReconcileStockComponent } from './pages/Inventory/reconcile-stock/reconcile-stock.component';
-//import { BatchItemComponent } from './pages/Inventory/batch-item/batch-item.component';
-//import { AddBatchItemComponent } from './pages/Inventory/batch-item/add-batch-item/add-batch-item.component';
-import { LoyalityPointsComponent } from './pages/loyality-points/loyality-points.component';
 import { POSAuthGuard } from '@module/auth-guard/posauth.guard';
 import { GeneralSettingsComponent } from './pages/general-settings/general-settings.component';
 import { PettyCashComponent } from './pages/pettycash/pettycash.component';
-import { PaymentModeComponent } from './pages/paymentmode/paymentmode.component';
-import { AddPaymentModeComponent } from './pages/paymentmode/add-paymentmode/add-paymentmode.component';
-import { LoyalitySettingsComponent } from './pages/loyality-settings/loyality-settings.component';
 
 
 const routes: Routes = [
@@ -181,10 +174,7 @@ const routes: Routes = [
     path: 'role',
     component: AdminRoleComponent
   },
-  {
-    path: 'promo-code',
-    component: MastersPromoCodeComponent
-  },
+  
   {
     path: 'form-access',
     component: FormAccessComponent
@@ -215,31 +205,18 @@ const routes: Routes = [
     component: ReconcileStockComponent
   },
 
-  {
-    path: 'loyality-points',
-    component: LoyalityPointsComponent,
-    canActivate: [POSAuthGuard]
-  },
+  
   {
     path: 'general-settings',
     component: GeneralSettingsComponent
   },
-  {
-    path: 'loyality-settings',
-    component: LoyalitySettingsComponent
-  },
+ 
   {
     path: 'pettycash',
     component: PettyCashComponent
   },
-  {
-    path: 'paymentmode',
-    component: PaymentModeComponent
-  },
-  {
-    path: 'add-paymentmode',
-    component: AddPaymentModeComponent
-  },
+
+ 
 ];
 
 @NgModule({

@@ -9,7 +9,6 @@ import { AddDiscountComponent } from '../item-master/add-discount/add-discount.c
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { PrintVeiwComponent } from '../print-design-veiw/print-veiw/print-veiw.component';
 import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ItemDiscountComponent } from './item-discount/item-discount.component';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 import Scrollbar from 'smooth-scrollbar';
