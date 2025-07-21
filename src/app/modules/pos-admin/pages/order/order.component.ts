@@ -3862,13 +3862,13 @@ export class OrderComponent implements OnInit {
         }
       }
       setTimeout(() => {
-        this.router.navigateByUrl('/pos-dashboard/dine-in');
+        this.router.navigateByUrl('/pos-dashboard/dine-in/order');
       }, 50);
     });
   }
   RedirectDine() {
     setTimeout(() => {
-      this.router.navigateByUrl('/pos-dashboard/dine-in');
+      this.router.navigateByUrl('/pos-dashboard/dine-in/order');
     }, 50);
   }
   // End replicate

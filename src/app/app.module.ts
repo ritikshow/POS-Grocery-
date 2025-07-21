@@ -30,8 +30,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MainPipe } from "@core/services/pos-system/pipes/main-pipe.module";
 import { DataTablesModule } from "angular-datatables";
 import { InternetStatusComponent } from "@module/pos-admin/pages/InternetStatus/internet-status.component";
-import { TableOrderByQRScanComponent } from "./table-order-by-qr-scan/table-order-by-qr-scan.component";
-import { TableOrderCartComponent } from "./table-order-cart/table-order-cart.component";
+//import { TableOrderByQRScanComponent } from "./table-order-by-qr-scan/table-order-by-qr-scan.component";
+//import { TableOrderCartComponent } from "./table-order-cart/table-order-cart.component";
 import { NotifierModule } from 'angular-notifier';
 
 @NgModule({
@@ -40,8 +40,8 @@ import { NotifierModule } from 'angular-notifier';
     AuthLayoutComponent,
     PosComponent,
     InternetStatusComponent,
-    TableOrderByQRScanComponent,
-    TableOrderCartComponent
+   // TableOrderByQRScanComponent,
+    //TableOrderCartComponent
   ],
   imports: [
     BrowserModule,

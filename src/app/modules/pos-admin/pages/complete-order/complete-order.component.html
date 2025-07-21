@@ -23,11 +23,7 @@
             Completed Orders
           </a>
         </li>
-        <!-- <li role="presentation">
-          <a routerLink="/pos-dashboard/dine-in/order-history">
-            Order History
-          </a>
-        </li> -->
+       
         <li role="presentation"
           *ngIf="commonService.checkRolePermissions('DINEIN_VOIDED_ORDERS')">
           <a routerLink="/pos-dashboard/dine-in/voided-order">
@@ -38,38 +34,7 @@
     </div>
     
   <div class="order_info_container">
-    <!-- <div class="table_header mb_20 create_order_blk this_mon_blk">
-      <div class="w-100">
-        <div class="OutletName">Outlet Name : {{outletName}}</div>
-      </div>
-    </div> -->
-    <!-- <ul class="nav nav-tabs d-flex flex-wrap align-items-center nav_tabs_ul p-0 mb_20" id="myTab" role="tablist">
-      <li>
-        <a routerLink="/pos-dashboard/dine-in">All Tables</a>
-      </li>
-      <li role="presentation">
-        <a routerLink="/pos-dashboard/dine-in/running-order">
-          Running Orders
-        </a>
-      </li>
-      <li role="presentation">
-        <a class="active" routerLink="/pos-dashboard/dine-in/completed-order">
-          Completed Orders
-        </a>
-      </li>
-      <li role="presentation">
-        <a routerLink="/pos-dashboard/dine-in/order-history">
-          Order History
-        </a>
-      </li>
-      <li role="presentation">
-        <a routerLink="/pos-dashboard/dine-in/voided-order">
-          Voided Orders
-        </a>
-      </li>
-    </ul> -->
-    <!-- <div>* By default past one week data shown below rest can be seen in Order History</div> -->
-    <!-- <div class="total_value"><b>Total Value :</b> {{count.toFixed(2)}}</div> -->
+   
     <div class="row mb_20 dt_table_cust_filter_align">
       <div class="col-md-3">
         <label class="font_12 fw-med text_pri"  >Start Date</label>
@@ -121,26 +86,15 @@
               <td>
                 <div class="d-flex align-items-center justify-content-center">
                   <img alt="image" src="/assets/images/view-icon.svg" class="mr_14 cursor-pointer"  (click)="orderDetails(data.orderId)"/>
-                  <!-- <button class="btn btn-orders edit" (click)="orderDetails(data.orderId)">View</button> -->
-                  <!-- <img alt="image" src="/assets/images/edit-icon.svg" class="mr_14 cursor-pointer" (click)="EditPaymentFunc(data)"/> -->
-                  <!-- <img alt="image" src="/assets/images/printer-icon.svg" (click)="print(data.orderId)"> -->
+                  
                   <button class="btn btn-orders edit mr_14" (click)="print(data.orderId)">Print</button>
-                  <!-- <button *ngIf="isCompanyAdmin" class="btn btn-orders edit" (click)="addEvent(voidpassword,data.orderId,i)">Void Order</button> -->
+                  
                 </div>
               </td>
             </tr>
           </tbody>
         </table>
-        <!-- <div class="total_entries">
-          <select class="len_per_page" (change)="changedLength($event)">
-            <option value="5">5</option>
-            <option value="10">10&nbsp;</option>
-            <option value="20">20&nbsp;</option>
-            <option value="-1">All&nbsp;</option>
-          </select>
-          <label>Total :</label>
-          <label> {{tableListRecord.total}}</label>
-        </div> -->
+        
       </div>
   </div>
 </div>

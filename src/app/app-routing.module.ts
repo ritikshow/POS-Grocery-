@@ -3,8 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthLayoutComponent } from './layouts';
 import { PosComponent } from './layouts/pos/pos.component';
 import { PosLoginComponent } from '@module/auth/pages/pos-login/pos-login.component';
-import { TableOrderByQRScanComponent } from './table-order-by-qr-scan/table-order-by-qr-scan.component';
-import { TableOrderCartComponent } from './table-order-cart/table-order-cart.component';
+//import { TableOrderByQRScanComponent } from './table-order-by-qr-scan/table-order-by-qr-scan.component';
+//import { TableOrderCartComponent } from './table-order-cart/table-order-cart.component';
 import { ResetPasswordComponent } from '@module/auth/pages/reset-password/reset-password.component';
 
 const routes: Routes = [
@@ -13,16 +13,16 @@ const routes: Routes = [
     redirectTo: '/',
     pathMatch: 'full'
   },
-  {
-    path: 'myorder/:outletId/:tableId/:outletName',
-    data: { breadcrumb: 'TableOrder' },
-    component: TableOrderByQRScanComponent
-  },
-  {
-    path: 'myordercart',
-    data: { breadcrumb: 'TableOrdercart' },
-    component: TableOrderCartComponent,
-  },
+  // {
+  //   path: 'myorder/:outletId/:tableId/:outletName',
+  //   data: { breadcrumb: 'TableOrder' },
+  //   component: TableOrderByQRScanComponent
+  // },
+  // {
+  //   path: 'myordercart',
+  //   data: { breadcrumb: 'TableOrdercart' },
+  //   component: TableOrderCartComponent,
+  // },
   {
     path: '',
     data: { breadcrumb: 'Login' },
